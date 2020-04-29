@@ -1,0 +1,69 @@
+
+
+@font-face {
+    font-family: 'source_sans_prolight';
+    src: url("/font/SourceSansPro-Light.ttf");
+}
+
+@font-face {
+    font-family: 'source_sans_proregular';
+    src: url("/font/SourceSansPro-Regular.ttf");
+}
+
+html ,body{
+    position: relative;
+    height: 100%;
+}
+
+body{
+    font-family: source_sans_proregular;
+    background-color: #ededed;
+}
+
+footer{
+    background-color: orange;
+    left: 0;
+    bottom: 0;
+    height: 21vh;
+    width: 100%;
+    overflow: hidden;
+}
+
+.ui.segment.no-margin{
+    margin: 0;
+}
+
+.parallax {
+    /* The image used */
+    /*background-image: url('/img/lan.jpg');
+
+    /* Full height */
+    height: 100%;
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.ui.image.fluid.game-img-header{
+
+}
+
+.ui.cube.shape .side{
+    height: 100%;
+    padding: 0;
+}
+
+.ui.comments .comment .avatar img {
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+}
+
+.ui.card.eq-card {
+    flex: 1; /* Shrink and grow according to available height */
+    flex-basis: 0;
+}
+
