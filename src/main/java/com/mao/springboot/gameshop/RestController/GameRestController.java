@@ -18,7 +18,7 @@ public class GameRestController {
     @GetMapping()
     public List<Game> gameList(@RequestParam("page")int page){
         List<Game> games = null;
-        if(page != 0){
+        if(page > 0){
             games = gameService.findAll(page);
         }
         else {

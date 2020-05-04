@@ -16,4 +16,10 @@ public class Controller {
         return "redirect:/games";
     }
 
+
+    @GetMapping("/chat")
+    public String chat(){
+        return "chat";
+    }
+
 }

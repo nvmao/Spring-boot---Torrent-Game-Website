@@ -20,38 +20,24 @@ public class User {
     @Column(name = "avatar_image")
     private String avatar;
 
+    @Column(name = "status")
+    private boolean status;
+
     @JsonIgnore
     @Column(name = "password")
     private String password;
-
 
     @JsonIgnore
     @OneToMany(mappedBy = "user",fetch = FetchType.EAGER )
     private List<Authority> authorities;
 
-//    @JsonManagedReference
-//    @OneToMany(mappedBy = "user")
-//    private List<Comment> comments;
-//
-//    @JsonManagedReference
-//    @OneToMany(mappedBy = "user")
-//    private List<Reply> replies;
-//
-//    public List<Reply> getReplies() {
-//        return replies;
-//    }
-//
-//    public void setReplies(List<Reply> replies) {
-//        this.replies = replies;
-//    }
-//
-//    public List<Comment> getComments() {
-//        return comments;
-//    }
-//
-//    public void setComments(List<Comment> comments) {
-//        this.comments = comments;
-//    }
+    public boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
 
     public List<Authority> getAuthorities() {
         return authorities;

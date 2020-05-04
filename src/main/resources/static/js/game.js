@@ -13,10 +13,18 @@ function init(){
 
     pageButtons.forEach(button=>{
         button.addEventListener("click",function () {
-            currentPage = button.value
-            selectActivePage()
-            gameContainer.innerHTML=''
-            loadGame(currentPage)
+
+            button.classList.add("loading")
+
+            setTimeout(function() {
+                currentPage = button.textContent
+                selectActivePage()
+                gameContainer.innerHTML=''
+                loadGame(currentPage)
+                location.href = "#gameContainer"
+                button.classList.remove("loading")
+            },2000) // simulate loading
+
         })
     })
 }
@@ -32,7 +40,7 @@ function loadGame(page) {
 
 function renderHtml(games) {
     games.forEach(game => {
-        let htmlString = `<div class="four wide column">
+        let htmlString = `<div class="sixteen wide mobile eight wide tablet four wide computer column">
                         <div class="ui card">
                             <div class="ui slide masked reveal image">
                                 <img src="${game.posterPhoto}" class="visible content">
@@ -69,7 +77,7 @@ function renderHtml(games) {
 function selectActivePage() {
     pageButtons.forEach(button=>{
         button.classList.remove("active")
-        if(button.value == currentPage){
+        if(button.textContent == currentPage){
             button.classList.add("active")
         }
     })

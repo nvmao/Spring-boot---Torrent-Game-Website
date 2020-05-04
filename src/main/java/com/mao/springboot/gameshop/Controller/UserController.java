@@ -4,15 +4,12 @@ import com.mao.springboot.gameshop.Entity.Authority;
 import com.mao.springboot.gameshop.Entity.User;
 import com.mao.springboot.gameshop.Service.FileService;
 import com.mao.springboot.gameshop.Service.LoginUser;
-import com.mao.springboot.gameshop.Service.MyUserDetails;
 import com.mao.springboot.gameshop.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
 
 
 @Controller
@@ -53,7 +49,7 @@ public class UserController {
                 user.setAvatar("/uploads/img/"+avatar.getOriginalFilename());
             }
 
-            userService.add(user);
+            userService.saveOrUpdate(user);
             Authority authority = new Authority("ROLE_USER");
             authority.setUser(user);
             userService.addAuthority(authority);

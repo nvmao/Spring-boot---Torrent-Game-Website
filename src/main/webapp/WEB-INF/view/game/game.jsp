@@ -76,7 +76,7 @@
                 </div>
             </h1>
             <div class="ui hidden section divider"></div>
-            <div class="ui raised link card" style="width: 400px;">
+            <div class="ui raised card" style="width: 400px;">
                 <div class="content">
                     <div class=" ui huge header">
                         Download
@@ -192,53 +192,53 @@
                         <a class="avatar">
                             <img src="${comment.user.avatar}">
                         </a>
-                        <div class="content">
-                            <a class="author">${comment.user.userName}</a>
-                            <div class="metadata">
-                                <span class="date">${comment.createdAt}</span>
-                            </div>
-                            <div class="text">
-                                ${comment.content}
-                            </div>
-                            <div class="actions">
-                                <div class="ui accordion">
-                                    <div class="title">
-                                        <i class="dropdown icon"></i>
-                                        ${comment.replies.size()} reply
-                                    </div>
-                                    <div class="content">
-                                        <div class="comments">
-                                            <c:forEach var="reply" items="${comment.replies}">
-                                                <div class="comment">
-                                                    <a class="avatar">
-                                                        <img src="${reply.user.avatar}">
-                                                    </a>
-                                                    <div class="content">
-                                                        <a class="author">${reply.user.userName}</a>
-                                                        <div class="metadata">
-                                                            <span class="date">${reply.createdAt}</span>
-                                                        </div>
-                                                        <div class="text">
-                                                                ${reply.content}
+                        <div class="content" >
+                                <a class="author">${comment.user.userName}</a>
+                                <div class="metadata">
+                                    <span class="date">${comment.createdAt}</span>
+                                </div>
+                                <div class="text">
+                                        ${comment.content}
+                                </div>
+                                <div class="actions">
+                                    <div class="ui accordion">
+                                        <div class="title">
+                                            <i class="dropdown icon"></i>
+                                                ${comment.replies.size()} reply
+                                        </div>
+                                        <div class="content">
+                                            <div class="comments">
+                                                <c:forEach var="reply" items="${comment.replies}">
+                                                    <div class="comment">
+                                                        <a class="avatar">
+                                                            <img src="${reply.user.avatar}">
+                                                        </a>
+                                                        <div class="content">
+                                                            <a class="author">${reply.user.userName}</a>
+                                                            <div class="metadata">
+                                                                <span class="date">${reply.createdAt}</span>
+                                                            </div>
+                                                            <div class="text">
+                                                                    ${reply.content}
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </c:forEach>
-                                            <h3 class="ui dividing header"></h3>
-                                            <form:form action="${pageContext.request.contextPath}/games/${game.id}/comment/reply" method="POST">
-                                                <div class="field">
-                                                    <textarea name="replyContent" rows="4" cols="80"></textarea>
-                                                </div>
-                                                <input type="hidden" value="${comment.id}" name="commentId">
-                                                <button class="ui blue labeled submit icon button">
-                                                    <i class="icon edit"></i> Add Reply
-                                                </button>
-                                            </form:form>
+                                                </c:forEach>
+                                                <h3 class="ui dividing header"></h3>
+                                                <form:form action="${pageContext.request.contextPath}/games/${game.id}/comment/reply" method="POST">
+                                                    <div class="field">
+                                                        <textarea name="replyContent" rows="4" cols="80"></textarea>
+                                                    </div>
+                                                    <input type="hidden" value="${comment.id}" name="commentId">
+                                                    <button class="ui blue labeled submit icon button">
+                                                        <i class="icon edit"></i> Add Reply
+                                                    </button>
+                                                </form:form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
                     </div>
 

@@ -21,6 +21,9 @@ public class GameController {
     GameService gameService;
 
     @Autowired
+    UserService userService;
+
+    @Autowired
     CommentService commentService;
 
     @Autowired

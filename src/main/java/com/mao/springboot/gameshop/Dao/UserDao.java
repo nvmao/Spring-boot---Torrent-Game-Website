@@ -28,7 +28,17 @@ public class UserDao {
         return user;
     }
 
-    public void add(User user){
+    public List<User> findAll(){
+        Session session = entityManager.unwrap(Session.class);
+
+        Query query = session.createQuery("from User");
+
+        List<User> users = query.getResultList();
+
+        return users;
+    }
+
+    public void saveOrUpdate(User user){
         Session session = entityManager.unwrap(Session.class);
 
         session.saveOrUpdate(user);
@@ -39,5 +49,6 @@ public class UserDao {
 
         session.saveOrUpdate(authority);
     }
+
 
 }

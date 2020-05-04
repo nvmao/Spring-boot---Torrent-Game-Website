@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -19,12 +20,16 @@ public class UserService {
     }
 
     @Transactional
-    public void add(User user){
-        userDao.add(user);
+    public void saveOrUpdate(User user){
+        userDao.saveOrUpdate(user);
     }
 
     @Transactional
     public void addAuthority(Authority authority){
         userDao.addAuthority(authority);
+    }
+
+    public List<User> findAll(){
+        return userDao.findAll();
     }
 }

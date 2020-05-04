@@ -24,7 +24,7 @@ footer{
     background-color: orange;
     left: 0;
     bottom: 0;
-    height: 21vh;
+    height: 22vh;
     width: 100%;
     overflow: hidden;
 }
@@ -62,8 +62,96 @@ footer{
     height: 30px;
 }
 
+.ui.dropdown .menu > .item > .image, .ui.dropdown .menu > .item > img{
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+}
+
+.ui.dropdown .menu > .item > .image, .ui.dropdown .menu > .item > img{
+
+}
+
 .ui.card.eq-card {
     flex: 1; /* Shrink and grow according to available height */
     flex-basis: 0;
 }
 
+#noPadding{
+    padding-top: 0;
+    padding-bottom: 0.2em;
+}
+
+
+.box-chat{
+    position: fixed;
+    bottom: 10px;
+    right: 5%;
+    width: 300px;
+    height: 50%;
+    z-index: 300;
+}
+.box-chat-header{
+    top: 0;
+    width: 100%;
+    height: 12%;
+    background-color: red;
+}
+
+.box-chat-exit-btn{
+    position: absolute;
+    right: 2%;
+    top: 10%;
+}
+
+.box-chat-content{
+    left: 0;
+    width: 100%;
+    height: 73%;
+    background-color: #0ea432;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+.box-chat-bottom{
+    bottom: 0;
+    width: 100%;
+    height: 15%;
+    background-color: rebeccapurple;
+}
+.box-chat-avatar{
+    width: 70px;
+    height: 80%;
+    border-radius: 50%;
+}
+.box-chat .ui.segment{
+    margin: 0;
+    position: relative;
+}
+
+.box-chat-input{
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    margin-right: 5px;
+}
+
+.box-chat-response{
+    height: auto;
+    width: 85%;
+    margin: auto;
+}
+
+.box-chat-send{
+    height: auto;
+    width: 100%;
+    margin: auto;
+}
+
+.ui.segment.box-chat-bottom input{
+    width: 85%;
+    height: 100%;
+    padding: 0;
+}
+#box-send{
+    padding: 10px;
+}

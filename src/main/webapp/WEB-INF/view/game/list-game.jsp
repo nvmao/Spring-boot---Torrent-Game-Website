@@ -11,6 +11,9 @@
     <link rel="stylesheet" type="text/css" href="/css/semantic.css">
     <link rel="stylesheet" type="text/css" href="/css/main.css">
 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
     <script src="/js/jquery.js"></script>
     <script src="/js/semantic.js"></script>
 
@@ -20,8 +23,10 @@
 
 <jsp:include page="../header.jsp"></jsp:include>
 
+
 <div class="ui hidden section divider"></div>
-<div class="ui container">
+<div class="ui hidden section divider"></div>
+<div class="ui  container">
 
     <div class="ui center aligned container">
 
@@ -55,18 +60,18 @@
                 <div class="ten wide column">
                     <div class="ui mini borderless  segment">
                         <div class="ui mini  secondary pointing four item menu">
-                        <a class=" item ">
-                            Everything
-                        </a>
+                            <a class=" item ">
+                                Everything
+                            </a>
                             <a class="active item ">
                                 New
                             </a>
-                        <a class="item">
-                            Most downloaded
-                        </a>
-                        <a class="item">
-                            Most like
-                        </a>
+                            <a class="item">
+                                Most downloaded
+                            </a>
+                            <a class="item">
+                                Most like
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -76,7 +81,7 @@
                             <i class="tasks icon"></i>
                         </div>
                         <div class="visible content">
-                                <i onclick="toggleSidebar()" class=" tasks icon"></i>
+                            <i onclick="toggleSidebar()" class=" tasks icon"></i>
                         </div>
                     </div>
                 </div>
@@ -86,43 +91,42 @@
         <div class="ui inverted section divider"></div>
 
         <div>
-            <div class="ui grid" id="gameContainer">
-<%--                <c:forEach var="game" items="${games}">--%>
-<%--                    <div class="four wide column">--%>
-<%--                        <div class="ui card">--%>
-<%--                            <div class="ui slide masked reveal image">--%>
-<%--                                <img src="${game.posterPhoto}" class="visible content">--%>
-<%--                                <img src="${game.hoverPhoto}" class="hidden content">--%>
-<%--                            </div>--%>
-<%--                            <div class="content">--%>
-<%--                                <a href="${pageContext.request.contextPath}/games/${game.id}" class="ui small header">${game.name}</a>--%>
-<%--                                <div class="meta">--%>
-<%--                                    <span class="date">${game.publisher.name}</span>--%>
-<%--                                </div>--%>
-<%--                            </div>--%>
-<%--                            <div class="extra content">--%>
-<%--                            <span class="left floated like">--%>
-<%--                                <a class="ui circular label">--%>
-<%--                                    <i class="like icon"></i>23--%>
-<%--                                </a>--%>
-<%--                                <a class="ui blue circular label">--%>
-<%--                                    <i class="comment icon"></i>${game.getCommentCount()}--%>
-<%--                                </a>--%>
-<%--                            </span>--%>
-<%--                                <span class="right floated star">--%>
-<%--                               <a class="ui grey circular label">--%>
-<%--                                    <i class="download icon"></i>100--%>
-<%--                                </a>--%>
-<%--                            </span>--%>
-<%--                            </div>--%>
-<%--                        </div>--%>
-<%--                    </div>--%>
-<%--                </c:forEach>--%>
+            <div class="ui grid "  id="gameContainer">
+                <%--                <c:forEach var="game" items="${games}">--%>
+                <%--                    <div class="four wide column">--%>
+                <%--                        <div class="ui card">--%>
+                <%--                            <div class="ui slide masked reveal image">--%>
+                <%--                                <img src="${game.posterPhoto}" class="visible content">--%>
+                <%--                                <img src="${game.hoverPhoto}" class="hidden content">--%>
+                <%--                            </div>--%>
+                <%--                            <div class="content">--%>
+                <%--                                <a href="${pageContext.request.contextPath}/games/${game.id}" class="ui small header">${game.name}</a>--%>
+                <%--                                <div class="meta">--%>
+                <%--                                    <span class="date">${game.publisher.name}</span>--%>
+                <%--                                </div>--%>
+                <%--                            </div>--%>
+                <%--                            <div class="extra content">--%>
+                <%--                            <span class="left floated like">--%>
+                <%--                                <a class="ui circular label">--%>
+                <%--                                    <i class="like icon"></i>23--%>
+                <%--                                </a>--%>
+                <%--                                <a class="ui blue circular label">--%>
+                <%--                                    <i class="comment icon"></i>${game.getCommentCount()}--%>
+                <%--                                </a>--%>
+                <%--                            </span>--%>
+                <%--                                <span class="right floated star">--%>
+                <%--                               <a class="ui grey circular label">--%>
+                <%--                                    <i class="download icon"></i>100--%>
+                <%--                                </a>--%>
+                <%--                            </span>--%>
+                <%--                            </div>--%>
+                <%--                        </div>--%>
+                <%--                    </div>--%>
+                <%--                </c:forEach>--%>
             </div>
         </div>
 
     </div>
-
     <div>
         <div class="ui right sidebar inverted vertical list">
             <a class="item">
@@ -137,19 +141,17 @@
         </div>
 
     </div>
-
-
     <div class="ui  divider"></div>
     <div class="ui center aligned container">
         <% for(int i = 0 ; i < (long)request.getAttribute("maxPage");i++){ %>
-        <button class="ui tiny secondary inverted circular button pageButton" value="<%=i+1%>">
+        <a  class="ui tiny secondary inverted circular button pageButton">
             <%=i+1%>
-        </button>
+        </a>
         <%}%>
     </div>
 
-
 </div>
+
 
 <jsp:include page="../login.jsp"></jsp:include>
 
