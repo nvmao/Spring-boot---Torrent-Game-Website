@@ -11,8 +11,13 @@
 }
 
 html ,body{
-    position: relative;
     height: 100%;
+}
+
+#wrapper {
+    min-height: 100%;
+    position: relative;
+    padding-bottom: 10rem;
 }
 
 body{
@@ -21,12 +26,10 @@ body{
 }
 
 footer{
-    background-color: orange;
-    left: 0;
-    bottom: 0;
-    height: 22vh;
     width: 100%;
-    overflow: hidden;
+    position: absolute;
+    bottom: 0;
+    left: 0;
 }
 
 .ui.segment.no-margin{
@@ -86,8 +89,9 @@ footer{
 .box-chat{
     position: fixed;
     bottom: 10px;
-    right: 5%;
+    right: 100px;
     width: 300px;
+
     height: 50%;
     z-index: 300;
 }
@@ -145,6 +149,7 @@ footer{
     height: auto;
     width: 100%;
     margin: auto;
+
 }
 
 .ui.segment.box-chat-bottom input{
@@ -154,4 +159,67 @@ footer{
 }
 #box-send{
     padding: 10px;
+}
+
+.background-img {
+    background: linear-gradient(304deg, #e4831e, #060606, #d83131, #31d8b7);
+    background-size: 800% 800%;
+
+    -webkit-animation: AnimationName 0s ease infinite;
+    -moz-animation: AnimationName 0s ease infinite;
+    animation: AnimationName 0s ease infinite;
+}
+@-webkit-keyframes AnimationName {
+    0%{background-position:23% 0%}
+    50%{background-position:78% 100%}
+    100%{background-position:23% 0%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:23% 0%}
+    50%{background-position:78% 100%}
+    100%{background-position:23% 0%}
+}
+@keyframes AnimationName {
+    0%{background-position:23% 0%}
+    50%{background-position:78% 100%}
+    100%{background-position:23% 0%}
+}
+
+body {
+    background: linear-gradient(48deg, #000000, #2b3940, #2b3940);
+    /*background: linear-gradient(48deg, #ffffff, #000000, #2b3940, #000000);*/
+    background-size: 800% 800%;
+    /*animation: gradient 120s ease-in-out infinite;*/
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+
+    }
+}
+
+.parallax {
+    /* The image used */
+    /* Full height */
+    height: 100%;
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+/* Turn off parallax scrolling for tablets and phones. Increase the pixels if needed */
+@media only screen and (max-device-width: 1366px) {
+    .parallax {
+        background-attachment: scroll;
+    }
 }

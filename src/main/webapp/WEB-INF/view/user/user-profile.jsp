@@ -16,45 +16,47 @@
 </head>
 <body>
 
-<jsp:include page="../header.jsp"></jsp:include>
+<div id="wrapper">
+    <jsp:include page="../header.jsp"></jsp:include>
 
-<div class="ui hidden section divider"></div>
-<div class="ui container">
+    <div class="ui hidden section divider"></div>
+    <div class="ui container">
 
 
-    <div class="ui card">
-        <div class="image">
-            <div class="ui rotate reveal image">
-                <div class="visible content">
-                    <img src="${user.avatar}" >
+        <div class="ui card">
+            <div class="image">
+                <div class="ui rotate reveal image">
+                    <div class="visible content">
+                        <img src="${user.avatar}" >
+                    </div>
+                    <div class="hidden content">
+                        <img src="${user.avatar}" >
+                    </div>
                 </div>
-                <div class="hidden content">
-                    <img src="${user.avatar}" >
+            </div>
+            <div class="content">
+                <a class="ui header red">${user.userName}</a>
+                <div class="meta">
+                    <span class="date">Joined in 2013</span>
+                </div>
+                <div class="description">
+                    <c:forEach var="authority" items="${user.authorities}">
+                        ${authority.authority}
+                    </c:forEach>
                 </div>
             </div>
-        </div>
-        <div class="content">
-            <a class="ui header red">${user.userName}</a>
-            <div class="meta">
-                <span class="date">Joined in 2013</span>
-            </div>
-            <div class="description">
-                <c:forEach var="authority" items="${user.authorities}">
-                    ${authority.authority}
-                </c:forEach>
+            <div class="extra content">
+                <a>
+                    <i class="user icon"></i>
+                    22 Friends
+                </a>
             </div>
         </div>
-        <div class="extra content">
-            <a>
-                <i class="user icon"></i>
-                22 Friends
-            </a>
-        </div>
+
     </div>
 
+    <jsp:include page="../footer.jsp"></jsp:include>
 </div>
-
-<jsp:include page="../footer.jsp"></jsp:include>
 
 <script>
     $('.ui.dropdown').dropdown()

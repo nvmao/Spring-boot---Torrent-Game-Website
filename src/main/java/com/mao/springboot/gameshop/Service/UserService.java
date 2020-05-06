@@ -20,7 +20,7 @@ public class UserService {
     }
 
     @Transactional
-    public void saveOrUpdate(User user){
+    public void saveOrUpdate(User user) {
         userDao.saveOrUpdate(user);
     }
 

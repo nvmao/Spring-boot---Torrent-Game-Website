@@ -21,16 +21,6 @@ public class UserRestController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/registration/{userName}")
-    public ResponseEntity<Void> register(@PathVariable String userName,
-                                         SimpMessageHeaderAccessor headerAccessor){
-
-
-
-        headerAccessor.getSessionAttributes().put("username",userName);
-        return ResponseEntity.ok().build();
-    }
-
     @GetMapping("/fetchAllUsers")
     public List<User> fetchAll(){
         return userService.findAll();
@@ -39,6 +29,11 @@ public class UserRestController {
     @GetMapping("/loginUser")
     public User getLoginUser(){
         return LoginUser.getLoginUser();
+    }
+
+    @GetMapping("/users/{userName}")
+    public User getUser(@PathVariable("userName") String userName){
+        return userService.findUserByName(userName);
     }
 
 }

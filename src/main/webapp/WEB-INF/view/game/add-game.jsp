@@ -18,60 +18,63 @@
 <body>
 <jsp:include page="../header.jsp"></jsp:include>
 
-<div class="ui hidden section divider"></div>
-<div class="ui container">
+<div id="wrapper">
+    <div class="ui hidden section divider"></div>
+    <div class="ui container">
 
-    <div class="ui center aligned container">
+        <div class="ui center aligned container">
 
-    </div>
+        </div>
 
-    <div class="ui black segment">
-        <h4 class="ui dividing header">Game Information</h4>
-        <form:form class="ui form" action="${pageContext.request.contextPath}/games/add" method="POST" enctype="multipart/form-data" modelAttribute="game" >
+        <div class="ui black segment">
+            <h4 class="ui dividing header">Game Information</h4>
+            <form:form class="ui form" action="${pageContext.request.contextPath}/games/add" method="POST" enctype="multipart/form-data" modelAttribute="game" >
 
-            <div class="required field">
-                <label>Name</label>
-                <form:input path="name"></form:input>
-            </div>
-            <div class="required field">
-                <label>Download Link</label>
-                <form:input path="downloadLink"></form:input>
-            </div>
-            <div class="required field">
-                <label>Poster Photo</label>
-                <input name="pPhoto" type="file">
-            </div>
-            <div class="required field">
-                <label>Hover Photo</label>
-                <input name="hPhoto" type="file">
-            </div>
-            <div class="required field">
-                <label>Publisher</label>
-                <div class="ui selection dropdown">
-                    <input name="publisher_id" type="hidden">
-                    <i class="dropdown icon"></i>
-                    <div class="default text">Publisher</div>
-                    <div class="menu">
-                        <c:forEach var="p" items="${publishers}">
-                            <div class="item" data-value="${p.id}">${p.name}</div>
-                        </c:forEach>
+                <div class="required field">
+                    <label>Name</label>
+                    <form:input path="name"></form:input>
+                </div>
+                <div class="required field">
+                    <label>Download Link</label>
+                    <form:input path="downloadLink"></form:input>
+                </div>
+                <div class="required field">
+                    <label>Poster Photo</label>
+                    <input name="pPhoto" type="file">
+                </div>
+                <div class="required field">
+                    <label>Hover Photo</label>
+                    <input name="hPhoto" type="file">
+                </div>
+                <div class="required field">
+                    <label>Publisher</label>
+                    <div class="ui selection dropdown">
+                        <input name="publisher_id" type="hidden">
+                        <i class="dropdown icon"></i>
+                        <div class="default text">Publisher</div>
+                        <div class="menu">
+                            <c:forEach var="p" items="${publishers}">
+                                <div class="item" data-value="${p.id}">${p.name}</div>
+                            </c:forEach>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="required field">
-                <label>Description</label>
-                <Form:textarea path="description"></Form:textarea>
-            </div>
+                <div class="required field">
+                    <label>Description</label>
+                    <Form:textarea path="description"></Form:textarea>
+                </div>
 
-            <button class="ui black button">Submit</button>
+                <button class="ui black button">Submit</button>
 
-        </form:form>
+            </form:form>
+        </div>
+
+
     </div>
 
-
+    <jsp:include page="../footer.jsp"></jsp:include>
 </div>
 
-<jsp:include page="../footer.jsp"></jsp:include>
 
 <script>
     $('.ui.dropdown').dropdown()

@@ -9,6 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.validation.ConstraintViolationException;
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 @Repository
@@ -31,17 +34,19 @@ public class UserDao {
     public List<User> findAll(){
         Session session = entityManager.unwrap(Session.class);
 
-        Query query = session.createQuery("from User");
+        Query query = session.createQuery("from User ");
 
         List<User> users = query.getResultList();
 
         return users;
     }
 
-    public void saveOrUpdate(User user){
+    public void saveOrUpdate(User user) {
+
         Session session = entityManager.unwrap(Session.class);
 
         session.saveOrUpdate(user);
+
     }
 
     public void addAuthority(Authority authority){

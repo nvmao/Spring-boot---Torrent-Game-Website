@@ -1,5 +1,4 @@
-<div class="ui hidden section divider"></div>
-<footer>
+<footer >
     <div class="ui inverted vertical footer segment">
         <div class="ui center aligned container">
             <div class="ui horizontal inverted small divided link list">
@@ -14,8 +13,6 @@
                 <a class="item" href="#">Privacy Policy</a>
             </div>
         </div>
-
-        <div class="ui hidden section divider"></div>
     </div>
 
 </footer>

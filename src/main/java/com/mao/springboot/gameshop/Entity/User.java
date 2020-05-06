@@ -4,16 +4,21 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.List;
 
 @Entity
 @Table(name = "user")
 public class User {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @NotNull
+    @Size(min=2,max=30,message = "username size must be from 2 to 30")
     @Column(name = "username")
     private String userName;
 
@@ -24,6 +29,7 @@ public class User {
     private boolean status;
 
     @JsonIgnore
+    @Size(min = 1,message = "password is required")
     @Column(name = "password")
     private String password;
 

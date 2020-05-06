@@ -19,10 +19,12 @@ function init(){
             setTimeout(function() {
                 currentPage = button.textContent
                 selectActivePage()
+
                 gameContainer.innerHTML=''
                 loadGame(currentPage)
-                location.href = "#gameContainer"
+                window.scrollTo(0, 0);
                 button.classList.remove("loading")
+
             },2000) // simulate loading
 
         })
@@ -40,10 +42,10 @@ function loadGame(page) {
 
 function renderHtml(games) {
     games.forEach(game => {
-        let htmlString = `<div class="sixteen wide mobile eight wide tablet four wide computer column">
-                        <div class="ui card">
+        let htmlString = `<div class="eight wide tablet four wide computer column gameBox">
+                        <div class="ui card gameBoxCard" >
                             <div class="ui slide masked reveal image">
-                                <img src="${game.posterPhoto}" class="visible content">
+                                <img src="${game.posterPhoto}" class="visible content posterImage">
                                 <img src="${game.hoverPhoto}" class="hidden content">
                             </div>
                             <div class="content">
@@ -70,8 +72,43 @@ function renderHtml(games) {
                         </div>
                     </div>`
         gameContainer.insertAdjacentHTML('beforeend',htmlString)
+
     })
 
+    dynamicBackgroundCard()
+
+
+    // let boxes =   $('.gameBox')
+    // boxes
+    //     .transition({
+    //
+    //         animation : 'jiggle',
+    //         duration  : 800,
+    //         interval  : 200
+    //     })
+}
+
+
+function dynamicBackgroundCard() {
+
+    let gameBoxCard = document.querySelectorAll('.gameBoxCard')
+
+    gameBoxCard.forEach(gameCard=>{
+
+        let posterImage = gameCard.querySelector('.posterImage')
+
+        let fac = new FastAverageColor();
+
+        fac.getColorAsync(posterImage.src)
+            .then(function(color) {
+
+                gameCard.setAttribute("style",
+                    `background: linear-gradient(45deg, #222222,${color.hex});`)
+
+            }).catch(function(e) {
+            console.log(e);
+        });
+    })
 }
 
 function selectActivePage() {

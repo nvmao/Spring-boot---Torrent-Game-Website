@@ -9,7 +9,7 @@ function connectToChat(userName) {
         console.log('connected to: '+frame)
         stompClient.subscribe('/topic/messages/' + userName,function (response) {
             let  data = JSON.parse(response.body)
-            sendReceiveMessage(data.fromLogin,data.message)
+            sendReceiveMessage(data.fromUser,data.content)
         })
     })
 }
@@ -18,29 +18,38 @@ $.get(url+'/socket/loginUser',(response)=>{
         loginUser = response
         connectToChat(loginUser.userName)
 })
+fetchAllUsers()
 
-function sendMsgSocket(text,to) {
-    stompClient.send('/app/chat/'+to,{},JSON.stringify({
-        fromLogin: loginUser.userName,
-        message:text
+
+function sendMsgSocket(text,toUser) {
+    stompClient.send('/app/chat/'+toUser.userName,{},JSON.stringify({
+        content:text,
+        createdAt:new Date().toISOString(),
+        fromUser:loginUser,
+        toUser:toUser
     }))
 }
 
-function  sendReceiveMessage(from,message) {
+function  sendReceiveMessage(fromUser,message) {
 
-    let chatList = document.getElementById("chatList_"+from)
+    let chatBox = document.getElementById('boxChat_'+fromUser.userName)
+    if(chatBox === null){
+        document.getElementById('friend_'+fromUser.userName).click()
+    }
 
-    let sendMessageHtml = `<div class="box-chat-response">
-                <div class="ui comments">
-                    <div class="comment">
-                        <div class="content">
+    let chatList = document.getElementById("chatList_"+fromUser.userName)
+
+    let receiveMessageHtml = `<div class="box-chat-response" style="margin-left: 2px">
+                <div class="ui comments" style="padding: 0">
+                    <div class="comment" style="padding: 0">
+                        <div class="content" style="width: auto">
                             <a class="ui image avatar">
-                                <img src="/uploads/img/cat.jpg">
+                                <img src="${fromUser.avatar}">
                             </a>
                             <div class="metadata">
-                                <span class="date">2 days ago</span>
+                                <span class="date">${timeSince(new Date())} ago</span>
                             </div>
-                            <div class="text" style="background-color: grey;border-radius: 25px;padding: 8px">
+                            <div class="text" style="background-color: grey;border-radius: 25px;padding: 8px;width: auto">
                                 ${message}
                             </div>
 
@@ -49,24 +58,27 @@ function  sendReceiveMessage(from,message) {
                 </div>
             </div>`
 
-    chatList.insertAdjacentHTML('beforeend',sendMessageHtml)
+    chatList.insertAdjacentHTML('beforeend',receiveMessageHtml)
     scrollToBottom(chatList)
 }
 
 function sendMessage(to) {
 
-    let messageInput = document.getElementById("text_"+to)
-    let chatList = document.getElementById("chatList_"+to)
-    let message = messageInput.value
-    messageInput.value = ''
+    $.get(url+'/socket/users/'+to,(response)=>{
+        let toUser = response
 
-    sendMsgSocket(message,to)
+        let messageInput = document.getElementById("text_"+to)
+        let chatList = document.getElementById("chatList_"+to)
+        let message = messageInput.value
+        messageInput.value = ''
 
-    let sendMessageHtml = `<div class="box-chat-send">
+        sendMsgSocket(message,toUser)
+
+        let sendMessageHtml = `<div class="box-chat-send">
                 <div class="ui grid">
                     <div class="four wide column">
                     </div>
-                    <div class="twelve wide column">
+                    <div class="twelve wide column" style="padding-bottom: 2px;" >
                         <div class="ui comments">
                             <div class="comment">
                                 <div class="content">
@@ -75,11 +87,11 @@ function sendMessage(to) {
                                         </div>
                                         <div class="eight wide column">
                                             <div class="metadata">
-                                                <span class="date">1 days ago</span>
+                                                <span class="date">${timeSince(new Date())} ago</span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="text" style="background-color: deepskyblue;border-radius: 25px;padding: 8px">
+                                    <div class="text" style="background-color: deepskyblue;border-radius: 25px;padding: 8px;">
                                         ${message}
                                     </div>
 
@@ -90,91 +102,183 @@ function sendMessage(to) {
                     </div>
                 </div>
             </div>`
-    chatList.insertAdjacentHTML('beforeend',sendMessageHtml)
+        chatList.insertAdjacentHTML('beforeend',sendMessageHtml)
 
-    scrollToBottom(chatList)
+        scrollToBottom(chatList)
 
-}
-
-
-function fetchAllUsers() {
-
-    $.get(url+'socket/fetchAllUsers',(response)=>{
-
-        let users = response
-        let usersTemplateHtml=''
-        let xPos = 5;
-        users.forEach((user)=>{
-            if(user.id != loginUser.id){
-                usersTemplateHtml = usersTemplateHtml +`
-                        <div class="item" onclick="openChatBox('${user.userName}','${user.avatar}',${xPos})" >
-                            <img class="ui avatar image" src="${user.avatar}" style="margin-right: 0">
-                            <div class="content" style="margin-left: 0;margin-right: 2rem">
-                                <div class="header">${user.userName}</div>
-                                ${user.status ? '<i class="ui dot mini green circle icon"></i>':''}
-                                    
-                            </div>
-                        </div>`
-                xPos+=20;
-            }
-        })
-
-        $('#friendList').html(usersTemplateHtml)
-        $('friendHolder').dropdown()
     })
 
 }
 
-function openChatBox(userName,avatar,xPos) {
+function renderChatHistory(from,to) {
 
-    closeChatBox(userName)
+    let chatList = document.getElementById("chatList_"+to)
 
-    let boxChat = `<div id="boxChat_${userName}" class="box-chat"  style="right: ${xPos}%">
+    $.get(url+'/chat-messages/'+from+'/'+to,(data)=>{
 
-        <div class="ui black inverted segment box-chat-header" style="padding: 10px">
+        data.forEach(message=>{
+            if(message.fromUser.userName === from){
+                let sendMessageHtml = `<div class="box-chat-send">
+                <div class="ui grid">
+                    <div class="four wide column">
+                    </div>
+                    <div class="twelve wide column" style="padding-bottom: 2px;" >
+                        <div class="ui comments">
+                            <div class="comment">
+                                <div class="content">
+                                    <div class="ui grid">
+                                        <div class="eight wide column">
+                                        </div>
+                                        <div class="eight wide column">
+                                            <div class="metadata">
+                                                <span class="date">${timeSince(Date.parse(message.createdAt))} ago</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text" style="background-color: deepskyblue;border-radius: 25px;padding: 8px;">
+                                        ${message.content}
+                                    </div>
 
-            <div class="box-chat-exit-btn " onclick="closeChatBox('${userName}')">
-                <i class="large close icon"></i>
-            </div>
+                                </div>
+                            </div>
+                        </div>
 
-            <div class="ui horizontal list">
-                <div class="item">
-                    <img class="ui avatar image" src="${avatar}">
-                    <div class="content">
-                        <div class="ui small header" style="color:white">Chat with ${userName}</div>
                     </div>
                 </div>
-            </div>
+            </div>`
+                chatList.insertAdjacentHTML('beforeend',sendMessageHtml)
+                scrollToBottom(chatList)
+            }
+            else{
+                let receiveMessageHtml = `<div class="box-chat-response" style="margin-left: 2px">
+                <div class="ui comments" style="padding: 0">
+                    <div class="comment" style="padding: 0">
+                        <div class="content" style="width: auto">
+                            <a class="ui image avatar">
+                                <img src="${message.fromUser.avatar}">
+                            </a>
+                            <div class="metadata">
+                                <span class="date">${timeSince(Date.parse(message.createdAt))} ago</span>
+                            </div>
+                            <div class="text" style="background-color: grey;border-radius: 25px;padding: 8px;width: auto">
+                                ${message.content}
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>`
+
+                chatList.insertAdjacentHTML('beforeend',receiveMessageHtml)
+                scrollToBottom(chatList)
+
+            }
+        })
+
+    })
 
 
+}
+
+function fetchCountUnreadChat(user) {
+    return new Promise(resolve => {
+        $.get(url+`/chat-messages/countUnread/${user.userName}/${loginUser.userName}`,(response)=>{
+            resolve(response)
+        })
+    })
+
+}
+
+async function addAddBoxClick(user,usersTemplateHtml,friendList){
+    let countUnread = await fetchCountUnreadChat(user)
+    usersTemplateHtml = `
+                        <div id="friend_${user.userName}" class="item" onclick="openChatBox('${user.userName}','${user.avatar}',${50})" >
+                                ${countUnread != 0 ? `<div class=" mini circular left ui teal label">${countUnread}</div>`:''}
+
+                            <img class="ui avatar image" src="${user.avatar}" style="margin-right: 0">
+                            <div class="content" style="margin-left: 0;margin-right: 2rem">
+                                <div class="header">${user.userName}</div>
+                                ${user.status ? '<div style="color: green">online</div>':'<div style="color: red">offline</div>'}
+                                    
+                            </div>
+                        </div>`
+    friendList.insertAdjacentHTML('beforeend',usersTemplateHtml)
+    $('friendHolder').dropdown()
+}
+
+async function fetchAllUsers() {
+
+    $.get(url+'socket/fetchAllUsers',async function(response){
+
+        let users = response
+        let usersTemplateHtml=''
+        let friendList = document.getElementById("friendList")
+        friendList.innerHTML=''
+
+        users.forEach((user)=>{
+            if(user.id != loginUser.id){
+                addAddBoxClick(user,usersTemplateHtml,friendList)
+            }
+        })
+
+    })
+
+}
+
+async function openChatBox(userName,avatar,xPos) {
+
+    let boxChat = document.getElementById('boxChat_'+userName)
+    if(boxChat !== null){
+        console.log('wait')
+        await closeChatBox(userName)
+    }
+    boxChat = `<div id="boxChat_${userName}" class="ui raised box-chat"  style="right: ${xPos}px">
+
+    <div class="ui black inverted segment box-chat-header" style="padding: 10px">
+
+        <div class="box-chat-exit-btn " onclick="closeChatBox('${userName}')">
+            <i class="large close icon"></i>
         </div>
 
-        <div id="chatList_${userName}" class="ui segment box-chat-content" style="padding: 10px">
-        
-            <div class="box-chat-response">
-               
-            </div>
-            <div class="box-chat-send">
-
-            </div>
-        </div>
-
-        <div  class="ui inverted segment box-chat-bottom" style="padding: 10px">
-            <div class="ui search">
-                <div class="ui icon send">
-                    <input id="text_${userName}" class="prompt" type="text" placeholder="text..." style="height: 40px;padding: 10px;">
-                    <i id="sendBtn_${userName}" onclick="sendMessage('${userName}')" class="large send icon"></i>
+        <div class="ui horizontal list">
+            <div class="item">
+                <img class="ui avatar image" src="${avatar}">
+                <div class="content">
+                    <div class="ui small header" style="color:white">Chat with ${userName}</div>
                 </div>
             </div>
         </div>
 
-    </div>`
+
+    </div>
+
+    <div id="chatList_${userName}" class="ui segment box-chat-content" style="padding: 10px">
+    
+        <div class="box-chat-response">
+           
+        </div>
+        <div class="box-chat-send">
+
+        </div>
+    </div>
+
+    <div  class="ui inverted segment box-chat-bottom" style="padding: 10px">
+        <div class="ui search">
+            <div class="ui icon send">
+                <input autofocus id="text_${userName}" class="prompt" type="text" placeholder="text..." style="height: 40px;padding: 10px;">
+                <i id="sendBtn_${userName}" onclick="sendMessage('${userName}')" class="large send icon"></i>
+            </div>
+        </div>
+    </div>
+
+</div>`
 
     let chatContainer = document.getElementById("chat")
 
     chatContainer.insertAdjacentHTML('beforeend',boxChat)
 
     let input = document.getElementById("text_"+userName);
+    input.focus()
 
     input.addEventListener("keyup", function(event) {
         if (event.keyCode === 13) {
@@ -184,8 +288,10 @@ function openChatBox(userName,avatar,xPos) {
         }
     });
 
+    renderChatHistory(loginUser.userName,userName)
+    rePositionChatBox()
 
-    //render chat from database
+
 }
 
 function scrollToBottom(chatList) {
@@ -194,9 +300,42 @@ function scrollToBottom(chatList) {
 
 function closeChatBox(userName) {
     let boxChat = $(`#boxChat_${userName}`)
+    return new Promise(resolve => {
+        boxChat.transition('fly right',function () {
+            boxChat.remove()
+            rePositionChatBox()
+            resolve()
+        })
+    })
+}
 
-    boxChat.transition('fly right',function () {
-        boxChat.remove()
+function timeSince(timeStamp) {
+    var now = new Date(),
+        secondsPast = (now.getTime() - timeStamp) / 1000;
+    if (secondsPast < 60) {
+        return parseInt(secondsPast) + 's';
+    }
+    if (secondsPast < 3600) {
+        return parseInt(secondsPast / 60) + 'm';
+    }
+    if (secondsPast <= 86400) {
+        return parseInt(secondsPast / 3600) + 'h';
+    }
+    if (secondsPast > 86400) {
+        day = timeStamp.getDate();
+        month = timeStamp.toDateString().match(/ [a-zA-Z]*/)[0].replace(" ", "");
+        year = timeStamp.getFullYear() == now.getFullYear() ? "" : " " + timeStamp.getFullYear();
+        return day + " " + month + year;
+    }
+}
+
+function rePositionChatBox() {
+    let chatBoxes = document.querySelectorAll('.box-chat')
+
+    let xPos = 50;
+    chatBoxes.forEach(chatBox=>{
+        chatBox.setAttribute("style", "right:"+xPos+"px;")
+        xPos+=320;
     })
 
 }
