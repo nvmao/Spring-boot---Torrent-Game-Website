@@ -44,10 +44,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/","/users/signup").permitAll()
-                .antMatchers("/users","/users/**","/games/**/comment","/games/**/comment/reply").hasAnyRole("ADMIN","USER")
+                .antMatchers("/users","/users/**",
+                        "/games/**/comment",
+                        "/games/**/comment/reply").hasAnyRole("ADMIN","USER")
                 .antMatchers("/games/add","/games/**/edit","/photos/add","/uploads/**").hasRole("ADMIN");
-
-
 
     }
 

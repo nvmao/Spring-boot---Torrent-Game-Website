@@ -17,7 +17,7 @@ html ,body{
 #wrapper {
     min-height: 100%;
     position: relative;
-    padding-bottom: 10rem;
+    padding-bottom: 15rem;
 }
 
 body{
@@ -188,7 +188,7 @@ footer{
 body {
     background: linear-gradient(48deg, #000000, #2b3940, #2b3940);
     /*background: linear-gradient(48deg, #ffffff, #000000, #2b3940, #000000);*/
-    background-size: 800% 800%;
+    background-size: 2000% 2000%;
     /*animation: gradient 120s ease-in-out infinite;*/
 }
 
@@ -222,4 +222,21 @@ body {
     .parallax {
         background-attachment: scroll;
     }
+}
+
+.game-list.extra--content{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    height: 200px;
+    background-color: red;
+}
+
+.emoji-container{
+    height: 250px;
+    width: 100%;
+    margin: 2px;
+    padding: 2px;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }

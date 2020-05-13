@@ -63,16 +63,22 @@
                     </div>
                 </div>
 
-                <div onclick="fetchAllUsers()" id="friendHolder" class="ui dropdown item " >
+                <a onclick="fetchAllUsers()" id="friendHolder" class="item " >
                     <i class="ui users icon"></i>
                     <span>Friends</span>
-                    <div id="friendList" class="ui  middle aligned animated list menu">
-                        <div class="item">
-                            heelo
-                        </div>
+
+
+<%--                    <div id="friendList" class="ui  middle aligned animated list menu">--%>
+                </a>
+
+                <div id="friend-popup" class="ui popup bottom hidden">
+<%--                    <h4 class="ui tiny blue header">Everybody is friend</h4>--%>
+                    <div class="emoji-container" style="width: 200px" id="friendList">
+
 
                     </div>
                 </div>
+
             </c:if>
 
             <c:if test="${user == null}">
@@ -95,7 +101,13 @@
 
 <div id="chat">
 
+    <form:form enctype="multipart/form-data" method="post" name="form-info" id="form-info"  >
+
+    </form:form>
+
+
 </div>
+
 
 
 
@@ -103,6 +115,12 @@
 
 <script src="/js/myChat.js"></script>
 <script>
+
+    $('#friendHolder')
+        .popup({
+            popup : $('#friend-popup'),
+            on    : 'click'
+        })
 
 
     $('.ui.sticky')

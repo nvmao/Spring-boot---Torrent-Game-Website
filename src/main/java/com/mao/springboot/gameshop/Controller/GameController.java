@@ -8,8 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -72,7 +70,7 @@ public class GameController {
             game.setPosterPhoto(posterPhotoPath);
             game.setHoverPhoto(hoverPhotoPath);
 
-            gameService.add(game);
+            gameService.save(game);
             
 
         }catch (Exception e){
@@ -125,7 +123,7 @@ public class GameController {
         Publisher publisher = publisherService.find(publisherId);
         game.setPublisher(publisher);
 
-        gameService.add(game);
+        gameService.save(game);
 
         return "redirect:/games/"+game.getId()+"/edit";
     }

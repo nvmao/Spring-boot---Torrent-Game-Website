@@ -39,6 +39,9 @@ public class Game {
 
     private String description;
 
+    @Column(name = "download_count")
+    private int downloadCount;
+
     @ManyToOne
     @JoinColumn(name = "publisher_id")
     private Publisher publisher;
@@ -48,6 +51,10 @@ public class Game {
 
     @OneToMany(mappedBy = "game")
     private List<Comment> comments;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "game")
+    private List<Love> loves;
 
 
     public int getCommentCount(){
@@ -60,6 +67,27 @@ public class Game {
     }
 
     public Game() {
+    }
+
+    public List<Love> getLoves() {
+        return loves;
+    }
+
+    public void setLoves(List<Love> loves) {
+        this.loves = loves;
+    }
+
+    public int getLoveCount() {
+        return  loves.size();
+    }
+
+
+    public int getDownloadCount() {
+        return downloadCount;
+    }
+
+    public void setDownloadCount(int downloadCount) {
+        this.downloadCount = downloadCount;
     }
 
     public int getId() {

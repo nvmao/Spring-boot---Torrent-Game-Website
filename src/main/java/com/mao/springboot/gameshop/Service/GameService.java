@@ -29,7 +29,7 @@ public class GameService {
     }
 
     @Transactional
-    public void add(Game game){
+    public void save(Game game){
         gameDao.add(game);
     }
 
@@ -43,4 +43,37 @@ public class GameService {
         return gameDao.countGames();
     }
 
+    @Transactional
+    public  List<Game> findAllSortedByNew(int page,int order){
+        return gameDao.findAllSortedByNew(page,order);
+    }
+
+    public  List<Game> findAllSortedByLove(int page,int order) {
+        return gameDao.findAllSortedByLove(page,order);
+    }
+
+    public  List<Game> findAllSortedByDownload(int page,int order) {
+        return gameDao.findAllSortedByDownload(page,order);
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

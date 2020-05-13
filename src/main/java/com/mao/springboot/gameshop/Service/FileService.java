@@ -24,4 +24,12 @@ public class FileService {
         return path.toString();
     }
 
+    public String saveMessageImage(MultipartFile file,String pathStr) throws Exception{
+        String filePath = servletContext.getRealPath("/") + pathStr;
+        byte[] bytes = file.getBytes();
+        Path path = Paths.get(filePath);
+        Files.write(path,bytes);
+        return path.toString();
+    }
+
 }

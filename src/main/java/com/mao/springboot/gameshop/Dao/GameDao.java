@@ -60,6 +60,96 @@ public class GameDao {
         return games;
     }
 
+    public  List<Game> findAllSortedByNew(int page,int order){
+
+        int itemPerPage = 28;
+        int offset = (page - 1) * itemPerPage;
+        Session session = entityManager.unwrap(Session.class);
+
+        String queryString;
+        if(order == 1){
+          queryString  = "from Game order by id desc ";
+        }
+        else{
+            queryString  = "from Game order by id ";
+        }
+
+        Query query = session.createQuery(queryString);
+
+        query.setFirstResult(offset);
+        query.setMaxResults(itemPerPage);
+
+        List<Game> games = query.getResultList();
+
+        return games;
+    }
+
+    public  List<Game> findAllSortedByLove(int page,int order){
+
+        int itemPerPage = 28;
+        int offset = (page - 1) * itemPerPage;
+        Session session = entityManager.unwrap(Session.class);
+
+        String queryString  = "from Game order by loves.size desc";
+
+        if(order==-1){
+            queryString  = "from Game order by loves.size";
+        }
+
+        Query query = session.createQuery(queryString);
+
+        query.setFirstResult(offset);
+        query.setMaxResults(itemPerPage);
+
+        List<Game> games = query.getResultList();
+
+        return games;
+    }
+
+    public  List<Game> findAllSortedByDownload(int page,int order){
+
+        int itemPerPage = 28;
+        int offset = (page - 1) * itemPerPage;
+        Session session = entityManager.unwrap(Session.class);
+
+        String queryString  = "from Game order by downloadCount desc";
+
+        if(order==-1){
+            queryString  = "from Game order by downloadCount";
+        }
+
+        Query query = session.createQuery(queryString);
+
+        query.setFirstResult(offset);
+        query.setMaxResults(itemPerPage);
+
+        List<Game> games = query.getResultList();
+
+        return games;
+    }
+
+    public  List<Game> findAllSortedByComment(int page,int order){
+
+        int itemPerPage = 28;
+        int offset = (page - 1) * itemPerPage;
+        Session session = entityManager.unwrap(Session.class);
+
+        String queryString  = "from Game order by downloadCount desc";
+
+        if(order==-1){
+            queryString  = "from Game order by downloadCount desc";
+        }
+
+        Query query = session.createQuery(queryString);
+
+        query.setFirstResult(offset);
+        query.setMaxResults(itemPerPage);
+
+        List<Game> games = query.getResultList();
+
+        return games;
+    }
+
     public Long countGames(){
         Session session = entityManager.unwrap(Session.class);
 

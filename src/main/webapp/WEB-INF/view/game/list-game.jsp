@@ -10,12 +10,14 @@
     <title>Games</title>
     <link rel="stylesheet" type="text/css" href="/css/semantic.css">
     <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="icon" href="/uploads/img/face.png" >
 
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="/js/sockjs.js"></script>
+    <script src="/js/stomp.js"></script>
     <script src="/js/jquery.js"></script>
     <script src="/js/semantic.js"></script>
+
+
 
     <style>
 
@@ -39,55 +41,36 @@
                 <div class="row">
                     <div class="three wide column">
 
-                        <div class="ui animated basic tiny button" tabindex="0">
-                            <div onclick="toggleSidebar()" class="hidden content">
-                                <i class=" th  icon"></i></div>
-                            <div class="visible content">
-                                <i class=" th  icon"></i>
-                            </div>
+                        <div class="ui purple basic tiny button grid-button" tabindex="0" style="margin-top: 15px;box-shadow: 0px 0px 0px 1px #999999 inset !important;color: #999999 !important;">
+                            <i class=" th  icon"></i>
                         </div>
-                        <div class="ui animated basic tiny button" tabindex="0">
-                            <div onclick="toggleSidebar()" class="hidden content">
-                                <i class=" th  list icon"></i>
-                            </div>
-                            <div class="visible content">
-                                <i class=" th  list icon"></i>
 
-                            </div>
+                        <div class="ui pink basic tiny button list-button" tabindex="0" style="margin-top: 15px;box-shadow: 0px 0px 0px 1px #999999 inset !important;color: #999999 !important;">
+                                <i class=" th  list icon"></i>
                         </div>
-                        <div class="ui animated basic tiny button" tabindex="0">
-                            <div onclick="toggleSidebar()" class="hidden content"><i class="sort amount down icon"></i></div>
-                            <div class="visible content">
-                                <i class="sort amount down icon"></i>
-                            </div>
-                        </div>
+
                     </div>
                     <div class="ten wide column">
-                        <div class="ui mini borderless transparent  segment">
-                            <div class="ui mini  secondary pointing four item menu">
-                                <a class=" item ">
-                                    Everything
-                                </a>
-                                <a class="active item ">
+                        <div class="ui mini borderless segment" style="background: transparent;">
+                            <div class="ui mini yellow secondary  pointing four item menu" style="background: transparent;">
+                                <a class="active sort-menu item " style="color: #999999;border-bottom: 1px solid #999999">
                                     New
                                 </a>
-                                <a class="item">
+                                <a class="sort-menu item " style="color: #999999;border-bottom: 1px solid #999999">
+                                    Most commented
+                                </a>
+                                <a class="sort-menu item" style="color: #999999;border-bottom: 1px solid #999999">
                                     Most downloaded
                                 </a>
-                                <a class="item">
-                                    Most like
+                                <a class="sort-menu item" style="color: #999999;border-bottom: 1px solid #999999">
+                                    Most loved
                                 </a>
                             </div>
                         </div>
                     </div>
                     <div class="three wide column">
-                        <div class="ui animated basic secondary big button" tabindex="0">
-                            <div onclick="toggleSidebar()" class="hidden content">
-                                <i class="tasks icon"></i>
-                            </div>
-                            <div class="visible content">
-                                <i onclick="toggleSidebar()" class=" tasks icon"></i>
-                            </div>
+                        <div class="ui olive basic tiny button order-button" tabindex="0" style="margin-top: 15px" >
+                           <i class="sort amount down icon"></i>
                         </div>
                     </div>
                 </div>
@@ -131,6 +114,7 @@
 </div>
 
 <script src="/js/game.js"></script>
+<script src="/js/sortGame.js"></script>
 <script src="/js/fast-avg-color.js"></script>
 <script src="/js/listGameDynamicBackground.js"></script>
 

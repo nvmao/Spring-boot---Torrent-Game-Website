@@ -10,8 +10,8 @@
     <link rel="stylesheet" type="text/css" href="/css/semantic.css">
     <link rel="stylesheet" type="text/css" href="/css/main.css">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="/js/sockjs.js"></script>
+    <script src="/js/stomp.js"></script>
     <script src="/js/jquery.js"></script>
     <script src="/js/semantic.js"></script>
 
@@ -23,6 +23,7 @@
 <div class="parallax" style="background-image: url('${game.posterPhoto}');"></div>
 
 <div id="wrapper">
+
     <div class="ui hidden section divider"></div>
     <div class="ui container">
 
@@ -80,29 +81,30 @@
                         </div>
                     </h1>
                     <div class="ui hidden section divider"></div>
-                    <div class="ui raised card" style="width: 400px;">
+                    <div class="ui raised card" style="width: auto;background: transparent">
                         <div class="content">
                             <div class=" ui huge header">
                                 Download
                             </div>
                             <div class="description">
                                 <p>
-                                <div class="ui tiny secondary basic button">
-                                    direct
-                                </div>
-                                <div class="ui tiny secondary basic button">
+
+                                <a href="${game.downloadLink}" target="_blank" rel="noopener noreferrer" onclick="downloadGame(${game.id})"  class="ui large green basic button" style="margin-right: 10px">
                                     torrent
-                                </div>
-                                <div class="ui tiny secondary basic button">
+                                </a>
+                                <a class="ui tiny yellow basic button disabled"  style="margin-right: 10px">
+                                    direct
+                                </a>
+                                <a class="ui tiny blue basic button disabled" style="margin-right: 10px">
                                     drive
-                                </div>
+                                </a>
                                 </p>
 
                             </div>
                         </div>
                         <div class="extra content">
-                            <div class="left floated author">
-                                <i class=" icon download"></i> 123
+                            <div class="left floated author" id="downloadCountLabel">
+                                <i class=" icon download"></i> ${game.downloadCount}
                             </div>
                         </div>
                     </div>
@@ -272,6 +274,15 @@
 <script src="/js/fast-avg-color.js"></script>
 <script src="/js/dynamicBackground.js"></script>
 <script>
+
+    function downloadGame(gameId){
+        let req = url+'/api/games/download/'+gameId
+        console.log(req)
+        let downloadCountLabel = document.getElementById("downloadCountLabel")
+        $.get(req,function (res) {
+            downloadCountLabel.innerHTML =`<i class=" icon download"></i>`+res
+        })
+    }
 
     $('.ui.accordion')
         .accordion()

@@ -20,8 +20,8 @@ public class ChatMessageService {
     }
 
     @Transactional
-    public List<ChatMessage> getChatMessages(String from,String to){
-        return chatMessageDao.getChatMessages(from,to);
+    public List<ChatMessage> getChatMessages(String from,String to,int page){
+        return chatMessageDao.getChatMessages(from,to,page);
     }
 
     @Transactional
@@ -32,6 +32,11 @@ public class ChatMessageService {
     @Transactional
     public long countUnreadMessage(String from,String to){
         return chatMessageDao.countUnreadMessage(from,to);
+    }
+
+    @Transactional
+    public long countMessage(String from, String to){
+        return chatMessageDao.countMessage(from,to);
     }
 
 }

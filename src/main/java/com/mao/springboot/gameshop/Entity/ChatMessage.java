@@ -32,6 +32,11 @@ public class ChatMessage {
     @JoinColumn(name = "to_id")
     private User toUser;
 
+
+    public enum MessageType{
+        typing
+    }
+
     @Override
     public String toString() {
         return "ChatMessage{" +

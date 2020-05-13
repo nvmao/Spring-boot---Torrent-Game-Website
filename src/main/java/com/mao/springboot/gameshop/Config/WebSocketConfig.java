@@ -25,7 +25,7 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @EventListener
     public void onDisconnectEvent(SessionDisconnectEvent event) {
-        System.out.println("Client with username "+event.getUser()+" disconnected");
+        //System.out.println("Client with username "+event.getUser()+" disconnected");
     }
 
 }
