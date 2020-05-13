@@ -83,15 +83,15 @@ function renderHtml(games) {
                             </div>
                             <div class="extra content">
                             <span class="left floated like">
-                                <a class="ui circular label" id="like_${game.id}" onclick="loveGame('${game.id}','${game.loveCount}')" >
+                                <a class="ui mini circular label" id="like_${game.id}" onclick="loveGame('${game.id}','${game.loveCount}')" >
                                     <i class="like icon" ></i>${game.loveCount}
                                 </a>
-                                <a class="ui blue circular label">
+                                <a class="ui mini blue circular label">
                                     <i class="comment icon"></i>${game.commentCount}
                                 </a>
                             </span>
                                 <span class="right floated star">
-                               <a class="ui grey circular label">
+                               <a class="ui mini grey circular label">
                                     <i class="download icon"></i>${game.downloadCount}
                                 </a>
                             </span>
@@ -126,13 +126,13 @@ function renderHtml(games) {
                           <div class="extra content">
                             <div class="left floated">
                                 <span class="left floated like">
-                                <a class="ui circular label" id="like_${game.id}" onclick="loveGame('${game.id}','${game.loveCount}')" >
+                                <a class="ui mini circular label" id="like_${game.id}" onclick="loveGame('${game.id}','${game.loveCount}')" >
                                     <i class="like icon" ></i>${game.loveCount}
                                 </a>
-                                <a class="ui blue circular label">
+                                <a class="ui mini blue circular label">
                                     <i class="comment icon"></i>${game.commentCount}
                                 </a>
-                                <a class="ui grey circular label" >
+                                <a class="ui mini grey circular label" >
                                     <i class="download icon"></i>${game.downloadCount}
                                 </a>
                             </span>
@@ -224,3 +224,4 @@ function isLoveGame(gameId,loveCount) {
         }
     })
 }
+

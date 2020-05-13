@@ -24,7 +24,7 @@
     </style>
 
 </head>
-<body >
+<body  >
 
 <jsp:include page="../header.jsp"></jsp:include>
 
@@ -52,7 +52,7 @@
                     </div>
                     <div class="ten wide column">
                         <div class="ui mini borderless segment" style="background: transparent;">
-                            <div class="ui mini yellow secondary  pointing four item menu" style="background: transparent;">
+                            <div class="ui mini yellow secondary  pointing four item stackable menu" style="background: transparent;">
                                 <a class="active sort-menu item " style="color: #999999;border-bottom: 1px solid #999999">
                                     New
                                 </a>
@@ -85,20 +85,76 @@
             </div>
 
         </div>
-        <div>
-            <div class="ui right sidebar inverted vertical list">
-                <a class="item">
-                    1
+
+        <div id="mobile-menu" class="ui left sidebar inverted vertical menu" >
+            <a class="item">
+                <div class="ui inverted transparent icon input">
+                    <input type="text" placeholder="Search...">
+                    <i class="search icon"></i>
+                </div>
+            </a>
+            <a href="${pageContext.request.contextPath}/games" class="item"><i class="home icon"></i>Home</a>
+            <a href="${pageContext.request.contextPath}/games" class="item"> Game</a>
+
+            <c:if test="${user != null}">
+
+
+
+                <a onclick="fetchAllUsers()" id="friendHolder2" class="item" >
+                    <i class="smile icon"></i>
+                    Friends
                 </a>
-                <a class="item">
-                    2
+
+                <div id="friend-popup2" class="ui popup right center hidden" >
+                        <%--                    <h4 class="ui tiny blue header">Everybody is friend</h4>--%>
+                    <div class="emoji-container" style="width: 200px;position: static" id="friendList">
+
+
+                    </div>
+                </div>
+
+                <a  class=" item">
+                    <img class="ui avatar image" src="${user.avatar}">
+                        ${user.userName}
+                        <%--                    <i class="dropdown icon"></i>--%>
+                        <%--                    <div class="menu">--%>
+                        <%--                        <a href="${pageContext.request.contextPath}/users/profile" class="item">--%>
+                        <%--                            Profile--%>
+                        <%--                        </a>--%>
+
+                        <%--                        <c:if test="${user.authorities[0].authority=='ROLE_ADMIN'}">--%>
+                        <%--                            <a href="${pageContext.request.contextPath}/games/add" class="item">--%>
+                        <%--                                Add Game--%>
+                        <%--                            </a>--%>
+                        <%--                        </c:if>--%>
+                        <%--                        <div class="item">--%>
+
+                        <%--                            <form:form action="${pageContext.request.contextPath}/success-logout"  method="POST">--%>
+                        <%--                                <button class="fluid ui button" type="submit" >Logout</button>--%>
+                        <%--                            </form:form>--%>
+                        <%--                        </div>--%>
+                        <%--                    </div>--%>
                 </a>
-                <a class="item">
-                    3
-                </a>
-            </div>
+
+
+            </c:if>
+
+            <c:if test="${user == null}">
+                <div class="item">
+                    <a class="ui basic blue button" href="${pageContext.request.contextPath}/users/signup">
+                        <i class="add user icon"></i>Sign Up
+                    </a>
+                </div>
+                <div class="item">
+                    <a onclick="showLogin()" class="ui basic teal button ">
+                        <i class="sign-in icon"></i>Login</a>
+                    </d>
+                </div>
+            </c:if>
 
         </div>
+
+
         <div class="ui  divider"></div>
         <div class="ui center aligned container">
             <% for(int i = 0 ; i < (long)request.getAttribute("maxPage");i++){ %>
@@ -110,6 +166,8 @@
 
     </div>
 
+
+
     <jsp:include page="../footer.jsp"></jsp:include>
 </div>
 
@@ -117,6 +175,8 @@
 <script src="/js/sortGame.js"></script>
 <script src="/js/fast-avg-color.js"></script>
 <script src="/js/listGameDynamicBackground.js"></script>
+
+
 
 </body>
 

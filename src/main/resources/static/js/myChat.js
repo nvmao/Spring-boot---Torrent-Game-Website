@@ -69,7 +69,7 @@ function  sendReceiveMessage(fromUser,message) {
                                 <img src="${fromUser.avatar}">
                             </a>
                             <div class="metadata">
-                                <span class="date">${timeSince(new Date())} ago</span>
+                                <span class="date">${timeSince(new Date())}</span>
                             </div>
                             <div class="text" style="background-color: grey;border-radius: 25px;padding: 8px;width: auto">
                                 ${message}
@@ -130,7 +130,7 @@ function sendMessage(to) {
                                         </div>
                                         <div class="eight wide column">
                                             <div class="metadata">
-                                                <span class="date">${timeSince(new Date())} ago</span>
+                                                <span class="date">${timeSince(new Date())}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -175,7 +175,7 @@ function renderChatHistory(from,to,page,autoScroll) {
                                         </div>
                                         <div class="eight wide column">
                                             <div class="metadata">
-                                                <span class="date">${timeSince(Date.parse(message.createdAt))} ago</span>
+                                                <span class="date">${timeSince(Date.parse(message.createdAt))}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -204,7 +204,7 @@ function renderChatHistory(from,to,page,autoScroll) {
                                 <img src="${message.fromUser.avatar}">
                             </a>
                             <div class="metadata">
-                                <span class="date">${timeSince(Date.parse(message.createdAt))} ago</span>
+                                <span class="date">${timeSince(Date.parse(message.createdAt))}</span>
                             </div>
                             <div class="text" style="background-color: grey;border-radius: 25px;padding: 8px;width: auto">
                                 ${message.content}
@@ -518,24 +518,48 @@ function closeChatBox(userName) {
     })
 }
 
-function timeSince(timeStamp) {
-    var now = new Date(),
-        secondsPast = (now.getTime() - timeStamp) / 1000;
-    if (secondsPast < 60) {
-        return parseInt(secondsPast) + 's';
+// function timeSince(timeStamp) {
+//     var now = new Date(),
+//         secondsPast = (now.getTime() - timeStamp) / 1000;
+//     if (secondsPast < 60) {
+//         return parseInt(secondsPast) + 's ago';
+//     }
+//     if (secondsPast < 3600) {
+//         return parseInt(secondsPast / 60) + 'm ago';
+//     }
+//     if (secondsPast <= 86400) {
+//         return parseInt(secondsPast / 3600) + 'h ago';
+//     }
+//     if (secondsPast > 86400) {
+//         return timeConverter(timeStamp)
+//     }
+// }
+function timeSince(date) {
+
+    var seconds = Math.floor((new Date() - date) / 1000);
+
+    var interval = Math.floor(seconds / 31536000);
+
+    if (interval > 1) {
+        return interval + " years";
     }
-    if (secondsPast < 3600) {
-        return parseInt(secondsPast / 60) + 'm';
+    interval = Math.floor(seconds / 2592000);
+    if (interval > 1) {
+        return interval + " months";
     }
-    if (secondsPast <= 86400) {
-        return parseInt(secondsPast / 3600) + 'h';
+    interval = Math.floor(seconds / 86400);
+    if (interval > 1) {
+        return interval + " days";
     }
-    if (secondsPast > 86400) {
-        day = timeStamp.getDate();
-        month = timeStamp.toDateString().match(/ [a-zA-Z]*/)[0].replace(" ", "");
-        year = timeStamp.getFullYear() == now.getFullYear() ? "" : " " + timeStamp.getFullYear();
-        return day + " " + month + year;
+    interval = Math.floor(seconds / 3600);
+    if (interval > 1) {
+        return interval + " hours";
     }
+    interval = Math.floor(seconds / 60);
+    if (interval > 1) {
+        return interval + " minutes";
+    }
+    return Math.floor(seconds) + " seconds";
 }
 
  function rePositionChatBox() {

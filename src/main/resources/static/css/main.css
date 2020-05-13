@@ -85,6 +85,20 @@ footer{
     padding-bottom: 0.2em;
 }
 
+.parent>.child
+{
+    visibility: visible;
+}
+
+.parent
+{
+    visibility: hidden;
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+}
+
 
 .box-chat{
     position: fixed;
@@ -92,7 +106,7 @@ footer{
     right: 100px;
     width: 300px;
 
-    height: 50%;
+    height: 380px;
     z-index: 300;
 }
 .box-chat-header{
@@ -186,10 +200,15 @@ footer{
 }
 
 body {
-    background: linear-gradient(48deg, #000000, #2b3940, #2b3940);
+    background: linear-gradient(48deg, #000000, #2b3940, #2b3940) !important;
     /*background: linear-gradient(48deg, #ffffff, #000000, #2b3940, #000000);*/
-    background-size: 2000% 2000%;
+    background-size: 2000% 2000% !important;
     /*animation: gradient 120s ease-in-out infinite;*/
+}
+
+body.pushable{
+    background: linear-gradient(48deg, #000000, #2b3940, #2b3940) !important;
+    background-size: 2000% 2000% !important;
 }
 
 @keyframes gradient {
