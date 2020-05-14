@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class CommentService {
@@ -22,5 +23,9 @@ public class CommentService {
     @Transactional
     public Comment find(int id){
         return commentDao.find(id);
+    }
+
+    public List<Comment> findComments(int gameID){
+        return commentDao.findComments(gameID);
     }
 }

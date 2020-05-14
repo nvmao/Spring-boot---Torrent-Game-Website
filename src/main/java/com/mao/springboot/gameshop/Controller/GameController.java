@@ -154,6 +154,8 @@ public class GameController {
         reply.setUser(LoginUser.getLoginUser());
         reply.setCreatedAt(new Timestamp(System.currentTimeMillis()));
 
+
+
         replyService.add(reply);
 
         return "redirect:/games/"+gameId;

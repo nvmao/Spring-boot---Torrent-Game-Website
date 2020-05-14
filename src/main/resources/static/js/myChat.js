@@ -303,6 +303,7 @@ async function fetchAllUsers() {
         let users = response
         let usersTemplateHtml=''
         let friendList = document.getElementById("friendList")
+        if(friendList === null) return
         friendList.innerHTML=''
 
         users.forEach((user)=>{

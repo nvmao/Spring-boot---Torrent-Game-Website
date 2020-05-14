@@ -73,7 +73,9 @@
                     </div>
                 </div>
                 <div class="five wide column">
-                    <a class="ui black button" href="${pageContext.request.contextPath}/games/${game.id}/edit" >Edit</a>
+                    <c:if test="${user.userName.equals('admin')}">
+                        <a class="ui black button" href="${pageContext.request.contextPath}/games/${game.id}/edit" >Edit</a>
+                    </c:if>
                     <div class="ui hidden section divider"></div>
                     <h1 class="ui big header">
                         <div class="ui center aligned container">
@@ -193,6 +195,25 @@
                     <div class="ui comments">
                         <h3 class="ui dividing header">Comments</h3>
 
+                        <form:form class="ui form" id="comment-form" onsubmit="return false" action="${pageContext.request.contextPath}/games/${game.id}/comment" method="POST">
+                            <input id="game-id" value="${game.id}" hidden>
+                            <input id="user-id" value="${user.id}" hidden>
+
+                            <div class="inline fields">
+                                <div class="field">
+                                    <textarea id="comment-input" name="commentContent" rows="3" cols="55"></textarea>
+                                </div>
+                                <div class="field">
+                                    <button onclick="comment()" class="ui blue small labeled submit icon button">
+                                        <i class="icon edit"></i> Add Comment
+                                    </button>
+                                </div>
+
+                            </div>
+
+                        </form:form>
+                        <div id="comment-holder" class="ui divider  hidden"></div>
+
                         <c:forEach var="comment" items="${game.comments}">
                             <div class="comment">
                                 <a class="avatar">
@@ -214,6 +235,18 @@
                                             </div>
                                             <div class="content">
                                                 <div class="comments">
+                                                    <form:form id="reply-form_${comment.id}" onsubmit="return false" method="POST">
+                                                        <div class="field">
+                                                            <textarea id="reply-input_${comment.id}" name="replyContent" rows="4" cols="80"></textarea>
+                                                        </div>
+                                                        <input type="hidden" value="${comment.id}" name="commentId">
+                                                        <button onclick="reply('${comment.id}')" class="ui blue labeled submit icon button">
+                                                            <i class="icon edit"></i> Add Reply
+                                                        </button>
+                                                    </form:form>
+
+                                                    <h3 class="ui dividing header" id="reply-holder_${comment.id}"></h3>
+
                                                     <c:forEach var="reply" items="${comment.replies}">
                                                         <div class="comment">
                                                             <a class="avatar">
@@ -230,16 +263,7 @@
                                                             </div>
                                                         </div>
                                                     </c:forEach>
-                                                    <h3 class="ui dividing header"></h3>
-                                                    <form:form action="${pageContext.request.contextPath}/games/${game.id}/comment/reply" method="POST">
-                                                        <div class="field">
-                                                            <textarea name="replyContent" rows="4" cols="80"></textarea>
-                                                        </div>
-                                                        <input type="hidden" value="${comment.id}" name="commentId">
-                                                        <button class="ui blue labeled submit icon button">
-                                                            <i class="icon edit"></i> Add Reply
-                                                        </button>
-                                                    </form:form>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -250,15 +274,7 @@
 
                         </c:forEach>
 
-                        <h3 class="ui dividing header"></h3>
-                        <form:form action="${pageContext.request.contextPath}/games/${game.id}/comment" method="POST">
-                            <div class="field">
-                                <textarea name="commentContent" rows="4" cols="80"></textarea>
-                            </div>
-                            <button class="ui blue labeled submit icon button">
-                                <i class="icon edit"></i> Add Comment
-                            </button>
-                        </form:form>
+
                     </div>
                 </div>
             </div>
@@ -273,6 +289,7 @@
 
 <script src="/js/fast-avg-color.js"></script>
 <script src="/js/dynamicBackground.js"></script>
+<script src="/js/comment.js"></script>
 <script>
 
     function downloadGame(gameId){

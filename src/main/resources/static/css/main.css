@@ -200,9 +200,9 @@ footer{
 }
 
 body {
-    background: linear-gradient(48deg, #000000, #2b3940, #2b3940) !important;
+    background: linear-gradient(48deg, #000000, #2b3940, #2b3940) ;
     /*background: linear-gradient(48deg, #ffffff, #000000, #2b3940, #000000);*/
-    background-size: 2000% 2000% !important;
+    background-size: 2000% 2000% ;
     /*animation: gradient 120s ease-in-out infinite;*/
 }
 
@@ -228,6 +228,9 @@ body.pushable{
     /* The image used */
     /* Full height */
     height: 100%;
+
+    filter: blur(50px);
+    -webkit-filter: blur(50px);
 
     /* Create the parallax scrolling effect */
     background-attachment: fixed;

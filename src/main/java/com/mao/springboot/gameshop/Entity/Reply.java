@@ -22,8 +22,6 @@ public class Reply{
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
-
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
@@ -33,6 +31,31 @@ public class Reply{
     @JoinColumn(name = "comment_id")
     private Comment comment;
 
+    @Transient
+    private int commentId;
+
+    @Override
+    public String toString() {
+        return "Reply{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", createdAt=" + createdAt +
+                ", user=" + user +
+                ", comment=" + comment +
+                ", commentId=" + commentId +
+                '}';
+    }
+
+    public int getCommentId() {
+        if(commentId==0){
+            commentId = comment.getId();
+        }
+        return commentId;
+    }
+
+    public void setCommentId(int commentId) {
+        this.commentId = commentId;
+    }
 
     public int getId() {
         return id;

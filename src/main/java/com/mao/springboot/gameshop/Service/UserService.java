@@ -18,6 +18,10 @@ public class UserService {
     public User findUserByName(String username){
         return userDao.findUserByName(username);
     }
+    @Transactional
+    public User findUserById(int id){
+        return userDao.findUserById(id);
+    }
 
     @Transactional
     public void saveOrUpdate(User user) {

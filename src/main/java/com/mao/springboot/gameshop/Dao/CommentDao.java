@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 @Repository
 public class CommentDao {
@@ -31,4 +32,14 @@ public class CommentDao {
         return comment;
     }
 
+    public List<Comment> findComments(int gameID) {
+        Session session = entityManager.unwrap(Session.class);
+
+        Query<Comment> query = session.createQuery("from Comment c where c.game.id=:gameId ");
+        query.setParameter("gameId",gameID);
+
+        List<Comment> comments = query.getResultList();
+
+        return comments;
+    }
 }

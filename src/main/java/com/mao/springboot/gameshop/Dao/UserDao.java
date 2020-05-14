@@ -56,4 +56,14 @@ public class UserDao {
     }
 
 
+    public User findUserById(int id) {
+        Session session = entityManager.unwrap(Session.class);
+
+        Query<User> query = session.createQuery("from User u where u.id=:id ");
+        query.setParameter("id",id);
+
+        User user = query.getSingleResult();
+
+        return user;
+    }
 }

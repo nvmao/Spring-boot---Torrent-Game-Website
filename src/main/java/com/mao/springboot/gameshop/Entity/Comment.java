@@ -22,7 +22,7 @@ public class Comment {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -33,6 +33,34 @@ public class Comment {
 
     @OneToMany(mappedBy = "comment")
     private List<Reply> replies;
+
+    @Transient
+    private int userId;
+
+    @Transient
+    private int gameId;
+
+    public int getUserId(){
+        if(userId == 0){
+            userId = user.getId();
+        }
+        return userId;
+    }
+
+    public int getGameId(){
+        if(gameId == 0){
+            gameId = game.getId();
+        }
+        return gameId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public void setGameId(int gameId) {
+        this.gameId = gameId;
+    }
 
     public int getId() {
         return id;
@@ -81,4 +109,19 @@ public class Comment {
     public void setGame(Game game) {
         this.game = game;
     }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + id +
+                ", content='" + content + '\'' +
+                ", createdAt=" + createdAt +
+                ", user=" + user +
+                ", game=" + game +
+                ", replies=" + replies +
+                ", userId=" + userId +
+                ", gameId=" + gameId +
+                '}';
+    }
 }
+
