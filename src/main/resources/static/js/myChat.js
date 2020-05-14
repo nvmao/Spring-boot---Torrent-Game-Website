@@ -1,17 +1,17 @@
 
-
 let url = $('#contextPathHolder').attr('data-contextPath')
 let loginUser
-let stompClient
+let stompClientChat
 let mouseDown = false
 let isClick = false
 
+
 function connectToChat(userName) {
     let socket = new SockJS(url+'/chat')
-    stompClient = Stomp.over(socket)
-    stompClient.connect({},function (frame) {
+    stompClientChat = Stomp.over(socket)
+    stompClientChat.connect({},function (frame) {
         console.log('connected to: '+frame)
-        stompClient.subscribe('/topic/messages/' + userName,function (response) {
+        stompClientChat.subscribe('/topic/messages/' + userName,function (response) {
             let  data = JSON.parse(response.body)
 
             if(data.content == "--typing"){
@@ -32,7 +32,7 @@ fetchAllUsers()
 
 
 function sendMsgSocket(text,toUser) {
-    stompClient.send('/app/chat/'+toUser.userName,{},JSON.stringify({
+    stompClientChat.send('/app/chat/'+toUser.userName,{},JSON.stringify({
         content:text,
         createdAt:new Date().toISOString(),
         fromUser:loginUser,
@@ -40,7 +40,7 @@ function sendMsgSocket(text,toUser) {
     }))
 }
 function sendTypingSocket(toUser) {
-    stompClient.send(`/app/chat/${toUser.userName}/typing`,{},JSON.stringify({
+    stompClientChat.send(`/app/chat/${toUser.userName}/typing`,{},JSON.stringify({
         content:'--typing',
         createdAt:new Date().toISOString(),
         fromUser:loginUser,

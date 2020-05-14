@@ -190,7 +190,7 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row ">
                 <div class="twelve wide column">
                     <div class="ui comments">
                         <h3 class="ui dividing header">Comments</h3>
@@ -220,7 +220,7 @@
                                     <img src="${comment.user.avatar}">
                                 </a>
                                 <div class="content" >
-                                    <a class="author">${comment.user.userName}</a>
+                                    <a class="author user-comment">${comment.user.userName}</a>
                                     <div class="metadata">
                                         <span class="date">${comment.createdAt}</span>
                                     </div>
@@ -253,7 +253,7 @@
                                                                 <img src="${reply.user.avatar}">
                                                             </a>
                                                             <div class="content">
-                                                                <a class="author">${reply.user.userName}</a>
+                                                                <a class="user-comment">${reply.user.userName}</a>
                                                                 <div class="metadata">
                                                                     <span class="date">${reply.createdAt}</span>
                                                                 </div>

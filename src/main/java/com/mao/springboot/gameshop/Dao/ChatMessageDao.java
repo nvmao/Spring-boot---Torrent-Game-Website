@@ -1,6 +1,6 @@
 package com.mao.springboot.gameshop.Dao;
 
-import com.mao.springboot.gameshop.Entity.ChatMessage;
+import com.mao.springboot.gameshop.Entity.Message;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -15,16 +15,16 @@ public class ChatMessageDao {
     @Autowired
     private EntityManager entityManager;
 
-    public void addMessage(ChatMessage chatMessage){
+    public void addMessage(Message message){
 
         Session session = entityManager.unwrap(Session.class);
 
-        session.saveOrUpdate(chatMessage);
+        session.saveOrUpdate(message);
 
     }
 
 
-    public List<ChatMessage> getChatMessages(String from,String to,int page){
+    public List<Message> getChatMessages(String from, String to, int page){
 
         int itemPerPage = 20;
         int offset = (page - 1) * itemPerPage;
@@ -32,7 +32,7 @@ public class ChatMessageDao {
         Session session = entityManager.unwrap(Session.class);
 
         Query query = session.createQuery(
-                "from ChatMessage c " +
+                "from Message c " +
                         "where " +
                         "(c.fromUser.userName=:fromUser and c.toUser.userName=:toUser) " +
                         "or (c.fromUser.userName=:toUser and c.toUser.userName=:fromUser) order by c.id desc ");
@@ -43,16 +43,16 @@ public class ChatMessageDao {
         query.setFirstResult(offset);
         query.setMaxResults(itemPerPage);
 
-        List<ChatMessage> chatMessages = query.getResultList();
+        List<Message> messages = query.getResultList();
 
-        return chatMessages;
+        return messages;
     }
 
     public void readAllMessages(String from, String to) {
         Session session = entityManager.unwrap(Session.class);
 
         Query query = session.createQuery(
-                "from ChatMessage c " +
+                "from Message c " +
                         "where " +
                         "((c.fromUser.userName=:fromUser and c.toUser.userName=:toUser) " +
                         "or (c.fromUser.userName=:toUser and c.toUser.userName=:fromUser)) and c.isRead=false ");
@@ -60,7 +60,7 @@ public class ChatMessageDao {
         query.setParameter("fromUser",from);
         query.setParameter("toUser",to);
 
-        List<ChatMessage> messages = query.getResultList();
+        List<Message> messages = query.getResultList();
         for(var m : messages){
             m.setRead(true);
             addMessage(m);
@@ -73,7 +73,7 @@ public class ChatMessageDao {
         Session session = entityManager.unwrap(Session.class);
 
         Query<Long> query = session.createQuery(
-                "select count(*) from ChatMessage c " +
+                "select count(*) from Message c " +
                         "where " +
                         "(c.fromUser.userName=:fromUser and c.toUser.userName=:toUser) " +
                         "or (c.fromUser.userName=:toUser and c.toUser.userName=:fromUser)");
@@ -91,7 +91,7 @@ public class ChatMessageDao {
         Session session = entityManager.unwrap(Session.class);
 
         Query<Long> query = session.createQuery(
-                "select count(*) from ChatMessage c " +
+                "select count(*) from Message c " +
                         "where " +
                         "(c.fromUser.userName=:fromUser and c.toUser.userName=:toUser) " +
                         " and (isRead=false) ");

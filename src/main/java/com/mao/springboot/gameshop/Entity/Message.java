@@ -6,8 +6,8 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "chat_message")
-public class ChatMessage {
+@Table(name = "message")
+public class Message {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +23,9 @@ public class ChatMessage {
 
     @Column(name = "is_read")
     private boolean isRead;
+
+    @Column(name = "type")
+    private int type;
 
     @ManyToOne
     @JoinColumn(name = "from_id")
@@ -47,6 +50,14 @@ public class ChatMessage {
                 ", fromUser=" + fromUser +
                 ", toUser=" + toUser +
                 '}';
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
     }
 
     public int getId() {

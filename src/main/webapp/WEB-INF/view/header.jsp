@@ -68,9 +68,9 @@
                         <a onclick="fetchAllUsers()" id="friendHolder" class="item " >
                             <i class="ui users icon"></i>
                             <span>Friends</span>
-
-
-                                <%--                    <div id="friendList" class="ui  middle aligned animated list menu">--%>
+                        </a>
+                        <a  class="item " >
+                            <i class="ui bell icon"></i>
                         </a>
 
                         <div id="friend-popup" class="ui popup bottom hidden">
@@ -133,6 +133,7 @@
 <link id="contextPathHolder" data-contextPath="${pageContext.request.contextPath}"/>
 
 <script src="/js/myChat.js"></script>
+<script src="/js/notification.js"></script>
 <script>
 
     $('.ui.sidebar').sidebar({

@@ -7,6 +7,9 @@ function reply(commentId) {
     let userId = document.getElementById("user-id")
     let csrf = document.getElementById("reply-form_"+commentId).querySelector(".csrf")
 
+    if(csrf == null){
+        csrf = document.getElementById("reply-form_"+commentId).lastChild.querySelector("input")
+    }
 
     if(replyInput.value.trim().length === 0){
         return
@@ -17,7 +20,6 @@ function reply(commentId) {
         commentId: commentId,
         userId: userId.value
     }
-    console.log(data)
 
     $.ajax({
         url: url+`/api/reply/${commentId}`,
@@ -28,6 +30,7 @@ function reply(commentId) {
         },
         contentType : 'application/json',
         success: function (data) {
+            sendCommentNotification()
             replyInput.value = ''
             addReply(data,replyHolder)
         },
@@ -82,6 +85,7 @@ function comment() {
         },
         contentType : 'application/json',
         success: function (data) {
+            sendCommentNotification()
             commentInput.value = ''
             addComment(data,commentHolder,csrf.value)
         },
@@ -91,7 +95,6 @@ function comment() {
 }
 
 function addComment(comment,commentHolder,csrf) {
-    console.log(comment)
     let commentHtml = `<div class="comment">
                                 <a class="avatar">
                                     <img src="${comment.user.avatar}">

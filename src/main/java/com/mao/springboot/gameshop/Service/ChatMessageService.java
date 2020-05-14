@@ -1,7 +1,7 @@
 package com.mao.springboot.gameshop.Service;
 
 import com.mao.springboot.gameshop.Dao.ChatMessageDao;
-import com.mao.springboot.gameshop.Entity.ChatMessage;
+import com.mao.springboot.gameshop.Entity.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +15,12 @@ public class ChatMessageService {
     private ChatMessageDao chatMessageDao;
 
     @Transactional
-    public void addMessage(ChatMessage chatMessage){
-        chatMessageDao.addMessage(chatMessage);
+    public void addMessage(Message message){
+        chatMessageDao.addMessage(message);
     }
 
     @Transactional
-    public List<ChatMessage> getChatMessages(String from,String to,int page){
+    public List<Message> getChatMessages(String from, String to, int page){
         return chatMessageDao.getChatMessages(from,to,page);
     }
 

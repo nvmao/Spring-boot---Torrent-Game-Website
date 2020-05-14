@@ -1,12 +1,10 @@
 package com.mao.springboot.gameshop.RestController;
 
-import com.mao.springboot.gameshop.Entity.ChatMessage;
+import com.mao.springboot.gameshop.Entity.Message;
 import com.mao.springboot.gameshop.Service.ChatMessageService;
 import com.mao.springboot.gameshop.Service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -28,15 +26,16 @@ public class MessageRestController {
     private ChatMessageService chatMessageService;
 
     @MessageMapping("/chat/{to}/typing")
-    public void typing(@DestinationVariable("to") String to,ChatMessage message){
+    public void typing(@DestinationVariable("to") String to, Message message){
 
         simpMessagingTemplate.convertAndSend("/topic/messages/"+to,message);
 
     }
 
     @MessageMapping("/chat/{to}")
-    public void sendMessage(@DestinationVariable String to, ChatMessage message){
+    public void sendMessage(@DestinationVariable String to, Message message){
 
+        message.setType(0); //0 is chat message
         if(message.getToUser().getStatus() == false){
             message.setRead(false);
         }
@@ -46,11 +45,11 @@ public class MessageRestController {
     }
 
     @GetMapping("/chat-messages/{from}/{to}")
-    public List<ChatMessage> getMessages(@PathVariable("from") String from,@PathVariable("to") String to,
-                                         @RequestParam("page")int page){
+    public List<Message> getMessages(@PathVariable("from") String from, @PathVariable("to") String to,
+                                     @RequestParam("page")int page){
 
         chatMessageService.readAllMessages(from,to);
-        List<ChatMessage> messages = chatMessageService.getChatMessages(from,to,page);
+        List<Message> messages = chatMessageService.getChatMessages(from,to,page);
 
 
         return messages;

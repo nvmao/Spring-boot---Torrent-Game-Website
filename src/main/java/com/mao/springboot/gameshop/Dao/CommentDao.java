@@ -35,7 +35,7 @@ public class CommentDao {
     public List<Comment> findComments(int gameID) {
         Session session = entityManager.unwrap(Session.class);
 
-        Query<Comment> query = session.createQuery("from Comment c where c.game.id=:gameId ");
+        Query<Comment> query = session.createQuery("from Comment c where c.game.id=:gameId " );
         query.setParameter("gameId",gameID);
 
         List<Comment> comments = query.getResultList();

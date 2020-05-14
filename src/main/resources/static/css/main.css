@@ -229,8 +229,8 @@ body.pushable{
     /* Full height */
     height: 100%;
 
-    filter: blur(50px);
-    -webkit-filter: blur(50px);
+    filter: blur(20px);
+    -webkit-filter: blur(20px);
 
     /* Create the parallax scrolling effect */
     background-attachment: fixed;
