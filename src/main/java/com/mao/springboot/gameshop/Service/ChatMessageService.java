@@ -2,6 +2,8 @@ package com.mao.springboot.gameshop.Service;
 
 import com.mao.springboot.gameshop.Dao.ChatMessageDao;
 import com.mao.springboot.gameshop.Entity.Message;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,4 +41,20 @@ public class ChatMessageService {
         return chatMessageDao.countMessage(from,to);
     }
 
+
+    @Transactional
+    public long countUnreadNotification(String to) {
+        return chatMessageDao.countUnreadNotification(to);
+    }
+
+    @Transactional
+    public long countNotification(String to) {
+
+        return chatMessageDao.countNotification(to);
+    }
+
+    public List<Message> getNotification(String to, int page){
+
+        return chatMessageDao.getNotification(to,page);
+    }
 }

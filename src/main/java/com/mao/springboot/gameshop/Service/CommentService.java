@@ -25,6 +25,7 @@ public class CommentService {
         return commentDao.find(id);
     }
 
+    @Transactional
     public List<Comment> findComments(int gameID){
         return commentDao.findComments(gameID);
     }

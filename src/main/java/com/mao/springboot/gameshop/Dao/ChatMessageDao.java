@@ -34,8 +34,8 @@ public class ChatMessageDao {
         Query query = session.createQuery(
                 "from Message c " +
                         "where " +
-                        "(c.fromUser.userName=:fromUser and c.toUser.userName=:toUser) " +
-                        "or (c.fromUser.userName=:toUser and c.toUser.userName=:fromUser) order by c.id desc ");
+                        "((c.fromUser.userName=:fromUser and c.toUser.userName=:toUser) " +
+                        "or (c.fromUser.userName=:toUser and c.toUser.userName=:fromUser)) and c.type=0 order by c.id desc ");
 
         query.setParameter("fromUser",from);
         query.setParameter("toUser",to);
@@ -55,7 +55,7 @@ public class ChatMessageDao {
                 "from Message c " +
                         "where " +
                         "((c.fromUser.userName=:fromUser and c.toUser.userName=:toUser) " +
-                        "or (c.fromUser.userName=:toUser and c.toUser.userName=:fromUser)) and c.isRead=false ");
+                        "or (c.fromUser.userName=:toUser and c.toUser.userName=:fromUser)) and c.isRead=false and c.type=0 ");
 
         query.setParameter("fromUser",from);
         query.setParameter("toUser",to);
@@ -76,7 +76,7 @@ public class ChatMessageDao {
                 "select count(*) from Message c " +
                         "where " +
                         "(c.fromUser.userName=:fromUser and c.toUser.userName=:toUser) " +
-                        "or (c.fromUser.userName=:toUser and c.toUser.userName=:fromUser)");
+                        "or (c.fromUser.userName=:toUser and c.toUser.userName=:fromUser) and type=0");
 
         query.setParameter("fromUser",from);
         query.setParameter("toUser",to);
@@ -94,7 +94,7 @@ public class ChatMessageDao {
                 "select count(*) from Message c " +
                         "where " +
                         "(c.fromUser.userName=:fromUser and c.toUser.userName=:toUser) " +
-                        " and (isRead=false) ");
+                        " and (isRead=false) and type=0 ");
 
         query.setParameter("fromUser",from);
         query.setParameter("toUser",to);
@@ -102,5 +102,62 @@ public class ChatMessageDao {
         long count = (long)query.uniqueResult();
 
         return count;
+    }
+
+
+
+    public long countUnreadNotification(String to) {
+
+        Session session = entityManager.unwrap(Session.class);
+
+        Query<Long> query = session.createQuery(
+                "select count(*) from Message c " +
+                        "where " +
+                        "( c.toUser.userName=:toUser) " +
+                        " and (isRead=false) and type=1 ");
+
+        query.setParameter("toUser",to);
+
+        long count = (long)query.uniqueResult();
+
+        return count;
+    }
+
+    public long countNotification( String to) {
+
+        Session session = entityManager.unwrap(Session.class);
+
+        Query<Long> query = session.createQuery(
+                "select count(*) from Message c " +
+                        "where " +
+                        "c.toUser.userName=:toUser and type=1 order by c.id ");
+
+        query.setParameter("toUser",to);
+
+        long count = query.uniqueResult();
+
+        return count;
+    }
+
+    public List<Message> getNotification(String to, int page){
+
+        int itemPerPage = 20;
+        int offset = (page - 1) * itemPerPage;
+
+        Session session = entityManager.unwrap(Session.class);
+
+        Query query = session.createQuery(
+                "from Message c " +
+                        "where " +
+                        "c.toUser.userName=:toUser and type=1 order by c.id desc ");
+
+        query.setParameter("toUser",to);
+
+        query.setFirstResult(offset);
+        query.setMaxResults(itemPerPage);
+
+        List<Message> messages = query.getResultList();
+
+        return messages;
     }
 }

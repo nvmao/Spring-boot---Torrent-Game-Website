@@ -7,9 +7,10 @@ function connectToLoginUser() {
     $.get(url+'/socket/loginUser',(response)=>{
         loginUser = response
         connectToNotification(loginUser.userName)
+        countUnreadNotification()
+
     })
 }
-
 
 function connectToNotification(userName) {
     let socket = new SockJS(url+'/notification')
@@ -17,34 +18,119 @@ function connectToNotification(userName) {
     stompClientNotif.connect({},function (frame) {
         console.log('connected to: '+frame)
         stompClientNotif.subscribe('/topic/notification/' + userName,function (response) {
-            console.log(response)
+
+            let data = JSON.parse(response.body)
+
+            let text = new String(data.content).split(",") ;
+
+
+            $.uiAlert({
+                textHead: 'Notification',
+                text: text[1],
+                bgcolor: '#19c3aa',
+                textcolor: '#fff',
+                position: 'top-left', // top And bottom ||  left / center / right
+                icon: 'comment',
+                link:'/games/'+text[0],
+                time: 3
+            });
+
+            countUnreadNotification()
+
         })
     })
 }
 
-function sendNotificationSocket(text,toUser) {
-    stompClientChat.send('/app/notification/'+toUser.userName,{},JSON.stringify({
-        content:text,
-        createdAt:new Date().toISOString(),
-        fromUser:loginUser,
-        toUser:toUser
-    }))
+function sendNotificationSocket(gameId,userId) {
+    stompClientChat.send('/app/notification/comment-game/'+gameId,{},userId)
 }
 
 function  sendCommentNotification() {
 
-    let usersOnPost = document.querySelectorAll(".user-comment")
-    let usersMap = new Map()
+    let gameId = document.getElementById("game-id")
+    let userId = document.getElementById("user-id")
 
-    usersOnPost.forEach(usersDom=>{
-        usersMap.set(usersDom.innerText,usersDom.innerText)
-    })
+    sendNotificationSocket(gameId.value,userId.value)
 
-    usersMap.forEach((user)=>{
-        $.get(url+'/socket/users/'+user,(response)=> {
-            sendNotificationSocket(`${loginUser.userName} has also comment with you`,response)
+}
+
+
+function countUnreadNotification() {
+
+    let bellCount = document.querySelectorAll('.bell-count')
+
+    console.log(bellCount)
+
+    bellCount.forEach(bell=>{
+        $.get(url +`/api/notifications/${loginUser.userName}/countUnread`,(res)=>{
+
+            console.log("res: "+res)
+
+            if(res != 0 ){
+                bell.innerText = res
+            }
+            else{
+                bell.innerText=''
+            }
         })
     })
 
 
+
 }
+
+function fetchNotification(page,loadmore) {
+
+    let notificationList = document.getElementById('notification-list')
+    if(loadmore==0){
+        notificationList.innerHTML=''
+    }
+    $.get(url +`/api/notifications/${loginUser.userName}?page=${page}`,(notifications)=>{
+
+        notifications.forEach((notif)=>{
+            let notificationHtml = `<a href="${url+'/games/'+notif.content.split(',')[0]}" id="friend_" class="ui grey image horizontal label"
+                                    style="display: block;padding: 10px;margin: 0 0 5px 0">
+                                    <div class="ui grid">
+                                        <div class="sixteen wide column" style="padding-left: 5px !important;margin-left: 0 !important;">
+                                                <img src="${notif.fromUser.avatar}" >
+                                            ${notif.content.split(',')[1]}
+                                        </div>
+                                    </div>
+                                </a>
+                            `
+
+            notificationList.insertAdjacentHTML("beforeend",notificationHtml)
+
+        })
+
+        $.get(url+`/api/notifications/${loginUser.userName}/count`,(res)=> {
+
+            if(page < (res/20+1)) {
+
+                notificationList.insertAdjacentHTML("beforeend",`<a id="not_${page}" 
+                        onclick="loadMoreNotification('${page}')" class="ui tiny basic blue button">load more</a>`)
+
+            }
+        })
+
+    })
+
+}
+
+function loadMoreNotification(page) {
+    let loadmoreBtn = document.getElementById("not_"+page)
+    loadmoreBtn.classList.add("loading")
+    setTimeout(()=>{
+        loadmoreBtn.remove()
+        fetchNotification(parseInt(page)+1,'1')
+    },1000)
+
+}
+
+
+
+
+
+
+
+

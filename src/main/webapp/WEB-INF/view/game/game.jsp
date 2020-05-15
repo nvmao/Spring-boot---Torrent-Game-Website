@@ -9,11 +9,14 @@
     <title>Games</title>
     <link rel="stylesheet" type="text/css" href="/css/semantic.css">
     <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="stylesheet" type="text/css" href="/css/Semantic-UI-Alert.css">
+
 
     <script src="/js/sockjs.js"></script>
     <script src="/js/stomp.js"></script>
     <script src="/js/jquery.js"></script>
     <script src="/js/semantic.js"></script>
+    <script src="/js/Semantic-UI-Alert.js"></script>
 
 </head>
 <body >
@@ -23,6 +26,7 @@
 <div class="parallax" style="background-image: url('${game.posterPhoto}');"></div>
 
 <div id="wrapper">
+
 
     <div class="ui hidden section divider"></div>
     <div class="ui container">
@@ -278,6 +282,74 @@
                     </div>
                 </div>
             </div>
+
+        </div>
+
+        <div id="mobile-menu" class="ui left sidebar inverted vertical menu" >
+            <a class="item">
+                <div class="ui inverted transparent icon input">
+                    <input type="text" placeholder="Search...">
+                    <i class="search icon"></i>
+                </div>
+            </a>
+            <a href="${pageContext.request.contextPath}/games" class="item"><i class="home icon"></i>Home</a>
+            <a href="${pageContext.request.contextPath}/games" class="item"> Game</a>
+
+            <c:if test="${user != null}">
+
+
+
+                <a onclick="fetchAllUsers()" id="friendHolder2" class="item" >
+                    <i class="smile icon"></i>
+                    Friends
+                </a>
+
+                <div id="friend-popup2" class="ui popup right center hidden" >
+                        <%--                    <h4 class="ui tiny blue header">Everybody is friend</h4>--%>
+                    <div class="emoji-container" style="width: 200px;position: static" id="friendList">
+
+
+                    </div>
+                </div>
+
+                <a  class=" item">
+                    <img class="ui avatar image" src="${user.avatar}">
+                        ${user.userName}
+                        <%--                    <i class="dropdown icon"></i>--%>
+                        <%--                    <div class="menu">--%>
+                        <%--                        <a href="${pageContext.request.contextPath}/users/profile" class="item">--%>
+                        <%--                            Profile--%>
+                        <%--                        </a>--%>
+
+                        <%--                        <c:if test="${user.authorities[0].authority=='ROLE_ADMIN'}">--%>
+                        <%--                            <a href="${pageContext.request.contextPath}/games/add" class="item">--%>
+                        <%--                                Add Game--%>
+                        <%--                            </a>--%>
+                        <%--                        </c:if>--%>
+                        <%--                        <div class="item">--%>
+
+                        <%--                            <form:form action="${pageContext.request.contextPath}/success-logout"  method="POST">--%>
+                        <%--                                <button class="fluid ui button" type="submit" >Logout</button>--%>
+                        <%--                            </form:form>--%>
+                        <%--                        </div>--%>
+                        <%--                    </div>--%>
+                </a>
+
+
+            </c:if>
+
+            <c:if test="${user == null}">
+                <div class="item">
+                    <a class="ui basic blue button" href="${pageContext.request.contextPath}/users/signup">
+                        <i class="add user icon"></i>Sign Up
+                    </a>
+                </div>
+                <div class="item">
+                    <a onclick="showLogin()" class="ui basic teal button ">
+                        <i class="sign-in icon"></i>Login</a>
+                    </d>
+                </div>
+            </c:if>
 
         </div>
 

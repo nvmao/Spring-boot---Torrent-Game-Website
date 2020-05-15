@@ -3,6 +3,7 @@ package com.mao.springboot.gameshop.Entity;
 import org.hibernate.annotations.Nationalized;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Date;
 
 @Entity
@@ -50,6 +51,18 @@ public class Message {
                 ", fromUser=" + fromUser +
                 ", toUser=" + toUser +
                 '}';
+    }
+
+    public Message(String content,User fromUser,User toUser,int type){
+        this.createdAt = new Timestamp(System.currentTimeMillis());
+        this.isRead = false;
+        this.content = content;
+        this.fromUser = fromUser;
+        this.toUser = toUser;
+        this.type = type;
+    }
+
+    public Message() {
     }
 
     public int getType() {

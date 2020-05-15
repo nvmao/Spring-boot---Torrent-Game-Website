@@ -6,7 +6,7 @@
 
     <div class="computer only row">
         <div class="column">
-            <div class="ui fixed  borderless big stackable  inverted menu">
+            <div class="ui fixed  borderless big stackable  inverted menu" style="padding-top: 5px;opacity: 95%">
 <%--                <div class="header item" onclick="showMenu()"><i class="ui large bars icon"></i></div>--%>
                 <%--            <img class="logo" src="http://placeimg.com/30/25/any">--%>
 
@@ -69,9 +69,19 @@
                             <i class="ui users icon"></i>
                             <span>Friends</span>
                         </a>
-                        <a  class="item " >
+
+                        <a  class="item " onclick="fetchNotification('1','0')" id="notificationHolder" >
                             <i class="ui bell icon"></i>
+                            <div class="floating mini ui teal label bell-count"  style="top:12%;left:80%"></div>
                         </a>
+
+
+                        <div id="notification-popup" class="ui popup bottom hidden">
+                                <%--                    <h4 class="ui tiny blue header">Everybody is friend</h4>--%>
+                            <div class="emoji-container" style="width: 200px" id="notification-list">
+
+                            </div>
+                        </div>
 
                         <div id="friend-popup" class="ui popup bottom hidden">
                                 <%--                    <h4 class="ui tiny blue header">Everybody is friend</h4>--%>
@@ -98,14 +108,22 @@
 
                 </div>
 
+
+                <div class="logo">
+                    <img class="ui small image" src="/img/icon.png">
+                </div>
+                
             </div>
         </div>
     </div>
 
     <div class="tablet mobile only row">
         <div class="column">
-            <div class="ui fixed  borderless big stackable  inverted menu">
+            <div class="ui fixed  borderless big stackable  inverted menu" style="padding-top: 6px;">
                 <a id="mobile_item" class="item"><i class="ui large bars icon" onclick="toggleSidebar()"></i></a>
+                <div class="logo">
+                    <img class="ui small image" src="/img/icon.png">
+                </div>
             </div>
 
         </div>
@@ -134,6 +152,8 @@
 
 <script src="/js/myChat.js"></script>
 <script src="/js/notification.js"></script>
+
+
 <script>
 
     $('.ui.sidebar').sidebar({
@@ -144,6 +164,11 @@
     $('#friendHolder')
         .popup({
             popup : $('#friend-popup'),
+            on    : 'click'
+        })
+    $('#notificationHolder')
+        .popup({
+            popup : $('#notification-popup'),
             on    : 'click'
         })
 
@@ -178,6 +203,22 @@
                     popup : $('#friend-popup2'),
                     on    : 'click'
                 })
+        $('#friendHolder')
+            .popup({
+                popup : $('#friend-popup'),
+                on    : 'click'
+            })
+
+        $('#notificationHolder')
+            .popup({
+                popup : $('#notification-popup'),
+                on    : 'click'
+            })
+        $('#notificationHolder2')
+            .popup({
+                popup : $('#notification-popup2'),
+                on    : 'click'
+            })
 
 
             let body = document.querySelector("body")

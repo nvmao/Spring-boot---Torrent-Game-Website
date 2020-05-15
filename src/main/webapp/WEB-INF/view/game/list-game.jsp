@@ -11,11 +11,14 @@
     <link rel="stylesheet" type="text/css" href="/css/semantic.css">
     <link rel="stylesheet" type="text/css" href="/css/main.css">
     <link rel="icon" href="/uploads/img/face.png" >
+    <link rel="stylesheet" type="text/css" href="/css/Semantic-UI-Alert.css">
 
     <script src="/js/sockjs.js"></script>
     <script src="/js/stomp.js"></script>
     <script src="/js/jquery.js"></script>
     <script src="/js/semantic.js"></script>
+    <script src="/js/Semantic-UI-Alert.js"></script>
+
 
 
 
@@ -99,11 +102,23 @@
             <c:if test="${user != null}">
 
 
-
                 <a onclick="fetchAllUsers()" id="friendHolder2" class="item" >
                     <i class="smile icon"></i>
                     Friends
                 </a>
+
+                <a  class="item " onclick="fetchNotification('1','0')" id="notificationHolder2" >
+                    <i class="bell icon"></i>
+                    Notification
+                    <div class="floating mini ui teal label bell-count"  style="top:12%;left:80%"></div>
+                </a>
+
+                <div id="notification-popup2" class="ui popup bottom hidden">
+                        <%--                    <h4 class="ui tiny blue header">Everybody is friend</h4>--%>
+                    <div class="emoji-container" style="width: 200px" id="notification-list">
+
+                    </div>
+                </div>
 
                 <div id="friend-popup2" class="ui popup right center hidden" >
                         <%--                    <h4 class="ui tiny blue header">Everybody is friend</h4>--%>

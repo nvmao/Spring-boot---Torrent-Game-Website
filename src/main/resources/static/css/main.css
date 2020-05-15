@@ -224,6 +224,12 @@ body.pushable{
     }
 }
 
+.logo{
+    position: absolute;
+    left: 45%;
+    top:-30%;
+}
+
 .parallax {
     /* The image used */
     /* Full height */

@@ -258,19 +258,6 @@ function fetchCountUnreadChat(user) {
 async function addAddBoxClick(user,usersTemplateHtml,friendList){
     let countUnread = await fetchCountUnreadChat(user)
 
-    // usersTemplateHtml = `
-    //                     <div id="friend_${user.userName}" class="item" onclick="openChatBox('${user.userName}','${user.avatar}',${50})" >
-    //                             ${countUnread != 0 ? `<div class=" mini circular left ui teal label">${countUnread}</div>`:''}
-    //
-    //                         <img class="ui avatar image" src="${user.avatar}" style="margin-right: 0">
-    //                         <div class="content" style="margin-left: 0;margin-right: 2rem">
-    //                             <div class="header">${user.userName}</div>
-    //                             ${user.status ? '<div style="color: green">online</div>':'<div style="color: red">offline</div>'}
-    //
-    //                         </div>
-    //                     </div>`
-
-    // ${user.status ? ' <div class="floating left ui green label">on</div>':' <div class="floating ui red label">off</div>'}
     usersTemplateHtml=`
 
                         <a id="friend_${user.userName}" onclick="openChatBox('${user.userName}','${user.avatar}',${50})" 
@@ -287,9 +274,7 @@ async function addAddBoxClick(user,usersTemplateHtml,friendList){
                             
                                 ${countUnread != 0 ? `<div class="floating mini ui teal label">${countUnread}</div>`:''}
                                
-                               
-                                
-<!--                            
+                                                          
                             </a>`
 
     friendList.insertAdjacentHTML('beforeend',usersTemplateHtml)
@@ -297,6 +282,7 @@ async function addAddBoxClick(user,usersTemplateHtml,friendList){
 }
 
 async function fetchAllUsers() {
+
 
     $.get(url+'/socket/fetchAllUsers', function(response){
 
