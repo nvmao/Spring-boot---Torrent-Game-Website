@@ -227,7 +227,7 @@ body.pushable{
 .logo{
     position: absolute;
     left: 45%;
-    top:-30%;
+    top:-55%;
 }
 
 .parallax {
@@ -267,4 +267,18 @@ body.pushable{
     padding: 2px;
     overflow-y: scroll;
     overflow-x: hidden;
+}
+
+.color-box{
+    width: 100%;
+    height: auto;
+    min-height: 120px;
+
+}
+
+.player-box{
+    width: 100%;
+    height: 100px;
+    max-height: 100px;
+    padding: 2px;
 }

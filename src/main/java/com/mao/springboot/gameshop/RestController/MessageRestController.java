@@ -25,6 +25,13 @@ public class MessageRestController {
     @Autowired
     private ChatMessageService chatMessageService;
 
+    @MessageMapping("/chat/{to}/playgame")
+    public void playgame(@DestinationVariable("to") String to, Message message){
+
+        simpMessagingTemplate.convertAndSend("/topic/messages/"+to,message);
+
+    }
+
     @MessageMapping("/chat/{to}/typing")
     public void typing(@DestinationVariable("to") String to, Message message){
 

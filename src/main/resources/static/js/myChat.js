@@ -17,6 +17,12 @@ function connectToChat(userName) {
             if(data.content == "--typing"){
                 sendTypingMessage(data.fromUser)
             }
+            else if(data.content == "--playgame"){
+                sendReceiveWantToPlayGame(data.fromUser)
+            }
+            else if(data.content == "--playgame yes"){
+                sendReceiveAccepted(data.fromUser)
+            }
             else{
                 sendReceiveMessage(data.fromUser,data.content)
             }
@@ -39,6 +45,7 @@ function sendMsgSocket(text,toUser) {
         toUser:toUser
     }))
 }
+
 function sendTypingSocket(toUser) {
     stompClientChat.send(`/app/chat/${toUser.userName}/typing`,{},JSON.stringify({
         content:'--typing',
@@ -48,6 +55,63 @@ function sendTypingSocket(toUser) {
     }))
 }
 
+function sendWantToPlayGameSocket(toUser) {
+    stompClientChat.send(`/app/chat/${toUser.userName}/playgame`,{},JSON.stringify({
+        content:'--playgame',
+        createdAt:new Date().toISOString(),
+        fromUser:loginUser,
+        toUser:toUser
+    }))
+}
+
+function sendReceiveWantToPlayGame(fromUser){
+    let body = document.querySelector("body")
+
+    let invite = document.getElementById("invite")
+    if(invite != null){
+        invite.remove()
+    }
+
+    let htmlContent = `<div id="invite" class="ui basic modal">
+                      <div class="ui icon header">
+                        <i class="play icon"></i>
+                        Challenge
+                      </div>
+                      <div class="content" style="text-align: center">
+                        <img src="${fromUser.avatar}" class="ui image small">
+                        <p> ${fromUser.userName} want to play a game with you  </p>
+                      </div>
+                      <div class="actions">
+                        <div id="no" class="ui red basic cancel inverted button">
+                          <i class="remove icon"></i>
+                          No
+                        </div>
+                        <div id="yes" class="ui green ok inverted button">
+                          <i class="checkmark icon"></i>
+                          Yes
+                        </div>
+                      </div>
+                    </div>`
+
+    body.insertAdjacentHTML("beforeend",htmlContent)
+
+    $('#invite')
+        .modal('show')
+    ;
+
+    invite = document.getElementById("invite")
+    let yes = invite.querySelector("#yes")
+    let no = invite.querySelector("#no")
+
+    yes.addEventListener("click",()=>{
+        sendMsgSocket("--playgame yes",fromUser)
+        window.location = url+`/playgame?from=${loginUser.userName}&to=${fromUser.userName}`
+    })
+    no.addEventListener("click",()=>{
+        sendMsgSocket("--playgame I don't want to play game with you",fromUser)
+    })
+
+}
 
 function  sendReceiveMessage(fromUser,message) {
 
@@ -85,6 +149,10 @@ function  sendReceiveMessage(fromUser,message) {
     }
 }
 
+function sendReceiveAccepted(fromUser) {
+    window.location = url+`/playgame?from=${loginUser.userName}&to=${fromUser.userName}`
+}
+
 function sendTypingMessage(fromUser) {
 
     let chatAction = document.getElementById("chat-action_"+fromUser.userName)
@@ -98,6 +166,18 @@ function sendTypingMessage(fromUser) {
     },3000)
 
 }
+
+function sendInviteGame(to) {
+    $.get(url+'/socket/users/'+to,(response)=> {
+        let toUser = response
+        let input = document.getElementById("text_"+toUser.userName);
+        input.value='I want to play a game'
+        document.getElementById("sendBtn_"+toUser.userName).click();
+        sendWantToPlayGameSocket(toUser)
+
+    })
+}
+
 
 function sendMessage(to) {
 
@@ -260,14 +340,16 @@ async function addAddBoxClick(user,usersTemplateHtml,friendList){
 
     usersTemplateHtml=`
 
+                        
                         <a id="friend_${user.userName}" onclick="openChatBox('${user.userName}','${user.avatar}',${50})" 
                             class="ui ${user.status? 'blue':'grey'} image horizontal label" style="display: block;padding: 10px;margin: 10px">
-
+                            
                             <div class="ui grid">
+                               
                                 <div class="six wide column" >
                                     <img src="${user.avatar}" >
                                 </div>
-                                <div class="ten wide column" style="padding-left: 0 !important;margin-left: 0 !important;">
+                                <div class="nine wide column" style="padding-left: 0 !important;margin-left: 0 !important;">
                                     ${user.userName}
                                 </div>
                             </div>
@@ -313,6 +395,10 @@ async function openChatBox(userName,avatar,xPos) {
     boxChat = `<div id="boxChat_${userName}" class="ui raised box-chat"  style="right: ${xPos}px">
 
     <div id="boxChatHeader_${userName}" class="ui black inverted segment box-chat-header" style="padding: 10px;">
+
+        <div class="box-chat-exit-btn " onclick="sendInviteGame('${userName}')" style="left: 80%" >
+            <i class="large teal play icon"></i>
+        </div>
 
         <div class="box-chat-exit-btn " onclick="closeChatBox('${userName}')">
             <i class="large close icon"></i>
@@ -505,22 +591,6 @@ function closeChatBox(userName) {
     })
 }
 
-// function timeSince(timeStamp) {
-//     var now = new Date(),
-//         secondsPast = (now.getTime() - timeStamp) / 1000;
-//     if (secondsPast < 60) {
-//         return parseInt(secondsPast) + 's ago';
-//     }
-//     if (secondsPast < 3600) {
-//         return parseInt(secondsPast / 60) + 'm ago';
-//     }
-//     if (secondsPast <= 86400) {
-//         return parseInt(secondsPast / 3600) + 'h ago';
-//     }
-//     if (secondsPast > 86400) {
-//         return timeConverter(timeStamp)
-//     }
-// }
 function timeSince(date) {
 
     var seconds = Math.floor((new Date() - date) / 1000);

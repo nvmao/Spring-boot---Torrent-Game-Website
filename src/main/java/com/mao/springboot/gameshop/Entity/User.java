@@ -37,6 +37,16 @@ public class User {
     @OneToMany(mappedBy = "user",fetch = FetchType.EAGER )
     private List<Authority> authorities;
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", status=" + status +
+                '}';
+    }
+
     public boolean getStatus() {
         return status;
     }

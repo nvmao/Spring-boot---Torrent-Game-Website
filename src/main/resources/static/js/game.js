@@ -24,8 +24,6 @@ function init(){
     currentOrder = (searchParams.get('order') == null) ? 1: searchParams.get('order')
     currentDisplay = (searchParams.get('order') == null) ? 0: searchParams.get('display')
 
-    console.log("page: "+currentPage)
-
     loadGame(currentPage,currentSort,currentOrder,currentDisplay)
     selectActivePage()
 

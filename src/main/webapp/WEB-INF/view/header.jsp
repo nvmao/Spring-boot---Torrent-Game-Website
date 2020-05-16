@@ -109,9 +109,9 @@
                 </div>
 
 
-                <div class="logo">
+                <a href="${pageContext.request.contextPath}" class="logo">
                     <img class="ui small image" src="/img/icon.png">
-                </div>
+                </a>
                 
             </div>
         </div>
@@ -121,9 +121,9 @@
         <div class="column">
             <div class="ui fixed  borderless big stackable  inverted menu" style="padding-top: 6px;">
                 <a id="mobile_item" class="item"><i class="ui large bars icon" onclick="toggleSidebar()"></i></a>
-                <div class="logo">
+                <a href="${pageContext.request.contextPath}" class="logo">
                     <img class="ui small image" src="/img/icon.png">
-                </div>
+                </a>
             </div>
 
         </div>

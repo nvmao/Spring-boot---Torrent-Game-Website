@@ -8,7 +8,7 @@ function connectToLoginUser() {
         loginUser = response
         connectToNotification(loginUser.userName)
         countUnreadNotification()
-
+        dynamicBackgroundFriendandNotf()
     })
 }
 
@@ -59,8 +59,6 @@ function countUnreadNotification() {
 
     let bellCount = document.querySelectorAll('.bell-count')
 
-    console.log(bellCount)
-
     bellCount.forEach(bell=>{
         $.get(url +`/api/notifications/${loginUser.userName}/countUnread`,(res)=>{
 
@@ -105,10 +103,10 @@ function fetchNotification(page,loadmore) {
 
         $.get(url+`/api/notifications/${loginUser.userName}/count`,(res)=> {
 
-            if(page < (res/20+1)) {
+            if(parseInt(page) < parseInt((res/20+1))) {
 
                 notificationList.insertAdjacentHTML("beforeend",`<a id="not_${page}" 
-                        onclick="loadMoreNotification('${page}')" class="ui tiny basic blue button">load more</a>`)
+                        onclick="loadMoreNotification('${page}')" class="ui tiny secondary blue button">load more</a>`)
 
             }
         })
@@ -128,7 +126,25 @@ function loadMoreNotification(page) {
 }
 
 
+function dynamicBackgroundFriendandNotf() {
 
+    let friendList = document.querySelector("#friend-popup")
+    let notificationList = document.querySelector('#notification-popup')
+
+
+    let fac = new FastAverageColor();
+
+    fac.getColorAsync(loginUser.avatar)
+        .then(function(color) {
+
+            friendList.setAttribute("style",
+                `width:200px;padding: 10px;background: linear-gradient(145deg, #222222,${color.hex}) !important;`)
+            notificationList.setAttribute("style",
+                `width:200px;padding: 10px;background: linear-gradient(145deg, #222222,${color.hex}) !important;`)
+
+        }).catch(function(e) {
+    });
+}
 
 
 
