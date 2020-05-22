@@ -31,4 +31,9 @@ public class PhotoService {
     public Photo find(int id){
         return photoDao.find(id);
     }
+
+    @Transactional
+    public void delete(int id){
+        photoDao.delete(id);
+    }
 }

@@ -33,6 +33,7 @@ public class UserService {
         userDao.addAuthority(authority);
     }
 
+    @Transactional
     public List<User> findAll(){
         return userDao.findAll();
     }

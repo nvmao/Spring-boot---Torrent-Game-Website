@@ -109,7 +109,7 @@
                 </div>
 
 
-                <a href="${pageContext.request.contextPath}" class="logo">
+                <a href="${pageContext.request.contextPath}/" class="logo">
                     <img class="ui small image" src="/img/icon.png">
                 </a>
                 
@@ -121,7 +121,7 @@
         <div class="column">
             <div class="ui fixed  borderless big stackable  inverted menu" style="padding-top: 6px;">
                 <a id="mobile_item" class="item"><i class="ui large bars icon" onclick="toggleSidebar()"></i></a>
-                <a href="${pageContext.request.contextPath}" class="logo">
+                <a href="${pageContext.servletContext.contextPath}/" class="logo">
                     <img class="ui small image" src="/img/icon.png">
                 </a>
             </div>
@@ -132,7 +132,12 @@
 </div>
 
 
-
+<%--<iframe--%>
+<%--        allow="microphone;"--%>
+<%--        width="350"--%>
+<%--        height="430"--%>
+<%--        src="https://console.dialogflow.com/api-client/demo/embedded/d3af6036-9043-4e71-ba5b-5e6018d80a0e">--%>
+<%--</iframe>--%>
 
 
 <div id="chat">

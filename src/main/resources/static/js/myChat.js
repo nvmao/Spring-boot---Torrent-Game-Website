@@ -23,6 +23,12 @@ function connectToChat(userName) {
             else if(data.content == "--playgame yes"){
                 sendReceiveAccepted(data.fromUser)
             }
+            else if(data.content == "--playgame2"){
+                sendReceiveWantToPlayGame2(data.fromUser)
+            }
+            else if(data.content == "--playgame2 yes"){
+                sendReceiveAccepted2(data.fromUser)
+            }
             else{
                 sendReceiveMessage(data.fromUser,data.content)
             }
@@ -58,6 +64,15 @@ function sendTypingSocket(toUser) {
 function sendWantToPlayGameSocket(toUser) {
     stompClientChat.send(`/app/chat/${toUser.userName}/playgame`,{},JSON.stringify({
         content:'--playgame',
+        createdAt:new Date().toISOString(),
+        fromUser:loginUser,
+        toUser:toUser
+    }))
+}
+
+function sendWantToPlayGameSocket2(toUser) {
+    stompClientChat.send(`/app/chat/${toUser.userName}/playgame2`,{},JSON.stringify({
+        content:'--playgame2',
         createdAt:new Date().toISOString(),
         fromUser:loginUser,
         toUser:toUser
@@ -113,6 +128,55 @@ function sendReceiveWantToPlayGame(fromUser){
 
 }
 
+function sendReceiveWantToPlayGame2(fromUser){
+    let body = document.querySelector("body")
+
+    let invite = document.getElementById("invite")
+    if(invite != null){
+        invite.remove()
+    }
+
+    let htmlContent = `<div id="invite" class="ui basic modal">
+                      <div class="ui icon header">
+                        <i class="play icon"></i>
+                        Challenge
+                      </div>
+                      <div class="content" style="text-align: center">
+                        <img src="${fromUser.avatar}" class="ui image small">
+                        <p> ${fromUser.userName} want to play a game with you  </p>
+                      </div>
+                      <div class="actions">
+                        <div id="no" class="ui red basic cancel inverted button">
+                          <i class="remove icon"></i>
+                          No
+                        </div>
+                        <div id="yes" class="ui green ok inverted button">
+                          <i class="checkmark icon"></i>
+                          Yes
+                        </div>
+                      </div>
+                    </div>`
+
+    body.insertAdjacentHTML("beforeend",htmlContent)
+
+    $('#invite')
+        .modal('show')
+    ;
+
+    invite = document.getElementById("invite")
+    let yes = invite.querySelector("#yes")
+    let no = invite.querySelector("#no")
+
+    yes.addEventListener("click",()=>{
+        sendMsgSocket("--playgame2 yes",fromUser)
+        window.location = url+`/playgame2?from=${loginUser.userName}&to=${fromUser.userName}`
+    })
+    no.addEventListener("click",()=>{
+        sendMsgSocket("--playgame I don't want to play game with you",fromUser)
+    })
+
+}
+
 function  sendReceiveMessage(fromUser,message) {
 
     let chatBox = document.getElementById('boxChat_'+fromUser.userName)
@@ -153,6 +217,10 @@ function sendReceiveAccepted(fromUser) {
     window.location = url+`/playgame?from=${loginUser.userName}&to=${fromUser.userName}`
 }
 
+function sendReceiveAccepted2(fromUser) {
+    window.location = url+`/playgame2?from=${loginUser.userName}&to=${fromUser.userName}`
+}
+
 function sendTypingMessage(fromUser) {
 
     let chatAction = document.getElementById("chat-action_"+fromUser.userName)
@@ -178,6 +246,16 @@ function sendInviteGame(to) {
     })
 }
 
+function sendInviteGame2(to) {
+    $.get(url+'/socket/users/'+to,(response)=> {
+        let toUser = response
+        let input = document.getElementById("text_"+toUser.userName);
+        input.value='I want to play a game'
+        document.getElementById("sendBtn_"+toUser.userName).click();
+        sendWantToPlayGameSocket2(toUser)
+
+    })
+}
 
 function sendMessage(to) {
 
@@ -396,6 +474,11 @@ async function openChatBox(userName,avatar,xPos) {
 
     <div id="boxChatHeader_${userName}" class="ui black inverted segment box-chat-header" style="padding: 10px;">
 
+
+        <div class="box-chat-exit-btn " onclick="sendInviteGame2('${userName}')" style="left: 70%" >
+            <i class="large play icon"></i>
+        </div>
+
         <div class="box-chat-exit-btn " onclick="sendInviteGame('${userName}')" style="left: 80%" >
             <i class="large teal play icon"></i>
         </div>
@@ -424,15 +507,16 @@ async function openChatBox(userName,avatar,xPos) {
     
         <div class="ui search">
             <div class="ui icon send">
-                <input autofocus id="text_${userName}" class="prompt" type="text" placeholder="text..." style="width: 65%;height: 40px;padding: 10px;">
+                <input autofocus id="text_${userName}" class="prompt" type="text" placeholder="text..." style="width: 55%;height: 40px;padding: 10px;">
                     <span>
                         <label for="file-input_${userName}">
-                            <i class="large image icon" ></i>
+                            <i class="large olive image icon" ></i>
                         </label>
                         <input type="file" id="file-input_${userName}" accept="image/x-png,image/gif,image/jpeg" style="display: none" >
                     </span>
-                    <i class="large meh icon" id="pop-icon_${userName}"></i>
-                    <i id="sendBtn_${userName}" onclick="sendMessage('${userName}')" class="large send icon" ></i>
+                    <i class="large yellow meh icon" id="pop-icon_${userName}"></i>
+                    <i class="large video red icon" id="pop-icon_${userName}"></i>
+                    <i id="sendBtn_${userName}" onclick="sendMessage('${userName}')" class="large blue send icon" ></i>
                 
             </div>
             

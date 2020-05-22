@@ -36,19 +36,17 @@ footer{
     margin: 0;
 }
 
-.parallax {
-    /* The image used */
-    /*background-image: url('/img/lan.jpg');
+/*.parallax {*/
 
-    /* Full height */
-    height: 100%;
+/*    !* Full height *!*/
+/*    height: 30%;*/
 
-    /* Create the parallax scrolling effect */
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
+/*    !* Create the parallax scrolling effect *!*/
+/*    background-attachment: fixed;*/
+/*    background-position: center;*/
+/*    background-repeat: no-repeat;*/
+/*    background-size: cover;*/
+/*}*/
 
 .ui.image.fluid.game-img-header{
 
@@ -233,14 +231,14 @@ body.pushable{
 .parallax {
     /* The image used */
     /* Full height */
-    height: 100%;
+    height: 70%;
+    width: 100%;
 
     filter: blur(20px);
     -webkit-filter: blur(20px);
 
     /* Create the parallax scrolling effect */
     background-attachment: fixed;
-    background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -281,4 +279,45 @@ body.pushable{
     height: 100px;
     max-height: 100px;
     padding: 2px;
+}
+
+#slider{
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+}
+
+#slider .slides{
+    display: block;
+    width: 6000px;
+    height: 400px;
+    margin: 0;
+    padding: 0;
+}
+
+#slider .slide{
+    float: left;
+    list-style-type: none;
+    width: 720px;
+    height: 400px;
+}
+#slider img{
+    float: left;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+#slider .left{
+    color: white;
+    position: absolute;
+    left: 2%;
+    top: 50%;
+    z-index: 1000;
+}
+#slider .right{
+    color: white;
+    position: absolute;
+    right: 2%;
+    top: 50%;
+    z-index: 1000;
 }

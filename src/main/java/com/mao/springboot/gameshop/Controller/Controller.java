@@ -23,9 +23,15 @@ public class Controller {
     }
 
     @GetMapping(value = "/playgame")
-    public String playGame(@RequestParam("from")String from, @RequestParam("to")String to){
+    public String playGameColor(@RequestParam("from")String from, @RequestParam("to")String to){
 
-        return "play-game";
+        return "playgame/play-game";
+    }
+
+    @GetMapping(value = "/playgame2")
+    public String playGameSteroid(@RequestParam("from")String from, @RequestParam("to")String to){
+
+        return "playgame/play-game-steroid";
     }
 
 }

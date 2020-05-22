@@ -13,11 +13,11 @@
     <link rel="icon" href="/uploads/img/face.png" >
     <link rel="stylesheet" type="text/css" href="/css/Semantic-UI-Alert.css">
 
-    <script src="/js/sockjs.js"></script>
-    <script src="/js/stomp.js"></script>
-    <script src="/js/jquery.js"></script>
-    <script src="/js/semantic.js"></script>
-    <script src="/js/Semantic-UI-Alert.js"></script>
+    <script src="/js/lib/sockjs.js"></script>
+    <script src="/js/lib/stomp.js"></script>
+    <script src="/js/lib/jquery.js"></script>
+    <script src="/js/lib/semantic.js"></script>
+    <script src="/js/lib/Semantic-UI-Alert.js"></script>
 
 
 
@@ -187,9 +187,8 @@
 
 <script src="/js/game.js"></script>
 <script src="/js/sortGame.js"></script>
-<script src="/js/fast-avg-color.js"></script>
+<script src="/js/lib/fast-avg-color.js"></script>
 <script src="/js/listGameDynamicBackground.js"></script>
-
 
 
 </body>

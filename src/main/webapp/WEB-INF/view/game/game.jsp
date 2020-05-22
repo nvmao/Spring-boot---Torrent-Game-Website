@@ -12,24 +12,26 @@
     <link rel="stylesheet" type="text/css" href="/css/Semantic-UI-Alert.css">
 
 
-    <script src="/js/sockjs.js"></script>
-    <script src="/js/stomp.js"></script>
-    <script src="/js/jquery.js"></script>
-    <script src="/js/semantic.js"></script>
-    <script src="/js/Semantic-UI-Alert.js"></script>
+    <script src="/js/lib/sockjs.js"></script>
+    <script src="/js/lib/stomp.js"></script>
+    <script src="/js/lib/jquery.js"></script>
+    <script src="/js/lib/semantic.js"></script>
+    <script src="/js/lib/Semantic-UI-Alert.js"></script>
 
 </head>
-<body >
+<body  >
 
 
 <jsp:include page="../header.jsp"></jsp:include>
 <div class="parallax" style="background-image: url('${game.posterPhoto}');"></div>
 
-<div id="wrapper">
+<div id="wrapper" style="color: #999999 !important;">
 
 
     <div class="ui hidden section divider"></div>
     <div class="ui container">
+
+
 
         <div class="ui grid">
 
@@ -38,43 +40,26 @@
 
                     <div class="ui hidden divider"></div>
 
-                    <div class="ui cube shape">
-                        <div class="sides">
-                            <c:forEach var="photo" items="${game.photos}" varStatus="loop">
-                                <c:if test="${loop.index == 0}">
-                                    <div class="active side">
-                                        <div class="content">
-                                            <img src="${photo.link}" class="ui image fluid">
-                                        </div>
-                                    </div>
-                                </c:if>
-                                <c:if test="${loop.index != 0}">
-                                    <div class="side">
-                                        <div class="content">
-                                            <img src="${photo.link}" class="ui image fluid">
-                                        </div>
-                                    </div>
-                                </c:if>
-
+                    <div id="slider">
+                        <div class="left">
+                            <i class="ui big left arrow icon"></i>
+                        </div>
+                        <div class="right">
+                            <i class="ui big right arrow icon"></i>
+                        </div>
+                        <ul class="slides">
+                            <c:forEach var="detailImage" items="${game.photos}">
+                                <li class="slide"> <img src="${detailImage.link}"> </li>
                             </c:forEach>
 
-                        </div>
+                        </ul>
                     </div>
 
                     <div class="ui ignored divider"></div>
-                    <div class="ui ignored icon direction buttons">
-                        <div class="ui button" data-animation="flip" onclick="flipLeft()" title="Flip Left" data-direction="left"><i class="left long arrow icon"></i></div>
-                        <div class="ui button" data-animation="flip" onclick="flipUp()" title="Flip Up" data-direction="up"><i class="up long arrow icon"></i></div>
-                        <div class="ui icon button" data-animation="flip" onclick="flipDown()" title="Flip Down" data-direction="down"><i class="down long arrow icon"></i></div>
-                        <div class="ui icon button" data-animation="flip" onclick="flipRight()" title="Flip Right" data-direction="right"><i class="right long arrow icon"></i></div>
-                        <div class="ui button" title="Flip Over" onclick="flipOver()" data-animation="flip" data-direction="over"><i class="retweet icon"></i></div>
-                        <div class="ui button" title="Flip Back" onclick="flipBack()" data-animation="flip" data-direction="back"><i class="flipped retweet icon"></i></div>
-                    </div>
+
                 </div>
                 <div class="one wide column">
-                    <div class="ui vertical divider">
-                        <->
-                    </div>
+
                 </div>
                 <div class="five wide column">
                     <c:if test="${user.userName.equals('admin')}">
@@ -359,9 +344,10 @@
 </div>
 
 
-<script src="/js/fast-avg-color.js"></script>
+<script src="/js/lib/fast-avg-color.js"></script>
 <script src="/js/dynamicBackground.js"></script>
 <script src="/js/comment.js"></script>
+<script src="/js/slider.js"></script>
 <script>
 
     function downloadGame(gameId){

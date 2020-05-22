@@ -10,8 +10,8 @@
     <link rel="stylesheet" type="text/css" href="/css/semantic.css">
     <link rel="stylesheet" type="text/css" href="/css/main.css">
 
-    <script src="/js/jquery.js"></script>
-    <script src="/js/semantic.js"></script>
+    <script src="/static/js/lib/jquery.js"></script>
+    <script src="/static/js/lib/semantic.js"></script>
 
 </head>
 <body>

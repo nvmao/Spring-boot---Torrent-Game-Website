@@ -20,7 +20,7 @@ function init(){
     let searchParams = new URLSearchParams(curl.search);
 
     currentPage = (searchParams.get('page') == null) ? 1: searchParams.get('page')
-    currentSort = (searchParams.get('sort') == null) ? 'new': searchParams.get('sort')
+    currentSort = (searchParams.get('sort') == null) ? 'love': searchParams.get('sort')
     currentOrder = (searchParams.get('order') == null) ? 1: searchParams.get('order')
     currentDisplay = (searchParams.get('order') == null) ? 0: searchParams.get('display')
 
@@ -69,7 +69,7 @@ function renderHtml(games) {
         games.forEach(game => {
             let htmlString = `<div class="eight wide tablet four wide computer column gameBox">
                         <div class="ui card gameBoxCard" >
-                            <div class="ui slide masked reveal image">
+                            <div class="ui slide left masked reveal image">
                                 <img src="${game.posterPhoto}" class="visible content posterImage">
                                 <img src="${game.hoverPhoto}" class="hidden content">
                             </div>

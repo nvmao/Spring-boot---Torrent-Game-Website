@@ -11,8 +11,8 @@
     <link rel="stylesheet" type="text/css" href="/css/semantic.css">
     <link rel="stylesheet" type="text/css" href="/css/main.css">
 
-    <script src="/js/jquery.js"></script>
-    <script src="/js/semantic.js"></script>
+    <script src="/js/lib/jquery.js"></script>
+    <script src="/js/lib/semantic.js"></script>
 
 </head>
 <body>
@@ -56,7 +56,13 @@
                     <div class="ui grid">
                         <c:forEach var="photo" items="${game.photos}">
                             <div class="two wide column">
-                                <img class="ui fluid image" src="${photo.link}">
+
+                                    <img class="ui fluid image" src="${photo.link}">
+
+                                    <a class="ui mini red right label">
+                                        <i class="delete icon"></i>
+                                    </a>
+
                             </div>
                         </c:forEach>
                     </div>
