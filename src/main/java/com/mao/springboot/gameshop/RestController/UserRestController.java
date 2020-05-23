@@ -33,7 +33,14 @@ public class UserRestController {
 
     @GetMapping("/users/{userName}")
     public User getUser(@PathVariable("userName") String userName){
-        return userService.findUserByName(userName);
+        User user;
+        try{
+            user = userService.findUserByName(userName);
+
+        }catch (Exception e){
+            return null;
+        }
+        return user;
     }
 
 }

@@ -17,6 +17,13 @@ public class Controller {
         return "redirect:/games";
     }
 
+
+    @GetMapping("/login")
+    public String loginPage(){
+        return "/user/login";
+    }
+
+
     @GetMapping("/chat")
     public String chat(){
         return "chat";

@@ -8,19 +8,24 @@ import com.mao.springboot.gameshop.Service.UserService;
 import com.mao.springboot.gameshop.Util.SimpleException;
 import org.apache.tomcat.util.http.fileupload.impl.FileUploadIOException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.io.IOException;
@@ -42,6 +47,9 @@ public class UserController {
     @Autowired
     private FileService fileService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @GetMapping("/signup")
     public String signUp(Model model){
 
@@ -51,13 +59,14 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public String signUp(HttpServletRequest request, @ModelAttribute User user,
+    public String signUp(HttpServletRequest  request, @ModelAttribute User user,
                          @RequestParam("rePassword") String rePassword,
                          @RequestParam("avatarFile")MultipartFile avatar,Model model){
 
         List<String> messages = new ArrayList<>();
 
         try {
+            user.setAvatar("/uploads/img/cat.jpg");
             if(!avatar.isEmpty()){
                 fileService.saveImage(avatar);
                 user.setAvatar("/uploads/img/"+avatar.getOriginalFilename());
@@ -67,12 +76,13 @@ public class UserController {
                 throw new SimpleException("password not match when you type it again");
             }
 
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+
             userService.saveOrUpdate(user);
             Authority authority = new Authority("ROLE_USER");
             authority.setUser(user);
             userService.addAuthority(authority);
 
-            authenticateUserAndSetSession(user,request);
 
         }catch (Exception e) {
             if(e instanceof ConstraintViolationException){
@@ -97,22 +107,16 @@ public class UserController {
             messages = null;
         }
 
+//        try {
+//            request.login(user.getUserName(),user.getPassword());
+//        }catch (Exception e){
+//            System.out.println("error: "+e);
+//        }
+
         return "redirect:/games";
     }
 
-    private void authenticateUserAndSetSession(User user, HttpServletRequest request) {
-        String username = user.getUserName();
-        String password = user.getPassword();
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
 
-        // generate session if one doesn't exist
-        request.getSession();
-
-        token.setDetails(new WebAuthenticationDetails(request));
-        Authentication authenticatedUser = authenticationManager.authenticate(token);
-
-        SecurityContextHolder.getContext().setAuthentication(authenticatedUser);
-    }
 
 
     @GetMapping("/profile")

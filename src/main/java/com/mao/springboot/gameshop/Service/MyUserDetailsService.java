@@ -3,6 +3,8 @@ package com.mao.springboot.gameshop.Service;
 import com.mao.springboot.gameshop.Dao.UserDao;
 import com.mao.springboot.gameshop.Entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -29,4 +31,6 @@ public class MyUserDetailsService implements UserDetailsService {
         return new MyUserDetails(user);
 
     }
+
+
 }

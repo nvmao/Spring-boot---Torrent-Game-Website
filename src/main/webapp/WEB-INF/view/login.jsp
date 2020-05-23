@@ -38,9 +38,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="ui vertical divider">
-                    Or
-                </div>
+               
             </div>
         </div>
     </div>

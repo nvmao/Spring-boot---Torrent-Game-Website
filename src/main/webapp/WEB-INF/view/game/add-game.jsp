@@ -49,7 +49,7 @@
                 <div class="required field">
                     <label>Publisher</label>
                     <div class="ui selection dropdown">
-                        <input name="publisher_id" type="hidden">
+                        <input name="publisher_id" type="hidden" value="${game.publisher[0].id}">
                         <i class="dropdown icon"></i>
                         <div class="default text">Publisher</div>
                         <div class="menu">

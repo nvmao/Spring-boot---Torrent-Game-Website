@@ -11,8 +11,8 @@
     <link rel="stylesheet" type="text/css" href="/css/semantic.css">
     <link rel="stylesheet" type="text/css" href="/css/main.css">
 
-    <script src="/static/js/lib/jquery.js"></script>
-    <script src="/static/js/lib/semantic.js"></script>
+    <script src="/js/lib/jquery.js"></script>
+    <script src="/js/lib/semantic.js"></script>
 
 </head>
 <body>
@@ -29,19 +29,19 @@
             <div class="five wide column"></div>
             <div class="six wide column">
 
-                <c:if test="${messages!=null}">
-                    <div id="#error" class="ui error message" >
-                        <i class="close icon" onclick="closeError()"></i>
-                        <div class="header">
-                            There were some errors with your submission
-                        </div>
-                        <ul >
-                            <c:forEach var="message" items="${messages}">
-                                <li>${message}</li>
-                            </c:forEach>
-                        </ul>
-                    </div>
-                </c:if>
+<%--                <c:if test="${messages!=null}">--%>
+<%--                    <div id="#error" class="ui error message" >--%>
+<%--                        <i class="close icon" onclick="closeError()"></i>--%>
+<%--                        <div class="header">--%>
+<%--                            There were some errors with your submission--%>
+<%--                        </div>--%>
+<%--                        <ul >--%>
+<%--                            <c:forEach var="message" items="${messages}">--%>
+<%--                                <li>${message}</li>--%>
+<%--                            </c:forEach>--%>
+<%--                        </ul>--%>
+<%--                    </div>--%>
+<%--                </c:if>--%>
 
 
 <%--                <div class="ui indicating progress" data-percent="60" >--%>
@@ -53,10 +53,10 @@
                     <h4 class="ui dividing header">User Information</h4>
                     <form:form class="ui form" action="${pageContext.request.contextPath}/users/signup" method="POST" enctype="multipart/form-data" modelAttribute="user" >
 
-                        <div class="required field">
+                        <div class="required field" id="username-field">
                             <label>Username</label>
                             <div class="ui left icon input">
-                                <form:input path="userName" placeholder="username"></form:input>
+                                <form:input id="username" path="userName" placeholder="username"></form:input>
                                 <i class="user icon"></i>
                             </div>
 
@@ -71,7 +71,7 @@
                         <div class="required field">
                             <label>Type your password again</label>
                             <div class="ui left icon input">
-                                <input name="rePassword" type="password" placeholder="password">
+                                <input id="password" name="rePassword" type="password" placeholder="password">
                                 <i class="lock icon"></i>
                             </div>
                         </div>
@@ -80,9 +80,13 @@
                             <input name="avatarFile" type="file">
                         </div>
 
-                        <button class="ui black button">Sign Up</button>
+                        <button class="ui black button" onclick="removeListUl()">Sign Up</button>
+
+                        <div class="ui error message"></div>
 
                     </form:form>
+
+
                 </div>
             </div>
             <div class="five wide column"></div>
@@ -93,7 +97,17 @@
 
 </div>
 
+
+<script src="/js/validation/signup-validator.js"></script>
+
 <script>
+
+    function removeListUl() {
+       setTimeout(()=>{
+           document.querySelector("ul").classList.remove("list")
+       },300)
+    }
+
     function closeError() {
         $('.ui.error.message').transition('scale',function () {
             $('.ui.error.message').remove()

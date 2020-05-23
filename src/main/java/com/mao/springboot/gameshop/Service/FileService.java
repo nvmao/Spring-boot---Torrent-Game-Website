@@ -9,6 +9,8 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class FileService {
@@ -16,7 +18,14 @@ public class FileService {
     @Autowired
     ServletContext servletContext;
 
+    List<String> contentTypes = Arrays.asList("image/png", "image/jpeg", "image/gif");
+
     public String saveImage(MultipartFile file) throws Exception{
+
+        if(!contentTypes.contains(file.getContentType())){
+            throw new Exception("File isn't an image");
+        }
+
         String folder = servletContext.getRealPath("/") +"/uploads/img/";
         byte[] bytes = file.getBytes();
         Path path = Paths.get(folder +file.getOriginalFilename());
@@ -25,6 +34,10 @@ public class FileService {
     }
 
     public String saveMessageImage(MultipartFile file,String pathStr) throws Exception{
+        if(!contentTypes.contains(file.getContentType())){
+            throw new Exception("File isn't an image");
+        }
+
         String filePath = servletContext.getRealPath("/") + pathStr;
         byte[] bytes = file.getBytes();
         Path path = Paths.get(filePath);
