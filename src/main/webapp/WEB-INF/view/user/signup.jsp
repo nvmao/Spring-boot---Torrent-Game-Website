@@ -10,7 +10,7 @@
     <title>Games</title>
     <link rel="stylesheet" type="text/css" href="/css/semantic.css">
     <link rel="stylesheet" type="text/css" href="/css/main.css">
-
+    <link rel="icon" href="/img/icon.png" >
     <script src="/js/lib/jquery.js"></script>
     <script src="/js/lib/semantic.js"></script>
 

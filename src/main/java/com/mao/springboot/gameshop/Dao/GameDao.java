@@ -60,6 +60,17 @@ public class GameDao {
         return games;
     }
 
+    public List<Game> search(String str){
+        Session session = entityManager.unwrap(Session.class);
+
+
+        Query query = session.createQuery("from Game where name like :sf");
+        query.setParameter("sf","%"+str+"%");
+
+        List<Game> games = query.getResultList();
+        return games;
+    }
+
     public  List<Game> findAllSortedByNew(int page,int order){
 
         int itemPerPage = 28;

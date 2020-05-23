@@ -31,6 +31,7 @@ public class PhotoDao {
         session.saveOrUpdate(photo);
     }
 
+
     public void delete(int id){
         Session session = entityManager.unwrap(Session.class);
 

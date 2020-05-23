@@ -33,8 +33,8 @@
                 <div class="right menu">
 
                     <div class="item">
-                        <div class="ui inverted transparent icon input">
-                            <input type="text" placeholder="Search...">
+                        <div class="ui search inverted transparent icon input">
+                            <input class="prompt" type="text" placeholder="Search...">
                             <i class="search icon"></i>
                         </div>
                     </div>
@@ -121,9 +121,9 @@
         <div class="column">
             <div class="ui fixed  borderless big stackable  inverted menu" style="padding-top: 6px;">
                 <a id="mobile_item" class="item"><i class="ui large bars icon" onclick="toggleSidebar()"></i></a>
-                <a href="${pageContext.servletContext.contextPath}/" class="logo">
-                    <img class="ui small image" src="/img/icon.png">
-                </a>
+<%--                <a href="${pageContext.servletContext.contextPath}/" class="logo">--%>
+<%--                    <img class="ui small image" src="/img/icon.png">--%>
+<%--                </a>--%>
             </div>
 
         </div>
@@ -160,6 +160,21 @@
 
 
 <script>
+
+    $('.ui.search')
+        .search({
+            apiSettings: {
+                url:  'http://localhost:8080/api/games?q={query}'
+            },
+            fields: {
+                results : 'items',
+                title   : 'name',
+                description: 'downloadCount',
+                url     : 'url'
+            },
+            minCharacters : 1
+        })
+    ;
 
     $('.ui.sidebar').sidebar({
         context: $('.ui.pushable.segment'),

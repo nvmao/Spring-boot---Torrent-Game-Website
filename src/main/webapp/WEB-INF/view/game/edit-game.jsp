@@ -10,6 +10,7 @@
     <title>Games</title>
     <link rel="stylesheet" type="text/css" href="/css/semantic.css">
     <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="icon" href="/img/icon.png" >
 
     <script src="/js/lib/jquery.js"></script>
     <script src="/js/lib/semantic.js"></script>
@@ -59,7 +60,7 @@
 
                                     <img class="ui fluid image" src="${photo.link}">
 
-                                    <a class="ui mini red right label">
+                                    <a href="${pageContext.request.contextPath}/photos/${game.id}/delete/${photo.id}" class="ui mini red right label">
                                         <i class="delete icon"></i>
                                     </a>
 

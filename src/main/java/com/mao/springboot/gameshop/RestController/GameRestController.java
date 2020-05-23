@@ -1,11 +1,13 @@
 package com.mao.springboot.gameshop.RestController;
 
 import com.mao.springboot.gameshop.Entity.Game;
+import com.mao.springboot.gameshop.Entity.RestResponse.GameList;
 import com.mao.springboot.gameshop.Service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -20,6 +22,18 @@ public class GameRestController {
         List<Game> games = null;
             games = gameService.findAll();
         return games;
+    }
+
+    @GetMapping(params = "q")
+    public GameList searchGame(@Param("q")String q, HttpServletRequest request){
+
+        List<Game> games = gameService.search(q);
+        for(var game:games){
+            game.setUrl(request.getContextPath()+"/games/"+game.getId());
+        }
+
+
+        return new GameList(games,games.size());
     }
 
     @GetMapping(params = "page")

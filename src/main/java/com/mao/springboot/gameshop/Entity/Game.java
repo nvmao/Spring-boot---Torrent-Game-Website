@@ -2,9 +2,11 @@ package com.mao.springboot.gameshop.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.List;
 
@@ -56,6 +58,8 @@ public class Game {
     @OneToMany(mappedBy = "game")
     private List<Love> loves;
 
+    @Transient
+    private String url;
 
     public int getCommentCount(){
         int count = 0;
@@ -69,6 +73,14 @@ public class Game {
     public Game() {
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     public List<Love> getLoves() {
         return loves;
     }
@@ -80,7 +92,6 @@ public class Game {
     public int getLoveCount() {
         return  loves.size();
     }
-
 
     public int getDownloadCount() {
         return downloadCount;

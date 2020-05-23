@@ -9,17 +9,24 @@
     <title>Games</title>
     <link rel="stylesheet" type="text/css" href="/css/semantic.css">
     <link rel="stylesheet" type="text/css" href="/css/main.css">
+    <link rel="icon" href="/img/icon.png" >
 
-    <script src="/static/js/lib/jquery.js"></script>
-    <script src="/static/js/lib/semantic.js"></script>
-
+    <script src="/js/lib/sockjs.js"></script>
+    <script src="/js/lib/stomp.js"></script>
+    <script src="/js/lib/jquery.js"></script>
+    <script src="/js/lib/semantic.js"></script>
+    <script src="/js/lib/Semantic-UI-Alert.js"></script>
+    <script src="/js/lib/fast-avg-color.js"></script>
 </head>
 <body>
+<jsp:include page="../header.jsp"></jsp:include>
 
 <div id="wrapper">
-    <jsp:include page="../header.jsp"></jsp:include>
 
     <div class="ui hidden section divider"></div>
+    <div class="ui hidden section divider"></div>
+    <div class="ui hidden section divider"></div>
+
     <div class="ui container">
 
 

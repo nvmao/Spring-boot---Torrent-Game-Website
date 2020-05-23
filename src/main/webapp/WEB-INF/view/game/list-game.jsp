@@ -10,7 +10,7 @@
     <title>Games</title>
     <link rel="stylesheet" type="text/css" href="/css/semantic.css">
     <link rel="stylesheet" type="text/css" href="/css/main.css">
-    <link rel="icon" href="/uploads/img/face.png" >
+    <link rel="icon" href="/img/icon.png" >
     <link rel="stylesheet" type="text/css" href="/css/Semantic-UI-Alert.css">
 
     <script src="/js/lib/sockjs.js"></script>
@@ -189,6 +189,8 @@
 <script src="/js/sortGame.js"></script>
 <script src="/js/lib/fast-avg-color.js"></script>
 <script src="/js/listGameDynamicBackground.js"></script>
+
+
 
 
 </body>

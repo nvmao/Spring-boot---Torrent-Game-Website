@@ -10,7 +10,7 @@
     <link rel="stylesheet" type="text/css" href="/css/semantic.css">
     <link rel="stylesheet" type="text/css" href="/css/main.css">
     <link rel="stylesheet" type="text/css" href="/css/Semantic-UI-Alert.css">
-
+    <link rel="icon" href="/img/icon.png" >
 
     <script src="/js/lib/sockjs.js"></script>
     <script src="/js/lib/stomp.js"></script>
@@ -25,7 +25,7 @@
 <jsp:include page="../header.jsp"></jsp:include>
 <div class="parallax" style="background-image: url('${game.posterPhoto}');"></div>
 
-<div id="wrapper" style="color: #999999 !important;">
+<div id="wrapper" >
 
 
     <div class="ui hidden section divider"></div>

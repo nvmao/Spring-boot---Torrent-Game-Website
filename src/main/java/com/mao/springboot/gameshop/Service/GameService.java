@@ -29,6 +29,11 @@ public class GameService {
     }
 
     @Transactional
+    public List<Game> search(String str) {
+        return gameDao.search(str);
+    }
+
+    @Transactional
     public void save(Game game){
         gameDao.add(game);
     }
