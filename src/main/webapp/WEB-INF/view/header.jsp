@@ -10,103 +10,93 @@
 <%--                <div class="header item" onclick="showMenu()"><i class="ui large bars icon"></i></div>--%>
                 <%--            <img class="logo" src="http://placeimg.com/30/25/any">--%>
 
-                <a href="${pageContext.request.contextPath}/games" class="item"><i class="home icon"></i>Home</a>
-                <a href="${pageContext.request.contextPath}/games" class="item"> Game</a>
-                <div class="ui simple dropdown item">
-                    Dropdown <i class="dropdown icon"></i>
-                    <div class="menu">
-                        <a class="item" href="#">Link Item</a>
-                        <a class="item" href="#">Link Item</a>
-                        <div class="divider"></div>
-                        <div class="header">Header Item</div>
-                        <div class="item">
-                            <i class="dropdown icon"></i>
-                            Sub Menu
-                            <div class="menu">
-                                <a class="item" href="#">Link Item</a>
-                                <a class="item" href="#">Link Item</a>
-                            </div>
-                        </div>
-                        <a class="item" href="#">Link Item</a>
-                    </div>
-                </div>
-                <div class="right menu">
-
+                <div class="ui container">
+                    <a href="${pageContext.request.contextPath}/" class="item"><i class="home icon"></i>Home</a>
+                    <a href="${pageContext.request.contextPath}/games" class="item"> Game</a>
                     <div class="item">
+                        <i class="search icon"></i>
+
                         <div class="ui search inverted transparent icon input">
+
                             <input class="prompt" type="text" placeholder="Search...">
-                            <i class="search icon"></i>
                         </div>
                     </div>
 
-                    <c:if test="${user != null}">
-                        <div id="noPadding" class="ui dropdown item">
-                            <div class="header" >
-                                <img class="ui avatar image" src="${user.avatar}">
-                                    ${user.userName}
-                            </div>
-                            <i class="dropdown icon"></i>
-                            <div class="menu">
-                                <a href="${pageContext.request.contextPath}/users/profile" class="item">
-                                    Profile
-                                </a>
+                    <div class="right menu">
 
-                                <c:if test="${user.authorities[0].authority=='ROLE_ADMIN'}">
-                                    <a href="${pageContext.request.contextPath}/games/add" class="item">
-                                        Add Game
+
+
+                        <c:if test="${user != null}">
+                            <div id="noPadding" class="ui dropdown item">
+                                <div class="header" >
+                                    <img class="ui avatar image" src="${user.avatar}">
+                                        ${user.userName}
+                                </div>
+                                <i class="dropdown icon"></i>
+                                <div class="menu">
+                                    <a href="${pageContext.request.contextPath}/users/profile" class="item">
+                                        Profile
                                     </a>
-                                </c:if>
-                                <div class="item">
 
-                                    <form:form action="${pageContext.request.contextPath}/success-logout"  method="POST">
-                                        <button class="fluid ui button" type="submit" >Logout</button>
-                                    </form:form>
+                                    <c:if test="${user.authorities[0].authority=='ROLE_ADMIN'}">
+                                        <a href="${pageContext.request.contextPath}/games/add" class="item">
+                                            Add Game
+                                        </a>
+                                    </c:if>
+                                    <div class="item">
+
+                                        <form:form action="${pageContext.request.contextPath}/success-logout"  method="POST">
+                                            <button class="fluid ui button" type="submit" >Logout</button>
+                                        </form:form>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <a onclick="fetchAllUsers()" id="friendHolder" class="item " >
-                            <i class="ui users icon"></i>
-                            <span>Friends</span>
-                        </a>
-
-                        <a  class="item " onclick="fetchNotification('1','0')" id="notificationHolder" >
-                            <i class="ui bell icon"></i>
-                            <div class="floating mini ui teal label bell-count"  style="top:12%;left:80%"></div>
-                        </a>
-
-
-                        <div id="notification-popup" class="ui popup bottom hidden">
-                                <%--                    <h4 class="ui tiny blue header">Everybody is friend</h4>--%>
-                            <div class="emoji-container" style="width: 200px" id="notification-list">
-
-                            </div>
-                        </div>
-
-                        <div id="friend-popup" class="ui popup bottom hidden">
-                                <%--                    <h4 class="ui tiny blue header">Everybody is friend</h4>--%>
-                            <div class="emoji-container" style="width: 200px" id="friendList">
-
-
-                            </div>
-                        </div>
-
-                    </c:if>
-
-                    <c:if test="${user == null}">
-                        <div class="item">
-                            <a class="ui basic blue button" href="${pageContext.request.contextPath}/users/signup">
-                                <i class="add user icon"></i>Sign Up
+                            <a onclick="fetchAllUsers()" id="friendHolder" class="item " >
+                                <i class="ui users icon"></i>
+                                <span>Friends</span>
                             </a>
-                        </div>
-                        <div class="item">
-                            <a onclick="showLogin()" class="ui basic teal button ">
-                                <i class="sign-in icon"></i>Login</a>
-                            </d>
-                        </div>
-                    </c:if>
 
+                            <a  class="item " onclick="fetchNotification('1','0')" id="notificationHolder" >
+                                <i class="ui bell icon"></i>
+                                <div class="floating mini ui teal label bell-count"  style="top:12%;left:80%"></div>
+                            </a>
+
+
+                            <div id="notification-popup" class="ui popup bottom hidden">
+                                    <%--                    <h4 class="ui tiny blue header">Everybody is friend</h4>--%>
+                                <div class="emoji-container" style="width: 200px" id="notification-list">
+
+                                </div>
+                            </div>
+
+                            <div id="friend-popup" class="ui popup bottom hidden">
+                                    <%--                    <h4 class="ui tiny blue header">Everybody is friend</h4>--%>
+                                <div class="emoji-container" style="width: 200px" id="friendList">
+
+
+                                </div>
+                            </div>
+
+                        </c:if>
+
+                        <c:if test="${user == null}">
+                            <div class="item">
+                                <a class="ui basic blue button" href="${pageContext.request.contextPath}/users/signup">
+                                    <i class="add user icon"></i>Sign Up
+                                </a>
+                            </div>
+                            <div class="item">
+                                <a onclick="showLogin()" class="ui basic teal button ">
+                                    <i class="sign-in icon"></i>Login</a>
+                                </d>
+                            </div>
+                        </c:if>
+
+                    </div>
                 </div>
+
+
 
 
                 <a href="${pageContext.request.contextPath}/" class="logo">
@@ -157,24 +147,12 @@
 
 <script src="/js/myChat.js"></script>
 <script src="/js/notification.js"></script>
+<script src="/js/search.js"></script>
 
 
 <script>
 
-    $('.ui.search')
-        .search({
-            apiSettings: {
-                url:  'http://localhost:8080/api/games?q={query}'
-            },
-            fields: {
-                results : 'items',
-                title   : 'name',
-                description: 'downloadCount',
-                url     : 'url'
-            },
-            minCharacters : 1
-        })
-    ;
+
 
     $('.ui.sidebar').sidebar({
         context: $('.ui.pushable.segment'),

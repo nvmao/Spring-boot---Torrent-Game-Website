@@ -2,12 +2,12 @@
 let CONTEXT_PATH = $('#contextPathHolder').attr('data-contextPath');
 let request = new XMLHttpRequest();
 let gameContainer = document.getElementById('gameContainer')
-let pageButtons = document.querySelectorAll('.pageButton')
 
 
 let currentPage
 let currentSort
 let currentOrder
+let currentGenre
 let currentDisplay
 
 
@@ -22,11 +22,16 @@ function init(){
     currentPage = (searchParams.get('page') == null) ? 1: searchParams.get('page')
     currentSort = (searchParams.get('sort') == null) ? 'love': searchParams.get('sort')
     currentOrder = (searchParams.get('order') == null) ? 1: searchParams.get('order')
+    currentGenre = (searchParams.get('genre') == null) ? 'all': searchParams.get('genre')
     currentDisplay = (searchParams.get('order') == null) ? 0: searchParams.get('display')
 
-    loadGame(currentPage,currentSort,currentOrder,currentDisplay)
-    selectActivePage()
+    loadGame(currentPage,currentSort,currentOrder,currentGenre,currentDisplay)
 
+    addEventPageButton()
+}
+
+function addEventPageButton() {
+    let pageButtons = document.querySelectorAll('.pageButton')
     pageButtons.forEach(button=>{
         button.addEventListener("click",function () {
 
@@ -45,28 +50,60 @@ function init(){
 
         })
     })
+    selectActivePage()
+
 }
 
-function loadGame(page,sort,order,display) {
-    request.open("GET",`${CONTEXT_PATH}/api/games?page=${page}&sort=${sort}&order=${order}&display=${display}`)
+function loadGame(page,sort,order,genre,display) {
+    request.open("GET",`${CONTEXT_PATH}/api/games?page=${page}&sort=${sort}&order=${order}&genre=${genre}&display=${display}`)
     request.onload = function () {
         let games = JSON.parse(request.responseText);
+
         renderHtml(games)
     }
     request.send()
+
+
 }
 
 function reloadHtmlGame() {
     gameContainer.innerHTML=''
-    loadGame(currentPage,currentSort,currentOrder)
+    loadGame(currentPage,currentSort,currentOrder,currentGenre,currentDisplay)
     window.scrollTo(0, 0);
     window.history.pushState({}, null,
-        `/games?page=${currentPage}&sort=${currentSort}&order=${currentOrder}&display=${currentDisplay}`);
+        `/games?page=${currentPage}&sort=${currentSort}&order=${currentOrder}&genre=${currentGenre}&display=${currentDisplay}`);
 }
 
 function renderHtml(games) {
+
+    console.log("games: "+games.length)
+    document.getElementById("button-page-holder").innerHTML=''
+    let pageCount = parseInt( games.length/28) +1
+    for(let i = 0; i< pageCount;i++){
+        let pagebtnHtml = `<a  class="ui tiny secondary inverted circular button pageButton">
+                                ${i+1}
+                            </a>`
+
+        document.getElementById("button-page-holder").insertAdjacentHTML("beforeend",pagebtnHtml)
+
+    }
+    addEventPageButton()
+
+
     if(currentDisplay == 0){
         games.forEach(game => {
+
+            let gernesHtml = ''
+            for(let i = 0; i < game.gernes.length;i++){
+                if(i == game.gernes.length -1){
+                    gernesHtml += '#'+game.gernes[i].name
+                }
+                else{
+                    gernesHtml += '#'+game.gernes[i].name +', '
+
+                }
+            }
+
             let htmlString = `<div class="eight wide tablet four wide computer column gameBox">
                         <div class="ui card gameBoxCard" >
                             <div class="ui slide left masked reveal image">
@@ -77,6 +114,11 @@ function renderHtml(games) {
                                 <a href="${CONTEXT_PATH}/games/${game.id}" class="ui small header">${game.name}</a>
                                 <div class="meta">
                                     <span class="date">${game.publisher.name}</span>
+                                </div>
+                                <div class="meta">
+                                    <span class="date" >
+                                        ${gernesHtml}
+                                    </span>
                                 </div>
                             </div>
                             <div class="extra content">
@@ -196,6 +238,7 @@ function dynamicBackgroundCardList() {
 }
 
 function selectActivePage() {
+    let pageButtons = document.querySelectorAll('.pageButton')
     pageButtons.forEach(button=>{
         button.classList.remove("active")
         if(parseInt(button.textContent) == currentPage){

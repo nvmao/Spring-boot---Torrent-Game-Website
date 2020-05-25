@@ -42,6 +42,7 @@ public class CommentRestController {
             comment.setCreatedAt(new Timestamp(System.currentTimeMillis()));
             commentService.add(comment);
         }catch (Exception e){
+            System.out.println("comment: "+e);
             return null;
         }
 

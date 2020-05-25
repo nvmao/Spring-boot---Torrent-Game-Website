@@ -50,8 +50,8 @@ public class GameRestController {
         return games;
     }
 
-    @GetMapping(params = {"page","sort","order"})
-    public List<Game> gameList(@Param("page") int page, @Param("sort") String sort,@Param("order")int order){
+    @GetMapping(params = {"page","sort","order","genre"})
+    public List<Game> gameList(@Param("page") int page, @Param("sort") String sort,@Param("order")int order,@Param("genre")String genre){
         List<Game> games = null;
 
         if(order==0){
@@ -61,17 +61,16 @@ public class GameRestController {
             page=1;
         }
 
-        //System.out.println("page: "+page+", sort: "+sort+", order: "+order);
 
         if(page > 0){
             if(sort.equals("new")){
-                games = gameService.findAllSortedByNew(page,order);
+                games = gameService.findAllSortedByNew(page,order,genre,28);
             }
             if(sort.equals("love")){
-                games = gameService.findAllSortedByLove(page,order);
+                games = gameService.findAllSortedByLove(page,order,genre,28);
             }
             if(sort.equals("download")){
-                games = gameService.findAllSortedByDownload(page,order);
+                games = gameService.findAllSortedByDownload(page,order,genre,28);
             }
         }
 

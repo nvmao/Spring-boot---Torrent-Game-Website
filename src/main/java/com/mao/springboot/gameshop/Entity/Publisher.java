@@ -1,6 +1,10 @@
 package com.mao.springboot.gameshop.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "publisher")
@@ -22,6 +26,18 @@ public class Publisher {
 
     @Column(name = "bg_photo")
     private String bg_photo;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "publisher",cascade= {CascadeType.ALL})
+    private List<Game> games;
+
+    public List<Game> getGames() {
+        return games;
+    }
+
+    public void setGames(List<Game> games) {
+        this.games = games;
+    }
 
     public Publisher() {
     }

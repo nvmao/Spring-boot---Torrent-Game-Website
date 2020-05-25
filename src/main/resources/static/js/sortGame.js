@@ -37,6 +37,37 @@ function initSort() {
 
 }
 
+function loadGenreUI() {
+    // let values = currentGenre.split(',')
+    // values.forEach(value => {
+    //     $('.ui .fluid ').dropdown('add value',value)
+    // })
+    // $('.ui .fluid ').dropdown('refesh')
+}
+
+function selectGenre() {
+
+    let values = $('.ui .fluid ').dropdown('get value')
+    values = values.filter((e)=>{
+        return e != ''
+    })
+
+    currentGenre = 'all'
+    if(values.length >0){
+        currentGenre = ''
+    }
+    for(let i = 0;i<values.length;i++){
+        if(i === values.length-1){
+            currentGenre += values[i]
+        }else{
+            currentGenre += values[i] +','
+        }
+    }
+
+    reloadHtmlGame()
+
+}
+
 function selectOrder() {
     currentOrder *= -1;
 
@@ -83,6 +114,7 @@ function loadOrder() {
     }
     reloadHtmlGame()
 }
+
 
 function selectItem(selectedItem) {
     sortMenu.forEach(item=>{

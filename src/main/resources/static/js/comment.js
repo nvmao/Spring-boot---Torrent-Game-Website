@@ -85,6 +85,7 @@ function comment() {
         },
         contentType : 'application/json',
         success: function (data) {
+            console.log("data: "+data)
             sendCommentNotification()
             commentInput.value = ''
             addComment(data,commentHolder,csrf.value)

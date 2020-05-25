@@ -18,7 +18,8 @@ public class Photo {
     private String link;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "game_id")
     private Game game;
 

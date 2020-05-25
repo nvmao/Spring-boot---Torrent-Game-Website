@@ -64,6 +64,7 @@
                 <div class="five wide column">
                     <c:if test="${user.userName.equals('admin')}">
                         <a class="ui black button" href="${pageContext.request.contextPath}/games/${game.id}/edit" >Edit</a>
+                        <a class="ui red button" onclick="showDeleteGame()" >Delete</a>
                     </c:if>
                     <div class="ui hidden section divider"></div>
                     <h1 class="ui big header">
@@ -300,24 +301,6 @@
                 <a  class=" item">
                     <img class="ui avatar image" src="${user.avatar}">
                         ${user.userName}
-                        <%--                    <i class="dropdown icon"></i>--%>
-                        <%--                    <div class="menu">--%>
-                        <%--                        <a href="${pageContext.request.contextPath}/users/profile" class="item">--%>
-                        <%--                            Profile--%>
-                        <%--                        </a>--%>
-
-                        <%--                        <c:if test="${user.authorities[0].authority=='ROLE_ADMIN'}">--%>
-                        <%--                            <a href="${pageContext.request.contextPath}/games/add" class="item">--%>
-                        <%--                                Add Game--%>
-                        <%--                            </a>--%>
-                        <%--                        </c:if>--%>
-                        <%--                        <div class="item">--%>
-
-                        <%--                            <form:form action="${pageContext.request.contextPath}/success-logout"  method="POST">--%>
-                        <%--                                <button class="fluid ui button" type="submit" >Logout</button>--%>
-                        <%--                            </form:form>--%>
-                        <%--                        </div>--%>
-                        <%--                    </div>--%>
                 </a>
 
 
@@ -339,6 +322,28 @@
         </div>
 
     </div>
+
+
+    <div  class="ui delete basic modal">
+        <div class="ui icon header">
+            <i class="archive icon"></i>
+            Delete The game
+        </div>
+        <div class="content">
+            <p>The comments of this game also get delete?</p>
+        </div>
+        <div class="actions">
+            <div class="ui red basic cancel inverted button">
+                <i class="remove icon"></i>
+                No
+            </div>
+            <a href="${pageContext.request.contextPath}/games/${game.id}/delete" class="ui green ok inverted button">
+                <i class="checkmark icon"></i>
+                Yes
+            </a>
+        </div>
+    </div>
+
     <jsp:include page="../login.jsp"></jsp:include>
     <jsp:include page="../footer.jsp"></jsp:include>
 </div>
@@ -349,6 +354,12 @@
 <script src="/js/comment.js"></script>
 <script src="/js/slider.js"></script>
 <script>
+
+    function showDeleteGame() {
+        $('.ui.delete.basic.modal')
+            .modal('show')
+        ;
+    }
 
     function downloadGame(gameId){
         let req = url+'/api/games/download/'+gameId

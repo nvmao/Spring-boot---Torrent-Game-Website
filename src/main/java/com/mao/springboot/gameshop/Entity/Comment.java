@@ -22,16 +22,18 @@ public class Comment {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
-    @ManyToOne
+    @ManyToOne(cascade= {CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "user_id")
     private User user;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "game_id")
     private Game game;
 
-    @OneToMany(mappedBy = "comment")
+    @OneToMany(mappedBy = "comment",cascade = {CascadeType.ALL})
     private List<Reply> replies;
 
     @Transient

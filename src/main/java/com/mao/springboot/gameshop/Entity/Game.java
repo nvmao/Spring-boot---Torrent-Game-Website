@@ -2,11 +2,13 @@ package com.mao.springboot.gameshop.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import org.hibernate.annotations.Cascade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -44,19 +46,29 @@ public class Game {
     @Column(name = "download_count")
     private int downloadCount;
 
-    @ManyToOne
+    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "publisher_id")
     private Publisher publisher;
 
-    @OneToMany(mappedBy = "game")
+    @OneToMany(mappedBy = "game",cascade= {CascadeType.ALL})
     private List<Photo> photos;
 
-    @OneToMany(mappedBy = "game")
+    @OneToMany(mappedBy = "game",cascade= {CascadeType.ALL})
     private List<Comment> comments;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "game")
+    @OneToMany(mappedBy = "game",cascade= {CascadeType.ALL})
     private List<Love> loves;
+
+    @ManyToMany(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
+    @JoinTable(
+            name = "game_gerne",
+            joinColumns = {@JoinColumn(name = "game_id")},
+            inverseJoinColumns = {@JoinColumn(name = "gerne_id")}
+    )
+    private List<Gerne> gernes;
 
     @Transient
     private String url;
@@ -71,6 +83,15 @@ public class Game {
     }
 
     public Game() {
+    }
+
+
+    public List<Gerne> getGernes() {
+        return gernes;
+    }
+
+    public void setGernes(List<Gerne> gernes) {
+        this.gernes = gernes;
     }
 
     public String getUrl() {
@@ -189,18 +210,20 @@ public class Game {
         this.description = description;
     }
 
+    public List<String> getListGenreName(){
+        List<String> genreName = new ArrayList<>();
+        for(var g : gernes){
+            genreName.add(g.getName());
+        }
+        return genreName;
+    }
+
     @Override
     public String toString() {
         return "Game{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", downloadLink='" + downloadLink + '\'' +
-                ", releaseDate=" + releaseDate +
-                ", steamReview=" + steamReview +
-                ", posterPhoto='" + posterPhoto + '\'' +
-                ", hoverPhoto='" + hoverPhoto + '\'' +
-                ", description='" + description + '\'' +
-                ", publisher=" + publisher +
+                ", gerne='"+ gernes+'\''+
                 '}';
     }
 }

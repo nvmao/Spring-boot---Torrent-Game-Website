@@ -69,6 +69,13 @@
                                 </a>
                             </div>
                         </div>
+
+                        <select onchange="selectGenre()" name="geners"  multiple="" class="ui fluid dropdown inverted" >
+                            <option value="">Select Geners</option>
+                            <c:forEach var="gener" items="${geners}">
+                                <option value="${gener.name}" >${gener.name}</option>
+                            </c:forEach>
+                        </select>
                     </div>
                     <div class="three wide column">
                         <div class="ui olive basic tiny button order-button" tabindex="0" style="margin-top: 15px" >
@@ -170,7 +177,7 @@
 
 
         <div class="ui  divider"></div>
-        <div class="ui center aligned container">
+        <div class="ui center aligned container" id="button-page-holder">
             <% for(int i = 0 ; i < (long)request.getAttribute("maxPage");i++){ %>
             <a  class="ui tiny secondary inverted circular button pageButton">
                 <%=i+1%>
@@ -190,7 +197,13 @@
 <script src="/js/lib/fast-avg-color.js"></script>
 <script src="/js/listGameDynamicBackground.js"></script>
 
+<script>
+    $('.ui.dropdown')
+        .dropdown()
+    ;
 
+
+</script>
 
 
 </body>

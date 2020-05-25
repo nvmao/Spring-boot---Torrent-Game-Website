@@ -11,11 +11,13 @@ public class Love {
     @Column(name = "id")
     private int id;
 
-    @ManyToOne
+    @ManyToOne(cascade= {CascadeType.PERSIST, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "game_id")
     private Game game;
 
-    @ManyToOne
+    @ManyToOne(cascade= {CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
     @JoinColumn(name = "user_id")
     private User user;
 

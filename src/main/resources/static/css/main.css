@@ -321,3 +321,52 @@ body.pushable{
     top: 50%;
     z-index: 1000;
 }
+
+.games-box .game-mini-box{
+    display: block;
+    position: absolute;
+}
+
+.games-box .game-mini-box:hover{
+    animation-name: rotate;
+    animation-duration: 0.3s;
+}
+
+
+.svg-1 {
+    display: block;
+    width: 100%;
+    background: #162c36 ;
+}
+
+.svg-1 polygon{
+    fill:#1b2428;
+    stroke-width:1
+}
+
+.svg-2{
+    display: block;
+    width: 100%;
+    background: #1b2428;
+}
+
+.svg-2 polygon{
+    fill:#162c36;
+
+    stroke-width:1
+}
+
+
+
+#big-gameBoxCard{
+    width: 100%;
+    height: 99%;
+}
+
+.ui.fluid.dropdown{
+    background: transparent;
+    border: 1px solid #999999;
+}
+.ui.fluid.dropdown:hover{
+    border: 1px solid #999999;
+}

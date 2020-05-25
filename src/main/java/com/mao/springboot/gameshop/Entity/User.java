@@ -18,7 +18,7 @@ public class User {
     private int id;
 
     @NotNull
-    @Size(min=2,max=30,message = "username size must be from 2 to 30")
+    @Size(min=2,max=12,message = "username size must be from 2 to 12")
     @Column(name = "username")
     private String userName;
 
