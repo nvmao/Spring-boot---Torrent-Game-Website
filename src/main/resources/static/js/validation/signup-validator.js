@@ -67,6 +67,20 @@ $('.ui.form')
 
                 ]
             },
+            email: {
+                identifier: 'email',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : 'Please enter a username'
+                    },
+                    {
+                        type   : 'email',
+                        prompt : 'Email is invalid'
+                    },
+
+                ]
+            },
             password: {
                 identifier: 'password',
                 rules: [

@@ -28,7 +28,8 @@ public class Publisher {
     private String bg_photo;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "publisher",cascade= {CascadeType.ALL})
+    @OneToMany(mappedBy = "publisher",cascade= {CascadeType.ALL, CascadeType.MERGE,
+            CascadeType.DETACH, CascadeType.REFRESH})
     private List<Game> games;
 
     public List<Game> getGames() {

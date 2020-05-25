@@ -35,4 +35,25 @@ public class PublisherDao {
         return publisher;
     }
 
+    public void add(Publisher publisher){
+        Session session = entityManager.unwrap(Session.class);
+
+        session.saveOrUpdate(publisher);
+
+    }
+
+    public void delete(int id){
+        Session session = entityManager.unwrap(Session.class);
+
+        Publisher publisher = session.get(Publisher.class,id);
+        for(var game:publisher.getGames()){
+            game.setPublisher(null);
+        }
+        publisher.setGames(null);
+
+        session.delete(publisher);
+
+
+    }
+
 }

@@ -4,14 +4,16 @@ let stompClient
 let gameStart = false
 let playerColor
 let enemyColor
+let playerName
+let enemyName
 
 function init(){
 
     let curl = new URL(window.location.href);
     let searchParams = new URLSearchParams(curl.search);
 
-    let playerName = searchParams.get("from")
-    let enemyName = searchParams.get("to")
+    playerName = searchParams.get("from")
+    enemyName = searchParams.get("to")
 
     connectToPlayGame(playerName)
 
@@ -68,9 +70,22 @@ function sendReadySocket(enemyName) {
 }
 
 
+function fetchPlayerScore(score) {
+    let playerScoreDome = document.getElementById("player-score")
+    playerScoreDome.innerText=`${score}`
+}
+
+function fetchEnemyScore(score) {
+    let enemyScoreDom = document.getElementById("enemy-score")
+    enemyScoreDom.innerText=`${score}`
+}
+
+
 function connectToPlayGame(userName) {
     let socket = new SockJS(url+'/playgame')
     stompClient = Stomp.over(socket)
+    stompClient.debug = null
+
     stompClient.connect({},function (frame) {
         console.log('connected to: '+frame)
         stompClient.subscribe('/topic/playgame2/' + userName,function (response) {
@@ -87,14 +102,40 @@ function connectToPlayGame(userName) {
                     createVector(data.target.x,data.target.y)
                     )
             }
+            else if(data.message=='coin'){
+
+                fetchPlayerScore(data.playerScores[`${playerName}`])
+                fetchEnemyScore(data.playerScores[`${enemyName}`])
+
+                if(data.playerScores[`${playerName}`] >= 5){
+                    playerVehicle.maxForce = 0.8
+                }
+
+                coins = []
+                data.coins.forEach(c=>{
+                    coins.push(new Coin(createVector(c.position.x,c.position.y),color(244,244,10),20))
+                })
+            }
+            else if(data.message == 'danger'){
+
+                dangers = []
+                data.circles.forEach(c=>{
+                    dangers.push(new Coin(createVector(c.pos.x,c.pos.y),color(254,12,12),70))
+                })
+            }
+            else if(data.message=='win'){
+                document.querySelector('h1').innerText=data.whoWin +' Win The Game'
+                gameStart = false
+            }
 
         })
     })
 }
-
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////game
 let playerVehicle
 let enemyVehicle
+let coins = []
+let dangers = []
 
 function setup() {
 
@@ -113,11 +154,15 @@ function draw() {
     if(!gameStart){
         return
     }
-
-    playerVehicle.color = color(playerColor[0],playerColor[1],playerColor[2])
-    enemyVehicle.color = color(enemyColor[0],enemyColor[1],enemyColor[2])
-
     background(0,0,25,20)
+
+
+    if(playerColor != null && enemyColor != null){
+        playerVehicle.color = color(playerColor[0],playerColor[1],playerColor[2])
+        enemyVehicle.color = color(enemyColor[0],enemyColor[1],enemyColor[2])
+    }
+
+
 
     if(mouseIsPressed){
         playerVehicle.seekTo(createVector(mouseX,mouseY))
@@ -126,6 +171,13 @@ function draw() {
 
     playerVehicle.update()
     enemyVehicle.draw()
+
+    for(let i =0;i<coins.length;i++){
+        coins[i].draw()
+    }
+    for(let i =0;i<dangers.length;i++){
+        dangers[i].draw()
+    }
 
 
 }

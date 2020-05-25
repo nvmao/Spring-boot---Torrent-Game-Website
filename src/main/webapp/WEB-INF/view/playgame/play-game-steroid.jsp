@@ -16,6 +16,10 @@
 </header>
 <body>
 
+<div class="ui segment" style="text-align: center">
+    <h1 style="color: #0e8c8c">Don't Give Up</h1>
+</div>
+
 <div class="ui segment " style="background: transparent">
     <div class="ui two column center grid " >
         <div class="column" >
@@ -35,6 +39,7 @@
 <script src="/js/lib/fast-avg-color.js"></script>
 <script src="/js/playgame/play-steroid-game.js" ></script>
 <script src="/js/playgame/Vehicle.js"></script>
+<script src="/js/playgame/Coin.js"></script>
 </body>
 
 </html>

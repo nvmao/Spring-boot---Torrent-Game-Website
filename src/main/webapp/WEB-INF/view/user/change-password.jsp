@@ -23,6 +23,8 @@
 <div id="wrapper">
     <div class="ui hidden section divider"></div>
     <div class="ui hidden section divider"></div>
+    <div class="ui hidden section divider"></div>
+    <div class="ui hidden section divider"></div>
     <div class="ui container">
 
         <div class="ui hidden section divider"></div>
@@ -32,50 +34,40 @@
             <div class="four wide column"></div>
             <div class="eight wide column">
 
-                <div class="ui placeholder segment">
+                <div class="ui placeholder blue segment" style="opacity: 95%">
 
-                    <c:if test="${param.error != null}">
-                        <div class="ui error message">
-                            <ul>
-                                <li>Username or password incorrect</li>
-                            </ul>
-                        </div>
-                    </c:if>
-
-
-                    <div class="ui two column very relaxed stackable grid">
-                        <div class="column">
-                            <form:form action="${pageContext.request.contextPath}/do-login" method="POST" class="ui form">
+                    <div class="ui centered grid">
+                        <div class="ten wide column">
+                            <form:form action="${pageContext.request.contextPath}/password/save-password" method="POST" class="ui form">
                                 <div class="field">
-                                    <label>Username</label>
+                                    <label>New Password</label>
                                     <input type="text" style="position: fixed; left: -10000000px;" disabled/>
                                     <div class="ui left icon input">
-                                        <input type="text" name="username" placeholder="Username">
-                                        <i class="user icon"></i>
+                                        <input type="text" id="password" name="password" placeholder="password">
+                                        <i class="mail icon"></i>
                                     </div>
                                 </div>
+                                <input name="token" value="${token}" hidden>
                                 <div class="field">
-                                    <label>Password</label>
+                                    <label>Type Password Again</label>
+                                    <input type="text" style="position: fixed; left: -10000000px;" disabled/>
                                     <div class="ui left icon input">
-                                        <input name="password"  type="password" placeholder="*******">
-                                        <i class="lock icon"></i>
+                                        <input type="text"  name="rePassowrd" placeholder="password">
+                                        <i class="mail icon"></i>
                                     </div>
                                 </div>
-                                <button class="ui teal submit button">Login</button>
+                                <button class="ui teal submit button">Submit</button>
 
-                                <a href="${pageContext.request.contextPath}/password/forgot" class="ui label" style="width: 100%;margin-top: 20px">Forgot your password ?</a>
+                                <div class="ui error message"></div>
 
+                                <c:if test="${message != null}">
+                                    <div class="ui center aligned compact red message" style="width: 100%">
+                                        <p>${message}!</p>
+                                    </div>
+                                </c:if>
 
 
                             </form:form>
-                        </div>
-                        <div class="middle aligned column">
-                            <a href="${pageContext.request.contextPath}/users/signup" class="ui big button">
-                                <i class="signup icon"></i>
-                                Sign Up
-                            </a>
-
-
                         </div>
                     </div>
 
@@ -87,6 +79,8 @@
     </div>
     <jsp:include page="../login.jsp"></jsp:include>
     <jsp:include page="../footer.jsp"></jsp:include>
+
+    <script src="/js/validation/reset-passsword-validator.js"></script>
 
 </div>
 

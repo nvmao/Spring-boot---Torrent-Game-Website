@@ -25,4 +25,14 @@ public class PublisherService {
         return publisherDao.find(id);
     }
 
+
+    @Transactional
+    public void add(Publisher publisher) {
+        publisherDao.add(publisher);
+    }
+
+    @Transactional
+    public void delete(int id) {
+        publisherDao.delete(id);
+    }
 }

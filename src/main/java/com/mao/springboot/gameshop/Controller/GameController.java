@@ -67,12 +67,14 @@ public class GameController {
     @GetMapping("/add")
     public String addGame(Model model){
         model.addAttribute("game",new Game());
+        model.addAttribute("genres",gerneService.findAll());
         model.addAttribute("user", LoginUser.getLoginUser());
         return "game/add-game";
     }
 
     @PostMapping("/add")
     public String AddGame(@ModelAttribute Game game,
+                          @RequestParam("genre_tags") String genre_tags,
                           @RequestParam("publisher_id") Integer publisherId,
                           @RequestParam("pPhoto") MultipartFile pPhoto,
                           @RequestParam("hPhoto") MultipartFile hPhoto){
@@ -85,12 +87,16 @@ public class GameController {
             String hoverPhotoPath = "/uploads/img/"+hPhoto.getOriginalFilename();
             Publisher publisher = publisherService.find(publisherId);
 
+
+            List<Gerne> genres = gerneService.find(genre_tags);
+
+            game.setGernes(genres);
             game.setPublisher(publisher);
             game.setPosterPhoto(posterPhotoPath);
             game.setHoverPhoto(hoverPhotoPath);
 
             gameService.save(game);
-            
+
 
         }catch (Exception e){
             System.out.println(e);
@@ -114,6 +120,7 @@ public class GameController {
     public String editGame(Model model,@PathVariable("id") int id){
         Game game = gameService.find(id);
         model.addAttribute("game",game);
+        model.addAttribute("genres",gerneService.findAll());
         model.addAttribute("user", LoginUser.getLoginUser());
         return "game/edit-game";
     }
@@ -129,6 +136,7 @@ public class GameController {
 
     @PostMapping("/{id}/edit")
     public String saveEditGame(@ModelAttribute Game game,
+                               @RequestParam("gen_tags") String gen_tags,
                                @RequestParam("publisher_id") Integer publisherId,
                                @RequestParam("pPhoto") MultipartFile pPhoto,
                                @RequestParam("hPhoto") MultipartFile hPhoto){
@@ -144,14 +152,16 @@ public class GameController {
                 String posterPhotoPath = "/uploads/img/"+pPhoto.getOriginalFilename();
                 game.setPosterPhoto(posterPhotoPath);
             }
+            List<Gerne> genres = gerneService.find(gen_tags);
+            game.setGernes(genres);
+
+            Publisher publisher = publisherService.find(publisherId);
+            game.setPublisher(publisher);
+
+            gameService.save(game);
         }catch (Exception e){
             System.out.println(e);
         }
-
-        Publisher publisher = publisherService.find(publisherId);
-        game.setPublisher(publisher);
-
-        gameService.save(game);
 
         return "redirect:/games/"+game.getId()+"/edit";
     }

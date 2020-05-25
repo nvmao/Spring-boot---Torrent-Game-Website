@@ -28,6 +28,10 @@ public class User {
     @Column(name = "status")
     private boolean status;
 
+    //    \\b[\\w.%-]+@[-.\\w]+\\.[A-Za-z]{2,4}\\b
+    @Column(name = "email")
+    private String email;
+
     @JsonIgnore
     @Size(min = 1,message = "password is required")
     @Column(name = "password")
@@ -45,6 +49,14 @@ public class User {
                 ", avatar='" + avatar + '\'' +
                 ", status=" + status +
                 '}';
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public boolean getStatus() {

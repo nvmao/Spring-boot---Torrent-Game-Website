@@ -26,7 +26,7 @@
 
 
 
-                        <c:if test="${user != null}">
+                        <c:if test="${ user.authorities != null}">
                             <div id="noPadding" class="ui dropdown item">
                                 <div class="header" >
                                     <img class="ui avatar image" src="${user.avatar}">
@@ -80,7 +80,7 @@
 
                         </c:if>
 
-                        <c:if test="${user == null}">
+                        <c:if test="${user == null || user.authorities == null}">
                             <div class="item">
                                 <a class="ui basic blue button" href="${pageContext.request.contextPath}/users/signup">
                                     <i class="add user icon"></i>Sign Up

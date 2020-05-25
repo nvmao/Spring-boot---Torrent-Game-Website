@@ -116,9 +116,6 @@ public class UserController {
         return "redirect:/games";
     }
 
-
-
-
     @GetMapping("/profile")
     public String profile(Model model){
 

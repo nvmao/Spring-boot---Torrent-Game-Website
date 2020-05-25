@@ -61,6 +61,14 @@
                             </div>
 
                         </div>
+                        <div class="required field" id="username-field">
+                            <label>Email</label>
+                            <div class="ui left icon input">
+                                <form:input id="email" path="email" placeholder="email"></form:input>
+                                <i class="user icon"></i>
+                            </div>
+
+                        </div>
                         <div class="required field">
                             <label>Password</label>
                             <div class="ui left icon input">
@@ -93,6 +101,8 @@
         </div>
 
     </div>
+
+    <jsp:include page="../login.jsp"></jsp:include>
     <jsp:include page="../footer.jsp"></jsp:include>
 
 </div>

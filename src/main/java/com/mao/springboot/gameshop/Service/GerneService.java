@@ -28,5 +28,9 @@ public class GerneService {
         gerneDao.delete(id);
     }
 
+    @Transactional
+    public List<Gerne> find(String genreTags) {
+        return gerneDao.find(genreTags);
+    }
 
 }

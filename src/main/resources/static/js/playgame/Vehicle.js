@@ -7,9 +7,7 @@ class Vehicle{
         this.acc = createVector(0,0)
         this.maxSpeed = 5.0
         this.maxForce = 0.2
-
         this.color = color(175,175,12)
-
 
 
         this.target = createVector(0,0)
@@ -24,6 +22,7 @@ class Vehicle{
         this.acc.mult(0)
 
 
+        this.edges()
         this.draw()
         this.sendToServer()
     }
@@ -31,6 +30,25 @@ class Vehicle{
 
     applyForce(force){
         this.acc.add(force)
+    }
+
+    edges(){
+        let w = 740
+        let h = 480
+
+        if(this.pos.x < 0){
+            this.pos.x = w;
+        }
+        else if(this.pos.x > w){
+            this.pos.x = 0
+        }
+        if(this.pos.y < 0){
+            this.pos.y = h;
+        }
+        else if(this.pos.y > h){
+            this.pos.y = 0
+        }
+
     }
 
     seekTo(target){

@@ -20,22 +20,26 @@
 
 <jsp:include page="../header.jsp"></jsp:include>
 
-<div id="wrapper">
+<div id="wrapper" style="padding-top: 100px">
+
 
     <div class="ui hidden section divider"></div>
     <div class="ui container">
+        <a class="ui basic blue button" href="${pageContext.request.contextPath}/publishers"> Manage Publisher </a>
+        <a class="ui basic blue button" href="${pageContext.request.contextPath}/genres"> Manage Genres </a>
+
 
         <div class="ui center aligned container">
 
         </div>
 
-        <div class="ui black segment">
+        <div class="ui black segment" >
             <h4 class="ui dividing header">Game Information</h4>
             <form:form class="ui form" action="${pageContext.request.contextPath}/games/${game.id}/edit" method="POST" enctype="multipart/form-data" modelAttribute="game" >
 
                 <div class="required field">
                     <label>Name</label>
-                    <form:input path="name"></form:input>
+                    <form:input  path="name"></form:input>
                 </div>
                 <div class="required field">
                     <label>Download Link</label>
@@ -44,12 +48,12 @@
                 <div class="required field">
                     <label>Poster Photo</label>
                     <img class="ui small image" src="${game.posterPhoto}">
-                    <input name="pPhoto" type="file">
+                    <input name="pPhoto" type="file" accept="image/x-png,image/gif,image/jpeg">
                 </div>
                 <div class="required field">
                     <label>Hover Photo</label>
                     <img class="ui small image" src="${game.hoverPhoto}">
-                    <input name="hPhoto" type="file">
+                    <input name="hPhoto" type="file" accept="image/x-png,image/gif,image/jpeg">
                 </div>
 
                 <div class="required field">
@@ -87,6 +91,15 @@
                     </div>
                 </div>
                 <div class="required field">
+                    <label>Genre</label>
+                    <select  name="gen_tags"  multiple="" class="ui fluid dropdown inverted" >
+                        <option value="">Select Geners</option>
+                        <c:forEach var="gener" items="${genres}">
+                            <option value="${gener.name}" >${gener.name}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class=" field">
                     <label>Description</label>
                     <Form:textarea rows="10" path="description"></Form:textarea>
                 </div>
@@ -104,11 +117,12 @@
             <div class="content">
                 <div class="ui black segment">
                     <form:form class="ui form" action="${pageContext.request.contextPath}/photos/add" method="post" enctype="multipart/form-data">
-                        <input name="gameId" type="hidden" value="${game.id}">
+                        <input id="gameId" name="gameId" type="hidden" value="${game.id}">
                         <div class="field">
                             <input type="file" name="photo" multiple>
                         </div>
-                        <button class="ui basic secondary button">Add</button>
+                        <button onclick="removeListUl()" class="ui basic secondary button">Add</button>
+                        <div class="ui error message"></div>
                     </form:form>
                 </div>
             </div>
@@ -117,11 +131,21 @@
 
     </div>
 
+    <jsp:include page="../login.jsp"></jsp:include>
     <jsp:include page="../footer.jsp"></jsp:include>
 </div>
 
 
+<script src="/js/dropdown.js"></script>
+<script src="/js/validation/add-game-validator.js"></script>
 <script>
+
+
+    function removeListUl() {
+        setTimeout(()=>{
+            document.querySelector("ul").classList.remove("list")
+        },300)
+    }
 
     function showModal(){
         $('.ui.modal')

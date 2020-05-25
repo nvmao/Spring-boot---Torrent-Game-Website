@@ -9,6 +9,16 @@ public class Player {
     private Vector2 pos;
     private Vector2 vel;
     private Vector2 target;
+    private int radius = 7;
+
+
+    public int getRadius() {
+        return radius;
+    }
+
+    public void setRadius(int radius) {
+        this.radius = radius;
+    }
 
     public Vector2 getTarget() {
         return target;

@@ -76,7 +76,6 @@ function reloadHtmlGame() {
 
 function renderHtml(games) {
 
-    console.log("games: "+games.length)
     document.getElementById("button-page-holder").innerHTML=''
     let pageCount = parseInt( games.length/28) +1
     for(let i = 0; i< pageCount;i++){
@@ -113,7 +112,7 @@ function renderHtml(games) {
                             <div class="content">
                                 <a href="${CONTEXT_PATH}/games/${game.id}" class="ui small header">${game.name}</a>
                                 <div class="meta">
-                                    <span class="date">${game.publisher.name}</span>
+                                    <span class="date">${ (game.publisher === null )? '':game.publisher.name }</span>
                                 </div>
                                 <div class="meta">
                                     <span class="date" >

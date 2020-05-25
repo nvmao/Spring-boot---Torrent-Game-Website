@@ -123,7 +123,16 @@
                             <div class="content">
                                 <div class="header">Genre</div>
                             </div>
-                            <p>Action, Adventure, Role-play</p>
+                            <p>
+                                <c:forEach var="g" items="${game.gernes}" varStatus="loop">
+                                    <c:if test="${loop.index == end-1}">
+                                        ${g.name}
+                                    </c:if>
+                                    <c:if test="${loop.index != end-1}">
+                                        #${g.name},
+                                    </c:if>
+                                </c:forEach>
+                            </p>
                         </div>
                         <div class="item">
                             <div class="content">

@@ -136,6 +136,13 @@
 <!--			<version>2.3.0</version>-->
 <!--		</dependency>-->
 
+		<!--send mail-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-mail</artifactId>
+			<version>2.2.5.RELEASE</version>
+		</dependency>
+
 		<!--Web socket-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

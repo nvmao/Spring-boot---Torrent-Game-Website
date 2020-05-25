@@ -18,9 +18,12 @@
 <body>
 <jsp:include page="../header.jsp"></jsp:include>
 
-<div id="wrapper">
+<div id="wrapper" style="padding-top: 100px">
     <div class="ui hidden section divider"></div>
     <div class="ui container">
+
+        <a class="ui basic blue button" href="${pageContext.request.contextPath}/publishers"> Manage Publisher </a>
+        <a class="ui basic blue button" href="${pageContext.request.contextPath}/genres"> Manage Genres </a>
 
         <div class="ui center aligned container">
 
@@ -40,11 +43,11 @@
                 </div>
                 <div class="required field">
                     <label>Poster Photo</label>
-                    <input name="pPhoto" type="file">
+                    <input name="pPhoto" type="file" accept="image/x-png,image/gif,image/jpeg">
                 </div>
                 <div class="required field">
                     <label>Hover Photo</label>
-                    <input name="hPhoto" type="file">
+                    <input name="hPhoto" type="file" accept="image/x-png,image/gif,image/jpeg">
                 </div>
                 <div class="required field">
                     <label>Publisher</label>
@@ -60,24 +63,45 @@
                     </div>
                 </div>
                 <div class="required field">
+                    <label>Genre</label>
+                    <select  name="genre_tags"  multiple="" class="ui fluid dropdown inverted" >
+                        <option value="">Select Geners</option>
+                        <c:forEach var="gener" items="${genres}">
+                            <option value="${gener.name}" >${gener.name}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+                <div class=" field">
                     <label>Description</label>
                     <Form:textarea path="description"></Form:textarea>
                 </div>
 
-                <button class="ui black button">Submit</button>
+                <button onclick="removeListUl()" class="ui black button">Submit</button>
 
+                <div class="ui error message"></div>
             </form:form>
         </div>
 
 
     </div>
-
+    <jsp:include page="../login.jsp"></jsp:include>
     <jsp:include page="../footer.jsp"></jsp:include>
 </div>
 
-
+<script src="/js/validation/add-game-validator.js"></script>
 <script>
+
+    function removeListUl() {
+        setTimeout(()=>{
+            document.querySelector("ul").classList.remove("list")
+        },300)
+    }
+
     $('.ui.dropdown').dropdown()
+
+    $('.ui.fluid')
+        .dropdown()
+    ;
 
     function toggleSidebar() {
         $('.ui.sidebar').sidebar('toggle')

@@ -5,12 +5,14 @@ let gridButton = document.querySelector(".grid-button")
 let listButton = document.querySelector(".list-button")
 
 let sortType = ["new","comment","download","love"]
+let setValue = false
 
 initSort()
 
 function initSort() {
 
     loadOrder()
+    loadGenreUI()
 
     selectDisplay()
 
@@ -38,16 +40,44 @@ function initSort() {
 }
 
 function loadGenreUI() {
-    // let values = currentGenre.split(',')
-    // values.forEach(value => {
-    //     $('.ui .fluid ').dropdown('add value',value)
-    // })
-    // $('.ui .fluid ').dropdown('refesh')
+    setTimeout(()=>{
+
+        let select = document.querySelector('.default.text')
+
+        if(currentGenre == 'all'){
+            return
+        }
+
+        let values = currentGenre.split(',');
+        values = values.filter((e)=>{
+            return e != ''
+        })
+
+        currentGenre=''
+
+        setValue = true
+
+        values.forEach(g=>{
+
+            $('.ui .fluid ').dropdown('add value',g)
+            let selectHtml = `<a class="ui label transition visible"
+                        data-value="${g}" style="display: inline-block !important;">${g}<i class="delete icon"></i></a>`
+            select.insertAdjacentHTML('beforebegin',selectHtml)
+        })
+
+        setValue = false
+
+    },200)
 }
 
 function selectGenre() {
 
+    if(setValue === true){
+        return
+    }
+
     let values = $('.ui .fluid ').dropdown('get value')
+
     values = values.filter((e)=>{
         return e != ''
     })

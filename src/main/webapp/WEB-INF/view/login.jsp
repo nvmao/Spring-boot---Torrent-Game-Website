@@ -29,13 +29,16 @@
                                 </div>
                             </div>
                             <button class="ui teal submit button">Login</button>
+                            <a href="${pageContext.request.contextPath}/password/forgot" class="ui label" style="width: 100%;margin-top: 20px">Forgot your password ?</a>
+
+
                         </form:form>
                     </div>
                     <div class="middle aligned column">
-                        <div class="ui big button">
+                        <a href="${pageContext.request.contextPath}/users/signup" class="ui big button">
                             <i class="signup icon"></i>
                             Sign Up
-                        </div>
+                        </a>
                     </div>
                 </div>
                
